@@ -29,3 +29,7 @@ Se implementaron reglas adaptables para móvil, tableta y escritorio, tabla con 
 9. Desplazarse hacia arriba y abajo en el cierre para verificar el relleno reversible de «LEÓN 2050».
 
 El código se entrega en el repositorio independiente `RafaelDuLu/implan-pmd-2050`, rama `main`. El despliegue en Cloudflare Pages queda a cargo del propietario. El README incluye la configuración.
+
+## Compatibilidad de despliegue con los boletines
+
+Se incorpora `package.json` con el comando `npm run build`. La compilación toma `assets/data.json` como origen, genera el archivo de navegador, ejecuta las comprobaciones y crea `dist/` con HTML, assets y el inventario público. Cloudflare Pages debe usar `npm run build` y salida `dist`, igual que Mercado Laboral. La compilación local se verificó con éxito. No se cambió el diseño ni las cifras.

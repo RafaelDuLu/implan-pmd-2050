@@ -20,28 +20,32 @@ Los enlaces a las fuentes sí necesitan internet.
 - Tabla del eje con ordenamiento por clave o nombre y descarga del resultado filtrado en CSV. Descarga individual por indicador.
 - Fuentes, referencias, hoja y fila de procedencia, notas e inventario de registros reservados.
 
-## Publicar como NUEVO proyecto en Cloudflare Pages
+## Compilación y publicación: mismo flujo que los boletines
 
-### Opción recomendada: nuevo repositorio GitHub
+El repositorio `RafaelDuLu/implan-pmd-2050` ya está creado, con los archivos en `main`.
 
-1. Crea un repositorio nuevo, por ejemplo `implan-pmd-2050`. No uses una rama de los boletines.
-2. Sube el contenido descomprimido: `index.html` debe estar en la raíz, junto a `assets/`, `docs/` y `scripts/`.
-3. En Cloudflare abre **Workers & Pages → Create application → Pages → Connect to Git** (los nombres pueden variar con el idioma del panel).
-4. Selecciona exclusivamente ese repositorio. Usa un nombre de proyecto nuevo, como `implan-pmd-2050`.
-5. Rama de producción: `main`. Framework: `None`. Comando de compilación: `exit 0`. Directorio de salida: `.`. Directorio raíz: el del repositorio.
-6. Despliega y revisa la dirección `.pages.dev` que Cloudflare te asigne.
-7. Los cambios posteriores en `main` generarán nuevos despliegues del portal independiente.
+```bash
+npm install
+npm run build
+```
 
-### Alternativa: subir el ZIP directamente
+La compilación valida los datos y genera la carpeta publicable `dist/`. No requiere dependencias externas de npm ni cambia las cifras. El origen de los datos es `assets/data.json`; el proceso genera `data.js` automáticamente para la página.
 
-En un nuevo proyecto **Pages → Direct Upload / Upload assets**, asigna un nombre independiente, arrastra este ZIP y despliega. El ZIP ya coloca `index.html` en la raíz.
+En el proyecto independiente de Cloudflare Pages:
 
-Cloudflare advierte que un proyecto creado por carga directa no puede convertirse después en uno con integración Git; para esa integración habría que crear otro proyecto. Si quieres mantener GitHub como origen de actualizaciones, elige la primera opción desde el principio.
+| Campo | Valor |
+| --- | --- |
+| Repositorio | `RafaelDuLu/implan-pmd-2050` |
+| Production branch | `main` |
+| Framework preset | `None` |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Root directory | Vacío |
+| Environment variables | Ninguna |
 
-Documentación oficial consultada el 19 de octubre de 2026:
+Si el primer despliegue falló por falta de `package.json`, guarda esta configuración y ejecuta un nuevo despliegue del último commit de `main`. No vuelvas a desplegar el commit inicial anterior a la incorporación de la compilación.
 
-- https://developers.cloudflare.com/pages/framework-guides/deploy-anything/
-- https://developers.cloudflare.com/pages/get-started/direct-upload/
+Para una carga manual o Apache, ejecuta `npm run build` y entrega solamente el contenido de `dist/`, con `index.html` en la raíz.
 
 ## Estructura
 
@@ -50,13 +54,15 @@ Documentación oficial consultada el 19 de octubre de 2026:
 | `index.html` | Estructura y contenido de la página |
 | `assets/styles.css` | Diseño adaptable, tablas y movimiento |
 | `assets/app.js` | Filtros, pestañas, gráficas SVG y CSV |
-| `assets/data.js` | Datos cargables incluso al abrir el HTML localmente |
-| `assets/data.json` | Copia legible para integración futura; generada con el mismo extractor |
+| `assets/data.js` | Archivo generado automáticamente desde JSON durante la compilación |
+| `assets/data.json` | Archivo de datos de origen para actualizar el portal |
 | `docs/inventario.csv` | Los 52 indicadores por eje y motivos de inclusión o reserva |
 | `docs/ANALISIS.md` | Selección, decisiones visuales y límites |
 | `docs/VALIDACION.md` | Comprobaciones realizadas y pendientes |
 | `scripts/extract.py` | Extracción reproducible desde el Excel |
 | `scripts/verify.cjs` | Comprobaciones de cálculos y formato |
+| `package.json` | Comandos npm de compilación y pruebas |
+| `scripts/build.cjs` | Genera los datos de navegador y la carpeta `dist/` |
 
 ## Actualizar los datos
 
@@ -64,14 +70,14 @@ Conserva el Excel original sin modificar. El extractor requiere Python con `open
 
 ```bash
 python scripts/extract.py /ruta/al/nuevo-archivo.xlsx
-node scripts/verify.cjs
+npm run build
 ```
 
 El extractor utiliza las hojas y columnas del Excel actual. Si cambia su estructura, hay que adaptar el mapeo antes de actualizar. Lee los valores almacenados en el libro; si un futuro archivo usa fórmulas nuevas, debe guardarse previamente desde Excel con resultados calculados.
 
 Se regeneran ambos archivos de datos y el inventario. Revisa la selección y las observaciones; luego sube los archivos al repositorio nuevo. Los conteos y las pestañas se actualizan a partir del conjunto extraído. Revisa también los textos de documentación que mencionan el número de indicadores.
 
-No edites solo `data.json`: la página usa `data.js`. Ambos deben salir de la misma ejecución del extractor.
+Para una actualización manual de valores, edita `assets/data.json` y ejecuta `npm run build`. El archivo `data.js` se regenera automáticamente; no hay que editarlo por separado. En Cloudflare, la compilación realiza ese paso después de cada actualización en `main`.
 
 Para admitir series anuales, nuevos ámbitos o metas 2050 en el visor, amplía el esquema explícitamente. Este libro no permite inventar esos desgloses. Los indicadores líderes tienen metas 2050 distintas de las metas 2030 por eje; no se intercambian.
 

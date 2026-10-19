@@ -1,0 +1,13 @@
+{
+  "name": "implan-pmd-2050",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portal de tabuladores estadísticos del PMD Visión 2050 de León",
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "test": "node scripts/verify.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
