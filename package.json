@@ -1,12 +1,17 @@
 {
   "name": "implan-pmd-2050",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
+  "type": "module",
   "description": "Portal de tabuladores estadísticos del PMD Visión 2050 de León",
   "scripts": {
-    "build": "node scripts/build.cjs",
-    "test": "node scripts/verify.cjs"
+    "dev": "node scripts/prepare.mjs && vite",
+    "build": "node scripts/prepare.mjs && npm test && vite build",
+    "test": "node --test scripts/verify.mjs",
+    "preview": "vite preview"
   },
+  "dependencies": { "react": "19.0.0", "react-dom": "19.0.0" },
+  "devDependencies": { "vite": "6.0.5" },
   "engines": {
     "node": ">=18"
   }

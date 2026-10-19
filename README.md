@@ -1,90 +1,93 @@
-# IMPLAN León · Tabuladores Estadísticos
+# León se mide · IMPLAN · Visión 2050
 
-Primera prueba del monitoreo del Plan Municipal de Desarrollo Visión 2050.
-Proyecto independiente: no depende de los boletines ni modifica sus archivos.
+Portal de indicadores del Plan Municipal de Desarrollo de León. React modular, CSS propio y datos en JSON. Repositorio exclusivo del PMD: https://github.com/RafaelDuLu/implan-pmd-2050
 
-## Abrir la prueba
-
-Descomprime el ZIP y abre `index.html` en Chrome, Edge, Firefox o Safari.
-No requiere instalación, servidor, API, cuenta ni conexión externa para consultar datos.
-Los enlaces a las fuentes sí necesitan internet.
-
-## Contenido
-
-- Siete pestañas por eje, con navegación por teclado y selección mediante clic o toque.
-- 31 indicadores seleccionados de 52 indicadores por eje. Los 9 líderes se conservan en el archivo de datos para su integración posterior.
-- Búsqueda por nombre o clave, filtros por último año disponible y sentido del cambio.
-- Valor base, último valor disponible y meta 2030. Gráfica de dos observaciones y línea de meta que puede ocultarse.
-- Cambio en la unidad correspondiente; los porcentajes cambian en puntos porcentuales.
-- Avance del tramo base–meta calculado por el portal y explicado en pantalla.
-- Tabla del eje con ordenamiento por clave o nombre y descarga del resultado filtrado en CSV. Descarga individual por indicador.
-- Fuentes, referencias, hoja y fila de procedencia, notas e inventario de registros reservados.
-
-## Compilación y publicación: mismo flujo que los boletines
-
-El repositorio `RafaelDuLu/implan-pmd-2050` ya está creado, con los archivos en `main`.
+## Ejecutar y publicar
 
 ```bash
-npm install
+npm ci
+npm run dev
+```
+
+Para Cloudflare Pages o Apache:
+
+```bash
 npm run build
 ```
 
-La compilación valida los datos y genera la carpeta publicable `dist/`. No requiere dependencias externas de npm ni cambia las cifras. El origen de los datos es `assets/data.json`; el proceso genera `data.js` automáticamente para la página.
+La salida es `dist/`. Todo funciona en el navegador. No hay servidor de aplicación, API, base de datos, CDN de dependencias, librería de animación ni seguimiento de visitantes.
 
-En el proyecto independiente de Cloudflare Pages:
-
-| Campo | Valor |
+| Cloudflare Pages | Valor |
 | --- | --- |
-| Repositorio | `RafaelDuLu/implan-pmd-2050` |
-| Production branch | `main` |
+| Rama | `main` |
 | Framework preset | `None` |
 | Build command | `npm run build` |
 | Build output directory | `dist` |
 | Root directory | Vacío |
-| Environment variables | Ninguna |
+| Variables de entorno | Ninguna |
 
-Si el primer despliegue falló por falta de `package.json`, guarda esta configuración y ejecuta un nuevo despliegue del último commit de `main`. No vuelvas a desplegar el commit inicial anterior a la incorporación de la compilación.
+El proceso de despliegue es el mismo usado en Mercado Laboral. Publica el último commit de `main`; reintentar un despliegue de un commit antiguo no incorpora los cambios nuevos. En Apache, copia el contenido de `dist/` a la carpeta pública; las rutas de assets y datos son relativas.
 
-Para una carga manual o Apache, ejecuta `npm run build` y entrega solamente el contenido de `dist/`, con `index.html` en la raíz.
+## Componentes
 
-## Estructura
-
-| Archivo | Función |
+| Archivo | Responsabilidad |
 | --- | --- |
-| `index.html` | Estructura y contenido de la página |
-| `assets/styles.css` | Diseño adaptable, tablas y movimiento |
-| `assets/app.js` | Filtros, pestañas, gráficas SVG y CSV |
-| `assets/data.js` | Archivo generado automáticamente desde JSON durante la compilación |
-| `assets/data.json` | Archivo de datos de origen para actualizar el portal |
-| `docs/inventario.csv` | Los 52 indicadores por eje y motivos de inclusión o reserva |
-| `docs/ANALISIS.md` | Selección, decisiones visuales y límites |
-| `docs/VALIDACION.md` | Comprobaciones realizadas y pendientes |
-| `scripts/extract.py` | Extracción reproducible desde el Excel |
-| `scripts/verify.cjs` | Comprobaciones de cálculos y formato |
-| `package.json` | Comandos npm de compilación y pruebas |
-| `scripts/build.cjs` | Genera los datos de navegador y la carpeta `dist/` |
+| `src/App.jsx` | Carga del JSON, selección del eje e indicador y estados de carga/error |
+| `src/components/Hero.jsx` | Portada y escáner operado por `onMouseMove` |
+| `src/components/AxisExplorer.jsx` | Siete bloques bento seleccionables; reemplazan las pestañas |
+| `src/components/IndicatorExplorer.jsx` | Valores publicados, escenario, control de ritmo y fuente |
+| `src/components/GoalTimeline.jsx` | Línea del tiempo de hitos con nodos interactivos |
+| `src/components/DataTable.jsx` | Consulta, filtros, ordenamiento y CSV |
+| `src/components/Footer.jsx` | Criterios de lectura, transición cromática y cierre con relleno reversible |
+| `src/hooks/useScanner.js` | Coordenadas de ratón, interpolación temporal y una escritura CSS por frame |
+| `src/hooks/useScrollScene.js` | Progreso de entrada al viewport, sin estado React por frame |
+| `src/lib/indicators.mjs` | Cálculos, evaluación de meta, conversión de unidades y descargas |
+| `src/styles.css` | CSS legible, adaptable y con modo de movimiento reducido |
+| `assets/data.json` | Único archivo de datos editable |
+| `scripts/extract.py` | Extracción desde el Excel sin modificarlo |
+| `scripts/prepare.mjs` | Prepara copias públicas de los datos y el inventario |
+| `scripts/verify.mjs` | Pruebas matemáticas y de integridad |
 
 ## Actualizar los datos
 
-Conserva el Excel original sin modificar. El extractor requiere Python con `openpyxl` en la computadora de actualización, no en el sitio ni en Cloudflare. Desde esta carpeta:
+Conserva el Excel original. Si mantiene las mismas hojas y columnas:
 
 ```bash
 python scripts/extract.py /ruta/al/nuevo-archivo.xlsx
 npm run build
 ```
 
-El extractor utiliza las hojas y columnas del Excel actual. Si cambia su estructura, hay que adaptar el mapeo antes de actualizar. Lee los valores almacenados en el libro; si un futuro archivo usa fórmulas nuevas, debe guardarse previamente desde Excel con resultados calculados.
+El extractor necesita Python con openpyxl en la computadora de actualización. Cloudflare no ejecuta Python: recibe el JSON preparado y compila el frontend.
 
-Se regeneran ambos archivos de datos y el inventario. Revisa la selección y las observaciones; luego sube los archivos al repositorio nuevo. Los conteos y las pestañas se actualizan a partir del conjunto extraído. Revisa también los textos de documentación que mencionan el número de indicadores.
+También puedes actualizar manualmente `assets/data.json`. `npm run build` prepara `public/data/indicadores.json`, que se entrega en `dist/data/indicadores.json`. Las copias públicas son generadas y no se editan por separado.
 
-Para una actualización manual de valores, edita `assets/data.json` y ejecuta `npm run build`. El archivo `data.js` se regenera automáticamente; no hay que editarlo por separado. En Cloudflare, la compilación realiza ese paso después de cada actualización en `main`.
+## Línea del tiempo y escenarios
 
-Para admitir series anuales, nuevos ámbitos o metas 2050 en el visor, amplía el esquema explícitamente. Este libro no permite inventar esos desgloses. Los indicadores líderes tienen metas 2050 distintas de las metas 2030 por eje; no se intercambian.
+`GoalTimeline` recibe un arreglo de registros con `porcentajeActual`, `metaObjetivo`, `proyeccionFinal`, `sentido`, años, unidad y nombre. Para unidades distintas de porcentaje, se usa `valorActual` y `porcentajeActual` es null. El adaptador `toTimelineRecord` construye ese contrato desde los datos originales.
 
-## Identidad y alcance
+La proyección no es un valor publicado:
 
-Tipografía del sistema y marca tipográfica provisional. Sin Azo Sans, logotipo oficial ni colores presentados como autorizados. Turquesa, tinta, blanco cálido y acento lima como propuesta de diseño.
+- Cambio anual medio = (valor reciente − valor base) / (año reciente − año base).
+- Escenario 2030 = valor reciente + cambio anual medio × factor × (2030 − año reciente).
+- Meta ascendente: proyección menor que meta → alerta; igual o mayor → verde.
+- Meta descendente: proyección mayor que meta → alerta; igual o menor → verde.
 
-Repositorio independiente: https://github.com/RafaelDuLu/implan-pmd-2050
+El factor se controla en la interfaz de 0 a 2. Multiplica el cambio, incluido su signo; no altera los datos publicados. Los escenarios porcentuales fuera de 0–100 % se marcan como no evaluables. No se muestra una probabilidad ni se certifica que la meta vaya a cumplirse.
 
-La primera versión se encuentra en la rama `main`. Cloudflare Pages se conectará por separado desde la cuenta del propietario; esta entrega no publica en Cloudflare.
+La línea del tiempo muestra hitos en un orden de lectura, no una escala temporal proporcional ni una serie histórica. Solo existen dos observaciones por indicador en el insumo.
+
+El componente puede reutilizarse para empleo informal cuando existan observaciones y una meta documentadas. El Excel actual del PMD no aporta esa combinación para una tasa de informalidad: no se inventaron sus cifras ni se mezclaron repositorios.
+
+## Movimiento y rendimiento
+
+El escáner usa `--mouse-x`, `--mouse-y` y `mask-image: radial-gradient`. El ratón no actualiza estado React. Se usa requestAnimationFrame y una interpolación independiente de la frecuencia: alpha = 1 − exp(−dt / 32 ms). El bucle se detiene cuando la posición se estabiliza o sale el puntero. El efecto se desactiva con movimiento reducido.
+
+El scroll usa eventos pasivos, IntersectionObserver y una sola actualización pendiente por escena. El relleno del cierre llega a 100 % cuando su bloque entra por completo al viewport y se revierte al subir. Los nodos y filtros funcionan con teclado, clic y toque. La tabla no usa columnas fijas ni animaciones sobre cifras.
+
+La arquitectura busca respetar un presupuesto de 16.7 ms por frame, pero no se promete 60 FPS constantes sin medir en los dispositivos y navegadores de destino. Consulta `docs/VALIDACION.md`.
+
+## Fuentes y selección
+
+Se conservan 52 indicadores por eje y 9 líderes en el JSON. El visor mantiene los 31 registros seleccionados con información comparable y sin discrepancias sustantivas señaladas. `docs/inventario.csv` documenta los 21 reservados. Los valores, fuentes, años, notas y unidades del Excel permanecen intactos.
+
+Las fuentes fueron transcritas del insumo proporcionado; todavía requieren cotejo externo contra los tabulados originales. No se usa Azo Sans ni logotipo oficial sin los archivos y autorización correspondientes. La marca de navegación es una propuesta tipográfica.

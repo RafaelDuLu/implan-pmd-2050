@@ -35,8 +35,7 @@ leaders=[]
 for row in w['TC Indicadores Lider'].iter_rows():
     v=[c.value for c in row]
     if v[2] is not None and str(v[2])[0:1].isdigit(): leaders.append({'id':str(v[2]),'name':v[3],'baseYear':v[6],'base':v[7],'target2050':v[9],'year':v[10],'value':v[11],'sheet':'TC Indicadores Lider','row':row[0].row})
-data={'title':'Monitoreo PMD · Visión 2050','version':'Prueba 1 · Septiembre 2026','file':path.name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'axes':axes,'indicators':records,'leaders':leaders,'scope':'León, Guanajuato; ámbito de referencia sujeto a ficha de cada fuente. No contiene desgloses por municipio o sexo.'}
-(root/'assets/data.js').write_text('window.PMD_DATA = '+json.dumps(data,ensure_ascii=False,indent=2)+';\n',encoding='utf-8')
+data={'title':'Monitoreo PMD · Visión 2050','version':'Septiembre 2026','file':path.name,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'axes':axes,'indicators':records,'leaders':leaders,'scope':'León, Guanajuato; ámbito de referencia sujeto a ficha de cada fuente. No contiene desgloses por municipio o sexo.'}
 (root/'assets/data.json').write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
 with (root/'docs/inventario.csv').open('w',encoding='utf-8-sig',newline='') as f:
     out=csv.writer(f);out.writerow(['Clave','Eje','Indicador','Incluido prueba','Motivo de reserva','Hoja','Fila'])
