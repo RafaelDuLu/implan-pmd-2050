@@ -1,0 +1,21 @@
+/* Plan 2050 palette sampled from the supplied logo; no continuous idle animation. */
+.closing-band{padding-bottom:0}
+.closing-band .band-action{background:var(--ink);color:var(--paper);margin-inline:calc(-1 * var(--gutter));padding:45px var(--gutter) 48px;border:0}
+.band-action>.plan-wordmark{
+ --fill:clamp(0,calc((var(--word-progress,0) - .27)/.61),1);
+ --edge:calc(clamp(0,calc(var(--fill)*25),1)*clamp(0,calc((1 - var(--fill))*25),1));
+ display:block;position:relative;width:100%;line-height:1;isolation:isolate;
+}
+.plan-word-trace{display:block;width:100%;height:auto;overflow:visible;fill:#ffffff0c;stroke:#e8eee1;stroke-width:var(--word-stroke,4);clip-path:inset(-2% -2% -2% calc(var(--fill)*100%))}
+.plan-word-trace path{--draw:clamp(0,calc((var(--word-progress,0) - .012 - var(--letter)*.01)*5),1);stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--draw))}
+.plan-word-ink{
+ position:absolute;inset:0;display:block;
+ background:linear-gradient(112deg,#edc755 0%,#edc755 12%,#e69949 21%,#9c1761 32%,#53b6a4 43%,#53b6a4 51%,#63b54e 62%,#edc755 74%,#e69949 84%,#9c1761 94%,#53b6a4 100%);
+ background-size:160% 100%;background-position:calc(var(--word-progress,0)*100%) 50%;
+ mask:url('/brand/decidir-mejor.svg') center/100% 100% no-repeat;
+ -webkit-mask:url('/brand/decidir-mejor.svg') center/100% 100% no-repeat;
+ clip-path:inset(-2% calc((1 - var(--fill))*100%) -2% -2%);
+}
+.plan-word-sweep{position:absolute;top:-15px;bottom:-15px;left:calc(var(--fill)*100%);width:1px;background:#fff;opacity:var(--edge);box-shadow:0 0 12px #53b6a4aa,0 0 26px #edc75566;pointer-events:none}
+@media(max-width:600px){.closing-band .band-action{padding-block:30px 34px}.plan-word-sweep{top:-8px;bottom:-8px}}
+@media(prefers-reduced-motion:reduce){.plan-word-trace{stroke:none;fill:transparent;clip-path:none}.plan-word-ink{clip-path:none;background-position:50% 50%}.plan-word-sweep{display:none}}
