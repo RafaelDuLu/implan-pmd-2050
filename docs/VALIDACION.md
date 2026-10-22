@@ -75,3 +75,12 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Marco real de 390 × 844 (375 px útiles): misma búsqueda con tres registros, tabla con desplazamiento horizontal propio y documento sin desbordamiento. Cierre accesible al final. El marco no equivale a una prueba física táctil.
 - Escáner comprobado mediante interacción real en portada y cierre: máscara circular sustractiva sobre relleno, contorno conservado, cruz, retícula, diagonales y coordenadas locales actualizadas. El cursor nativo se oculta únicamente sobre superficies activas con puntero preciso.
 - Sin cambios en cifras, históricos, cálculos o CSV. Sin dependencias adicionales. Movimiento reducido elimina las capas fijas y el escáner. Sin medición de FPS ni validación física en Safari.
+
+
+## Corrección del instrumento en portada
+
+- El escáner pertenece ahora a toda la sección hero, no solo al texto. Las guías horizontal y vertical abarcan 1348 px de ancho y toda la altura de la portada en el viewport de revisión.
+- Interacción en (450, 360) de pantalla: coordenadas locales X0450 / Y0260; máscara del título alineada mediante sus desplazamientos X80.41 / Y96 respecto al hero. El relleno desaparece localmente y el contorno permanece visible.
+- Movimiento fuera del título a (900, 170): lectura X0900 / Y0070 sin perder la cruz. Al salir al encabezado, data-scanning vuelve a false.
+- Se añaden marcas de regla en los ejes, cruz de mayor tamaño y coordenadas con fondo contrastado. Sin halo verde sobre las letras. ResizeObserver mantiene el origen del título alineado al ajustar ancho o cargar fuentes.
+- Compilación y las 14 pruebas aprobadas. Datos, filtros, cálculos y exportaciones sin cambios. Esta revisión visual corresponde a Chrome de escritorio; no se realizó una medición de FPS.
