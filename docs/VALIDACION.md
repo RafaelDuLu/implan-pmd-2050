@@ -41,3 +41,16 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Las superficies decorativas duplicadas se ocultan de accesibilidad; un solo texto alternativo describe cada paso.
 - Sin dependencias nuevas ni cambios en datos, cálculos o CSV.
 - Pendiente verificar físicamente en teléfonos, Safari y zoom 150 %; los controles de esta sesión no permitieron cambiar el viewport o confirmar ese zoom. Se incorporaron reglas para pantallas pequeñas y movimiento reducido, sin presentarlas como una medición en esos dispositivos.
+
+
+## Negro y verde, navegación y gráficas · 22 de octubre de 2026
+
+- Compilación y 14 pruebas aprobadas, incluidas la separación de dirección/favorabilidad y la admisión segura de históricos.
+- Chrome escritorio (1363 px): siete temas visibles, un solo visor, tres barras al elegir Barras y tres nodos al elegir Hitos.
+- Agua: flecha ↓ verde para −2.93 litros/persona. Factor 1: escenario 119.38 y alerta; factor 2: escenario 112.05 y estado favorable. El dato reciente permanece 126.7 en resumen y gráfica.
+- Revisión responsive con un marco de navegación real de 390 × 844 px (375 px de contenido tras la barra del navegador): se activan los media queries móviles, sin desbordamiento horizontal del documento. No equivale a una prueba física de teléfono.
+- En ese ancho: menú Cambiar indicador → búsqueda «densidad» → indicador 4.1.3; el menú se cierra, aparece ↓ y la gráfica queda dentro de su región desplazable (302 px, SVG de 520 px). Se verificó la vista Barras visualmente.
+- El arnés responsive se retiró después de la revisión; no forma parte del código entregado.
+- Las cifras históricas adicionales siguen pendientes del cotejo descrito en HISTORICOS.md. No se hicieron mediciones de FPS en hardware móvil ni prueba física en Safari.
+
+- Se respetan también los límites explícitos de unidades «Escala 0 - 112» y «Escala 0 - 10»: un escenario que sale de ellos queda no evaluable.

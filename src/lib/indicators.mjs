@@ -32,9 +32,11 @@ export function project(indicator, multiplier = 1, horizon = 2030) {
   }
   const rate = (value - base) / (year - baseYear);
   const projected = value + rate * multiplier * (horizon - year);
-  const outOfBounds = indicator.percent && (projected < 0 || projected > 1);
+  const scale = String(indicator.unit || '').match(/^Escala\s+(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)$/i);
+  const bounds = indicator.percent ? [0,1] : scale ? [Number(scale[1]),Number(scale[2])] : null;
+  const outOfBounds = bounds && (projected < bounds[0] || projected > bounds[1]);
   return { value: projected, rate, state: outOfBounds ? 'unavailable' : assessGoal(projected, target2030, direction),
-    reason: outOfBounds ? 'El escenario sale del rango de 0 a 100 %. No es interpretable.' : null };
+    reason: outOfBounds ? indicator.percent ? 'El escenario sale del rango de 0 a 100 %. No es interpretable.' : `El escenario sale de la escala declarada de ${bounds[0]} a ${bounds[1]}. No es interpretable.` : null };
 }
 export function toTimelineRecord(indicator, multiplier = 1) {
   const scenario = project(indicator, multiplier);
@@ -63,4 +65,28 @@ export function downloadCSV(indicators, axes, filename) {
   const link = document.createElement('a');
   link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Direction describes the observed value, independently of whether rising is desirable.
+export function movement(indicator) {
+  if (observedState(indicator) === 'same') return { arrow: '→', label: 'Sin cambio', direction: 'flat' };
+  return indicator.value > indicator.base
+    ? { arrow: '↑', label: 'Subió', direction: 'up' }
+    : { arrow: '↓', label: 'Bajó', direction: 'down' };
+}
+
+/** Historical additions must be reviewed, sourced and expressed in the original unit. */
+export function chartObservations(indicator, history) {
+  const original = [{ year: indicator.baseYear, value: indicator.base }, { year: indicator.year, value: indicator.value }];
+  if (!history || history.validated !== true || history.unit !== indicator.unit || !history.geography
+      || !history.source?.name || !/^https:\/\//.test(history.source?.url || '') || !Array.isArray(history.observations)) return original;
+  const seen = new Set();
+  for (const point of history.observations) {
+    if (!Number.isInteger(point.year) || !isNumber(point.value) || point.year > indicator.year || seen.has(point.year)
+      || (indicator.percent && (point.value < 0 || point.value > 1))) return original;
+    const published = original.find(p => p.year === point.year);
+    if (published && Math.abs(published.value - point.value) > 1e-10) return original;
+    seen.add(point.year);
+  }
+  return [...history.observations.filter(p => !original.some(o => o.year === p.year)), ...original].sort((a,b) => a.year - b.year);
 }

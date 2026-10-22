@@ -38,7 +38,11 @@ El proceso de despliegue es el mismo usado en Mercado Laboral. Publica el últim
 | `src/components/IndicatorExplorer.jsx` | Valores publicados, escenario, control de ritmo y fuente |
 | `src/components/GoalTimeline.jsx` | Línea del tiempo de hitos con nodos interactivos |
 | `src/components/DataTable.jsx` | Consulta, filtros, ordenamiento y CSV |
-| `src/components/SectionTransition.jsx` | Cuatro barridos editoriales reversibles y apertura por eje |
+| `src/components/SectionTransition.jsx` | Letras gigantes con relleno vertical reversible y apertura por eje |
+| `src/components/IndicatorNavigator.jsx` | Siete temas, búsqueda de indicadores y navegación anterior/siguiente |
+| `src/components/ChangeSummary.jsx` | Flecha real del cambio, valores base/reciente y sentido favorable |
+| `src/components/HistoryChart.jsx` | Vistas Evolución/Barras/Hitos, meta y escenario interactivo |
+| `assets/histories.json` | Series históricas adicionales, separadas y sujetas a validación |
 | `src/components/Footer.jsx` | Criterios de lectura, transición cromática y cierre con relleno reversible |
 | `src/hooks/useScanner.js` | Coordenadas de ratón, interpolación temporal y una escritura CSS por frame |
 | `src/hooks/useScrollScene.js` | Progreso de entrada al viewport, sin estado React por frame |
@@ -85,7 +89,7 @@ El escáner usa `--mouse-x`, `--mouse-y` y `mask-image: radial-gradient`. El rat
 
 El scroll usa eventos pasivos, IntersectionObserver y una sola actualización pendiente por escena. El relleno del cierre llega a 100 % cuando su bloque entra por completo al viewport y se revierte al subir. Los nodos y filtros funcionan con teclado, clic y toque. La tabla no usa columnas fijas ni animaciones sobre cifras.
 
-Los capítulos Explorar, Avanzar, Comparar y Entender superponen dos superficies de contraste completo. Un recorte diagonal revela el fondo y el relleno tipográfico juntos. Su progreso es clamp((0.9 × alto del viewport − borde superior) / (0.65 × alto del viewport), 0, 1). No hay scroll forzado ni bloqueo de rueda. Al subir, el efecto se revierte. Cada eje abre una cortina con su color y nombre durante 1.05 s; cambiar un indicador no la reinicia. Con movimiento reducido, las superficies se muestran completas y la cortina desaparece.
+Los capítulos Explorar, Avanzar, Comparar y Entender usan negro cálido y verde fosforescente #b6ff00. Una palabra contorneada y su relleno coinciden exactamente; el relleno asciende con el desplazamiento mediante clip-path vertical. Su progreso es clamp((0.9 × alto del viewport − borde superior) / (0.65 × alto del viewport), 0, 1). Al subir se vacía. Cada eje abre una cortina verde durante 1.05 s; cambiar de indicador no reinicia la cortina. Con movimiento reducido, las palabras aparecen rellenas y no hay cortina.
 
 La arquitectura busca respetar un presupuesto de 16.7 ms por frame, pero no se promete 60 FPS constantes sin medir en los dispositivos y navegadores de destino. Consulta `docs/VALIDACION.md`.
 
@@ -94,3 +98,12 @@ La arquitectura busca respetar un presupuesto de 16.7 ms por frame, pero no se p
 Se conservan 52 indicadores por eje y 9 líderes en el JSON. El visor mantiene los 31 registros seleccionados con información comparable y sin discrepancias sustantivas señaladas. `docs/inventario.csv` documenta los 21 reservados. Los valores, fuentes, años, notas y unidades del Excel permanecen intactos.
 
 Las fuentes fueron transcritas del insumo proporcionado; todavía requieren cotejo externo contra los tabulados originales. No se usa Azo Sans ni logotipo oficial sin los archivos y autorización correspondientes. La marca de navegación es una propuesta tipográfica.
+
+
+## Gráficas e históricos
+
+Las vistas Evolución y Barras solo usan las observaciones disponibles; Hitos conserva la línea del tiempo. La meta puede ocultarse y el escenario cambia al modificar el factor de ritmo. Sus botones de valores funcionan también con teclado y toque. En móvil, el SVG conserva etiquetas legibles en una región desplazable, con aviso explícito.
+
+Las flechas ↑/↓ reflejan la variación del valor. Su color refleja si esa variación es favorable según el sentido del indicador; una disminución favorable muestra ↓ en verde.
+
+El cotejo y el esquema de incorporación están en `docs/HISTORICOS.md`. No se agregó ninguna serie sin verificación. El Excel original permanece intacto.

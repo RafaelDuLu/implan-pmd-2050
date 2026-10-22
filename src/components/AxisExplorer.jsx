@@ -2,13 +2,13 @@ import { useScrollScene } from '../hooks/useScrollScene.js';
 import { Arrow, AxisGlyph } from './Icons.jsx';
 
 export const axisCopy = {
-  1: { title: 'Sociedad', subtitle: 'Educación, inclusión e identidad', text: 'Las condiciones que construyen oportunidades.', color: '#d0f58b' },
-  2: { title: 'Seguridad', subtitle: 'Ciudadanía y paz social', text: 'La tranquilidad como condición de vida.', color: '#edbda3' },
-  3: { title: 'Economía', subtitle: 'Prosperidad e innovación', text: 'El valor que generamos como ciudad.', color: '#b5b8ef' },
-  4: { title: 'Territorio', subtitle: 'Sustentabilidad y resiliencia', text: 'Un entorno preparado para el futuro.', color: '#94d6b5' },
-  5: { title: 'Agua', subtitle: 'Gestión integral', text: 'El recurso que conecta nuestro futuro.', color: '#91d7e3' },
-  6: { title: 'Movilidad', subtitle: 'Eficiencia, inclusión y calidad', text: 'Las formas de encontrarnos.', color: '#e7d58b' },
-  7: { title: 'Gobierno', subtitle: 'Apertura e innovación', text: 'Una ciudad que participa y confía.', color: '#c3b3dd' },
+  1: { title: 'Sociedad', subtitle: 'Educación, inclusión e identidad', text: 'Las condiciones que construyen oportunidades.', color: '#b6ff00' },
+  2: { title: 'Seguridad', subtitle: 'Ciudadanía y paz social', text: 'La tranquilidad como condición de vida.', color: '#b6ff00' },
+  3: { title: 'Economía', subtitle: 'Prosperidad e innovación', text: 'El valor que generamos como ciudad.', color: '#b6ff00' },
+  4: { title: 'Territorio', subtitle: 'Sustentabilidad y resiliencia', text: 'Un entorno preparado para el futuro.', color: '#b6ff00' },
+  5: { title: 'Agua', subtitle: 'Gestión integral', text: 'El recurso que conecta nuestro futuro.', color: '#b6ff00' },
+  6: { title: 'Movilidad', subtitle: 'Eficiencia, inclusión y calidad', text: 'Las formas de encontrarnos.', color: '#b6ff00' },
+  7: { title: 'Gobierno', subtitle: 'Apertura e innovación', text: 'Una ciudad que participa y confía.', color: '#b6ff00' },
 };
 
 export default function AxisExplorer({ axes, indicators, activeAxis, onSelect }) {

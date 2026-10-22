@@ -31,7 +31,10 @@ export default function App() {
       document.getElementById('indicadores')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     });
   }
-  function selectIndicator(indicator) { setSelection(current => ({ ...current, indicator })); setNotice(`Indicador ${indicator} seleccionado.`); }
+  function selectIndicator(indicator) {
+    setSelection(current => ({ ...current, indicator })); setNotice(`Indicador ${indicator} seleccionado.`);
+    requestAnimationFrame(() => document.getElementById('active-indicator-title')?.focus({ preventScroll: true }));
+  }
   useEffect(() => {
     const change = () => { const axis = location.hash.match(/^#eje-([1-7])$/)?.[1]; if (axis) setSelection({ axis: Number(axis), indicator: '' }); };
     window.addEventListener('hashchange', change);
@@ -48,7 +51,7 @@ export default function App() {
       <SectionTransition word="Explorar." number="01" caption="SIETE PERSPECTIVAS" detail="Un plan de ciudad. Distintas formas de mirarlo."/>
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
       <SectionTransition word="Avanzar." number="02" caption="DEL PRESENTE A LA META" detail="Observa el punto de partida y explora el horizonte." from="paper" to="violet"/>
-      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectIndicator={selectIndicator}/></AxisSheet>}
+      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator}/></AxisSheet>}
       <SectionTransition word="Comparar." number="03" caption="CADA CIFRA CUENTA" detail="Los datos abiertos. El contexto completo." from="dark" to="paper"/>
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
       <Footer/>

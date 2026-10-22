@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { progress, assessGoal, project, displayValue, deltaValue, toTimelineRecord, createCSV } from '../src/lib/indicators.mjs';
+import { progress, assessGoal, project, displayValue, deltaValue, toTimelineRecord, createCSV, movement, chartObservations } from '../src/lib/indicators.mjs';
 
 const data = JSON.parse(readFileSync(new URL('../assets/data.json', import.meta.url),'utf8'));
 const eligible = data.indicators.filter(d => d.eligible);
@@ -70,4 +70,30 @@ test('CSV conserva valores originales y declara que el escenario no es oficial',
 test('La interfaz no muestra marcadores de desarrollo', () => {
   const files=['src/App.jsx','src/components/Hero.jsx','src/components/AxisExplorer.jsx','src/components/IndicatorExplorer.jsx','src/components/GoalTimeline.jsx','src/components/DataTable.jsx','src/components/Footer.jsx'];
   for(const file of files) assert.doesNotMatch(readFileSync(new URL('../'+file,import.meta.url),'utf8'),/prueba\s*0?1|lorem ipsum|placeholder de desarrollo/i);
+});
+
+test('La flecha representa subir o bajar independientemente del sentido favorable', () => {
+  const water=eligible.find(d=>d.id==='5.3.1');
+  assert.equal(movement(water).arrow,'↓');
+  assert.equal(movement(water).label,'Bajó');
+  assert.equal(movement({base:1,value:2,direction:'D'}).arrow,'↑');
+  assert.equal(movement({base:2,value:2,direction:'A'}).arrow,'→');
+});
+
+test('Los históricos validados se ordenan sin reemplazar las observaciones originales', () => {
+  const d=eligible.find(d=>d.id==='1.3.2');
+  const history={validated:true,unit:d.unit,geography:'Municipio de León, Guanajuato',source:{name:'Fuente de validación',url:'https://www.inegi.org.mx/'},observations:[{year:2015,value:9.2}]};
+  assert.deepEqual(chartObservations(d,history).map(p=>p.year),[2015,2020,2025]);
+  assert.deepEqual(chartObservations(d,{...history,validated:false}).map(p=>p.year),[2020,2025]);
+  assert.equal(chartObservations(d,{...history,unit:'Otra unidad'}).length,2);
+  assert.equal(chartObservations(d,{...history,observations:[{year:2020,value:100}]}).length,2);
+  assert.equal(chartObservations(d,{...history,observations:[{year:2030,value:10}]}).length,2);
+  assert.equal(chartObservations(d,{...history,observations:[{year:2015,value:9},{year:2015,value:10}]}).length,2);
+});
+
+test('El escenario respeta los límites de una escala declarada en la unidad', () => {
+  const biodiversity=eligible.find(d=>d.id==='4.1.1');
+  assert.equal(project(biodiversity,1).state,'on-track');
+  assert.equal(project(biodiversity,2).state,'unavailable');
+  assert.match(project(biodiversity,2).reason,/0 a 112/);
 });

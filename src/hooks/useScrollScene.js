@@ -11,7 +11,7 @@ export function useScrollScene(travel = 'element') {
     const paint = () => {
       frame = 0;
       const rect = element.getBoundingClientRect();
-      // Entry progress: reaches 1 when the element's bottom enters the viewport.
+      // Entry progress: element scenes complete when their bottom enters the viewport.
       // This also lets a footer finish its fill before scrolling reaches the page end.
       const start = travel === 'viewport' ? innerHeight * 0.9 : innerHeight;
       const distance = travel === 'viewport' ? innerHeight * 0.65 : rect.height;
