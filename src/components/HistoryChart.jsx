@@ -36,11 +36,13 @@ export default function HistoryChart({ indicator: d, projected, timelineData }) 
       </svg></div>
       <p className="chart-mobile-hint">Desliza para recorrer la gráfica →</p>
       <div className="chart-point-buttons" role="group" aria-label="Consultar valores de la gráfica">{points.map((p, i) => <button key={`${p.year}-${p.kind}`} aria-pressed={selected === i} onClick={() => setSelected(i)}><span>{p.year}{p.kind === 'scenario' ? ' / ESCENARIO' : ''}</span><strong>{displayValue(p.value,d)}</strong></button>)}</div>
-      <p className="chart-point-detail" role="status">{current.label} · {current.year}: <b>{displayValue(current.value,d)}</b></p>
+      <p className="sr-only" role="status">{current.label} · {current.year}: {displayValue(current.value,d)}</p>
       <div className="chart-legend"><span><i/> {hasHistory ? 'Observaciones disponibles' : 'Observaciones del insumo'}</span><span><i/> Escenario no oficial</span>{showGoal && <span><i/> Meta 2030</span>}</div>
+      <details className="chart-notes"><summary>Notas de la gráfica</summary>
       <p className="chart-integrity">{hasHistory ? 'Observaciones del insumo e histórico validado. Solo se muestran los periodos disponibles.' : 'Vista de referencia con las dos observaciones del Excel. Históricos oficiales pendientes de incorporación; sin valores intermedios inventados.'} El escenario cambia con el control de ritmo.</p>
       {hasHistory && <p className="chart-integrity">Histórico: <a href={history.source.url} target="_blank" rel="noopener noreferrer">{history.source.name} ↗</a> · {history.geography}</p>}
       {d.id === '3.1.3' && <p className="chart-source-check">Periodos por cotejar: el Excel etiqueta 2019 y 2024. INEGI señala 2023 como referencia económica de los CE 2024. <a href="https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/ce/CE2024_def_RR.pdf" target="_blank" rel="noopener noreferrer">Ver ficha oficial ↗</a></p>}
+      </details>
     </>}
   </div>;
 }
