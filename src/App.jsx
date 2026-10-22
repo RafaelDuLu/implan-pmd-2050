@@ -4,6 +4,7 @@ import AxisExplorer from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
 import DataTable from './components/DataTable.jsx';
 import Footer from './components/Footer.jsx';
+import SectionTransition, { AxisSheet } from './components/SectionTransition.jsx';
 
 export default function App() {
   const [data, setData] = useState(null);
@@ -44,9 +45,12 @@ export default function App() {
     <a href="#ejes" className="skip-link">Saltar a los indicadores</a>
     <Hero count={indicators.length}/>
     <main>
+      <SectionTransition word="Explorar." number="01" caption="SIETE PERSPECTIVAS" detail="Un plan de ciudad. Distintas formas de mirarlo."/>
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
-      {!!selectedIndicators.length && <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectIndicator={selectIndicator}/>}
-      <DataTable key={selection.axis} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
+      <SectionTransition word="Avanzar." number="02" caption="DEL PRESENTE A LA META" detail="Observa el punto de partida y explora el horizonte." from="paper" to="violet"/>
+      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectIndicator={selectIndicator}/></AxisSheet>}
+      <SectionTransition word="Comparar." number="03" caption="CADA CIFRA CUENTA" detail="Los datos abiertos. El contexto completo." from="dark" to="paper"/>
+      <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
       <Footer/>
     </main>
     <div className="sr-only" role="status" aria-live="polite">{notice}</div>

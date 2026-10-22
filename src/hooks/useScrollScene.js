@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-export function useScrollScene() {
+export function useScrollScene(travel = 'element') {
   const ref = useRef(null);
   useEffect(() => {
     const element = ref.current;
@@ -13,13 +13,16 @@ export function useScrollScene() {
       const rect = element.getBoundingClientRect();
       // Entry progress: reaches 1 when the element's bottom enters the viewport.
       // This also lets a footer finish its fill before scrolling reaches the page end.
-      const progress = Math.max(0, Math.min(1, (innerHeight - rect.top) / Math.max(rect.height, 1)));
+      const start = travel === 'viewport' ? innerHeight * 0.9 : innerHeight;
+      const distance = travel === 'viewport' ? innerHeight * 0.65 : rect.height;
+      const progress = Math.max(0, Math.min(1, (start - rect.top) / Math.max(distance, 1)));
       element.style.setProperty('--scene', media.matches ? '1' : progress.toFixed(4));
     };
     const schedule = () => { if (visible && !frame) frame = requestAnimationFrame(paint); };
     const observer = new IntersectionObserver(entries => {
       visible = entries[0].isIntersecting;
-      if (visible) schedule();
+      // Measure once on exit too: a quick scroll must settle at the endpoint.
+      if (!frame) frame = requestAnimationFrame(paint);
     }, { rootMargin: '120px' });
     observer.observe(element);
     window.addEventListener('scroll', schedule, { passive: true });
@@ -32,6 +35,6 @@ export function useScrollScene() {
       window.removeEventListener('resize', schedule);
       media.removeEventListener('change', schedule);
     };
-  }, []);
+  }, [travel]);
   return ref;
 }

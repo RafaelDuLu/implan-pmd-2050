@@ -29,3 +29,15 @@ No se ha medido un perfil de FPS en hardware de destino. La implementación usa 
 8. Activar movimiento reducido: sin entrada animada, sin escáner y cierre relleno.
 
 La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`, rama `main`, framework None. El despliegue requiere el nuevo commit de la reescritura.
+
+
+## Transiciones por capítulo · 22 de octubre de 2026
+
+- Compilación de producción y las 11 pruebas de integridad y cálculos: aprobadas.
+- Revisión visual en Chrome, viewport 1363 × 936: portada, barrido diagonal con relleno de tipografía y continuidad hacia categorías.
+- Reversibilidad comprobada mediante desplazamiento real: progreso 1 → 0.8148 → 0.5074, con captura del contorno parcialmente relleno.
+- Cambio de Agua a Territorio: un único encabezado y visor montado, cortina finalizada y foco en el título correcto. Se corrigieron claves React compartidas entre visor y tabla durante esta comprobación.
+- Búsqueda «biodiversidad» en Territorio: una fila, clave 4.1.1, conservando base 67, dato 79 y meta 85. Sin desbordamiento horizontal del documento en este viewport.
+- Las superficies decorativas duplicadas se ocultan de accesibilidad; un solo texto alternativo describe cada paso.
+- Sin dependencias nuevas ni cambios en datos, cálculos o CSV.
+- Pendiente verificar físicamente en teléfonos, Safari y zoom 150 %; los controles de esta sesión no permitieron cambiar el viewport o confirmar ese zoom. Se incorporaron reglas para pantallas pequeñas y movimiento reducido, sin presentarlas como una medición en esos dispositivos.

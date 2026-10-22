@@ -38,6 +38,7 @@ El proceso de despliegue es el mismo usado en Mercado Laboral. Publica el últim
 | `src/components/IndicatorExplorer.jsx` | Valores publicados, escenario, control de ritmo y fuente |
 | `src/components/GoalTimeline.jsx` | Línea del tiempo de hitos con nodos interactivos |
 | `src/components/DataTable.jsx` | Consulta, filtros, ordenamiento y CSV |
+| `src/components/SectionTransition.jsx` | Cuatro barridos editoriales reversibles y apertura por eje |
 | `src/components/Footer.jsx` | Criterios de lectura, transición cromática y cierre con relleno reversible |
 | `src/hooks/useScanner.js` | Coordenadas de ratón, interpolación temporal y una escritura CSS por frame |
 | `src/hooks/useScrollScene.js` | Progreso de entrada al viewport, sin estado React por frame |
@@ -83,6 +84,8 @@ El componente puede reutilizarse para empleo informal cuando existan observacion
 El escáner usa `--mouse-x`, `--mouse-y` y `mask-image: radial-gradient`. El ratón no actualiza estado React. Se usa requestAnimationFrame y una interpolación independiente de la frecuencia: alpha = 1 − exp(−dt / 32 ms). El bucle se detiene cuando la posición se estabiliza o sale el puntero. El efecto se desactiva con movimiento reducido.
 
 El scroll usa eventos pasivos, IntersectionObserver y una sola actualización pendiente por escena. El relleno del cierre llega a 100 % cuando su bloque entra por completo al viewport y se revierte al subir. Los nodos y filtros funcionan con teclado, clic y toque. La tabla no usa columnas fijas ni animaciones sobre cifras.
+
+Los capítulos Explorar, Avanzar, Comparar y Entender superponen dos superficies de contraste completo. Un recorte diagonal revela el fondo y el relleno tipográfico juntos. Su progreso es clamp((0.9 × alto del viewport − borde superior) / (0.65 × alto del viewport), 0, 1). No hay scroll forzado ni bloqueo de rueda. Al subir, el efecto se revierte. Cada eje abre una cortina con su color y nombre durante 1.05 s; cambiar un indicador no la reinicia. Con movimiento reducido, las superficies se muestran completas y la cortina desaparece.
 
 La arquitectura busca respetar un presupuesto de 16.7 ms por frame, pero no se promete 60 FPS constantes sin medir en los dispositivos y navegadores de destino. Consulta `docs/VALIDACION.md`.
 
