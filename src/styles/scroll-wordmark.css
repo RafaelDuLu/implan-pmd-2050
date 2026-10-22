@@ -1,6 +1,7 @@
 /* Original Mona Sans vectors: outline drawing, white sweep, then ink fill. */
 .band-action>.scroll-wordmark{
-  --fill:clamp(0,calc((var(--scene,0) - .56)*2.5),1);
+  --fill:clamp(0,calc((var(--word-progress,0) - .3)/.6),1);
+  --sweep-opacity:calc(clamp(0,calc(var(--fill)*30),1)*clamp(0,calc((1 - var(--fill))*30),1));
   position:relative;display:block;flex:none;
   width:min(100%,4.02em);font-size:clamp(48px,14.2vw,225px);
   line-height:1;isolation:isolate;
@@ -8,12 +9,14 @@
 .scroll-wordmark>svg{display:block;width:100%;height:auto;overflow:visible}
 .scroll-word-trace{fill:none;stroke:var(--ink);stroke-width:var(--word-stroke,4);clip-path:inset(-2% -2% -2% calc(var(--fill)*100%))}
 .scroll-word-trace path{
-  --draw:clamp(0,calc((var(--scene,0) - .04 - var(--glyph-index)*.032)*2.5),1);
+  --draw:clamp(0,calc((var(--word-progress,0) - .015 - var(--glyph-index)*.018)*5),1);
   stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--draw));
 }
 .scroll-wordmark>.scroll-word-fill{position:absolute;inset:0;width:100%;height:100%;fill:var(--ink);clip-path:inset(-2% calc((1 - var(--fill))*100%) -2% -2%)}
-.scroll-word-sweep{position:absolute;left:calc(var(--fill)*100%);top:-12px;bottom:-12px;width:1px;background:white;box-shadow:0 0 9px #ffffff38;pointer-events:none;opacity:calc(clamp(0,calc(var(--fill)*25),1)*clamp(0,calc((1 - var(--fill))*25),1))}
+.scroll-word-sweep{position:absolute;left:calc(var(--fill)*100%);top:-12px;bottom:-12px;width:1px;background:white;box-shadow:0 0 9px #ffffff38;pointer-events:none;opacity:var(--sweep-opacity)}
+/* A restrained light edge follows the scan without adding labels or decoration. */
+.scroll-wordmark>.scroll-word-glint{position:absolute;inset:0;width:100%;height:100%;fill:#fff;opacity:calc(var(--sweep-opacity)*.75);pointer-events:none;clip-path:inset(-2% calc((1 - var(--fill))*100%) -2% calc(var(--fill)*100% - 7px))}
 @media(prefers-reduced-motion:reduce){
- .scroll-word-trace,.scroll-word-sweep{display:none!important}
+ .scroll-word-trace,.scroll-word-sweep,.scroll-word-glint{display:none!important}
  .scroll-wordmark>.scroll-word-fill{position:relative;height:auto;clip-path:none}
 }
