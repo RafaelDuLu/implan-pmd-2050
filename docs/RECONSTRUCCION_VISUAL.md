@@ -53,3 +53,12 @@ No se usan imágenes para las letras ni vídeos de fondo. El contenido conserva 
 Por solicitud del usuario se retiran todas las líneas instrumentales del escáner. El componente ScannerOverlay deja de formar parte del proyecto. En vez de construcción geométrica decorativa, la portada presenta el contorno real de León y revela la capa vial oficial de INEGI dentro de la lente. El encabezado y la portada vuelven a negro con verde fosforescente. Los banners, las tablas y las transiciones por capas conservan su estructura.
 
 LeonMap usa dos recursos locales alineados. La lente hereda las coordenadas del puntero de la portada y resta el desplazamiento del mapa, medido con ResizeObserver. El botón de revelado permite consultar todas las vialidades sin ratón; el estado no afecta datos ni filtros. El código de preparación cartográfica está separado de la compilación de Cloudflare.
+
+
+## Aclaración: conservar el instrumento y recuperar el cierre
+
+Se vuelve a consultar el CSS y controlador del cierre en el archivo fuente de referencia. Su secuencia usa trazado de paths normalizados y reemplazo de contorno por relleno de izquierda a derecha; el progreso se revierte con el desplazamiento. Se adapta el principio a letras propias «LEÓN 2050» y una línea blanca visible en el borde de relleno. No se copian los paths del logotipo de referencia.
+
+La tipografía local Mona Sans 450 se convierte a ocho glifos vectoriales mediante scripts/build-wordmark.py, con unión de solapes para obtener contornos limpios. FooterWordmark mantiene tres capas alineadas: trazo progresivo, relleno recortado y contorno local de la lente. La línea de barrido comparte la misma variable de progreso que la máscara de relleno. Así puede dibujarse y desdibujarse sin ráfagas temporizadas independientes del scroll.
+
+ScannerOverlay vuelve solo a la portada y al cierre: círculo, cruz, dos ejes y coordenadas, sin rejillas ni vectores abstractos. El mapa cartográfico sigue revelando las calles de INEGI.

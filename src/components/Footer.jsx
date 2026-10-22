@@ -1,5 +1,5 @@
 import { useFooterReveal } from '../hooks/useFooterReveal.js';
-import { useScanner } from '../hooks/useScanner.js';
+import FooterWordmark from './FooterWordmark.jsx';
 import EditorialBanner from './EditorialBanner.jsx';
 import { Arrow, Mark } from './Icons.jsx';
 
@@ -16,9 +16,8 @@ export function ClosingSections() {
 
 export default function Footer() {
   const ref=useFooterReveal();
-  const scanner=useScanner();
   return <footer className="site-footer" ref={ref}><div className="footer-stage"><div className="footer-top"><div><a className="brand" href="#inicio"><Mark/><span>IMPLAN<small>LEÓN · VISIÓN 2050</small></span></a><p>Información para entender<br/>la ciudad que compartimos.</p></div><nav aria-label="Índice del portal"><span className="micro">EXPLORAR</span><a href="#ejes">Los siete ejes ↗</a><a href="#indicadores">Indicadores ↗</a><a href="#datos">Datos abiertos ↗</a></nav><div className="footer-context"><span className="micro">ACERCA DEL PORTAL</span><p>Monitoreo del Plan Municipal<br/>de Desarrollo Visión 2050.</p><a href="#lectura">Fuentes y criterios ↗</a></div></div>
-      <div className="footer-drawing"><div className="drawing-ruler micro" aria-hidden="true"><span>LEÓN / GUANAJUATO</span><i/><span data-fill-progress>000%</span><span>HORIZONTE 2050</span></div><div className="footer-word scanner-surface" {...scanner} role="img" aria-label="León 2050"><span aria-hidden="true">LEÓN 2050</span><span className="footer-word-fill" aria-hidden="true">LEÓN 2050</span></div></div>
+      <div className="footer-drawing"><div className="drawing-ruler micro" aria-hidden="true"><span>LEÓN / GUANAJUATO</span><i/><span data-fill-progress>000%</span><span>HORIZONTE 2050</span></div><FooterWordmark/></div>
       <div className="footer-bottom micro"><span>IMPLAN LEÓN · TABULADORES ESTADÍSTICOS</span><span>INSUMO / SEPTIEMBRE 2026</span><a href="#inicio">VOLVER ARRIBA ↑</a></div>
     </div></footer>;
 }

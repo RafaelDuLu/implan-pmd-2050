@@ -96,3 +96,14 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Marco real de 390 × 844 (375 px útiles): mapa de 331 px, documento sin desbordamiento; activar «Revelar calles» con Enter cambia aria-pressed a true y muestra toda la capa (opacity 1, mask none). Las dos imágenes cargan correctamente. Este marco no equivale a una prueba física de teléfono.
 - Movimiento reducido y puntero táctil conservan el botón explícito, sin necesitar hover ni animación. No se modificaron datos estadísticos ni cálculos.
 - El arnés temporal de revisión móvil se retiró del archivo main.jsx antes de compilar y entregar. No se midió FPS en hardware de destino.
+
+
+## Círculo recuperado y cierre trazado · 22 de octubre de 2026
+
+- Aclaración de alcance: se conserva el escáner circular con ejes X/Y, cruz y coordenadas únicamente en hero y rótulo final. Se mantienen retiradas las cuadrículas y construcciones decorativas. Portada negra y verde, mapa de León y botón de calles sin cambios.
+- Se corrigió una eliminación excesiva de estilos del rótulo al retirar las retículas: el cierre vuelve a ocupar todo el ancho con letras grandes. Ahora usa ocho glifos originales de Mona Sans 450 convertidos a paths; se unieron los contornos solapados de la fuente para evitar líneas interiores en E y L.
+- El contorno se dibuja con pathLength y stroke-dashoffset por letra. El relleno empieza en progreso 0.56 y termina en 0.96; una línea blanca vertical sigue exactamente el borde. Al subir se invierte el recorrido y posteriormente se borran los trazos. El ancho del trazo se ajusta con ResizeObserver para mantener un píxel en pantalla.
+- Escritorio: dos instrumentos en todo el DOM; círculo y ejes comprobados sobre mapa y rótulo. Al terminar el documento: relleno completo, barrido oculto y sin desbordamiento horizontal.
+- Desplazamiento real hacia arriba: progreso 1 → 0.7554, relleno 48.85 % y línea blanca visible. Luego 0.4185: relleno retirado y dashoffset escalonado entre letras, comprobado visualmente con contornos incompletos. No se fijó el progreso por script para simular la prueba.
+- Marco real 390 × 844 (375 px útiles): cierre de 442 px, rótulo ajustado al contenedor, sin desbordamiento y relleno completo al terminar. El arnés de prueba se retiró de main.jsx antes de la compilación final.
+- Movimiento reducido: relleno completo sin barrido ni trazos animados; escáner desactivado. No se presenta como prueba física de teléfono/Safari ni como medición de FPS. Datos, fórmulas y descargas se conservan.

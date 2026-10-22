@@ -5,7 +5,7 @@ export function useScanner() {
   const ref = useRef(null);
   const frame = useRef(0);
   const reduced = useRef(false);
-  const pointer = useRef({ x: 0, y: 0, drawnX: 0, drawnY: 0, time: 0, rect: null });
+  const pointer = useRef({ x: 0, y: 0, drawnX: 0, drawnY: 0, time: 0, rect: null, labelX: null, labelY: null });
   const paint = useCallback(function draw(time) {
     frame.current = 0;
     const element = ref.current;
@@ -18,6 +18,10 @@ export function useScanner() {
     p.drawnY += (p.y - p.drawnY) * alpha;
     element.style.setProperty('--mouse-x', `${p.drawnX.toFixed(1)}px`);
     element.style.setProperty('--mouse-y', `${p.drawnY.toFixed(1)}px`);
+    if(p.labelX===null)p.labelX=element.querySelector(':scope > .scanner-instrument [data-scan-x]') || false;
+    if(p.labelY===null)p.labelY=element.querySelector(':scope > .scanner-instrument [data-scan-y]') || false;
+    if(p.labelX)p.labelX.textContent=String(Math.round(p.drawnX)).padStart(4,'0');
+    if(p.labelY)p.labelY.textContent=String(Math.round(p.drawnY)).padStart(4,'0');
     // Stop the loop when the pointer settles; there is no idle animation.
     if (Math.abs(p.x - p.drawnX) + Math.abs(p.y - p.drawnY) > 0.2)
       frame.current = requestAnimationFrame(draw);
@@ -27,8 +31,8 @@ export function useScanner() {
     if (!element || reduced.current) return;
     const p = pointer.current;
     p.rect ??= element.getBoundingClientRect();
-    p.x = Math.max(0, Math.min(p.rect.width, event.clientX - p.rect.left));
-    p.y = Math.max(0, Math.min(p.rect.height, event.clientY - p.rect.top));
+    p.x = Math.max(0, Math.min(element.offsetWidth, (event.clientX - p.rect.left)*element.offsetWidth/p.rect.width));
+    p.y = Math.max(0, Math.min(element.offsetHeight, (event.clientY - p.rect.top)*element.offsetHeight/p.rect.height));
     if (element.dataset.scanning !== 'true') {
       p.drawnX = p.x; p.drawnY = p.y; p.time = 0;
       element.dataset.scanning = 'true';
