@@ -25,3 +25,5 @@
 }
 
 .indicator-workspace.single-indicator{grid-template-columns:minmax(0,1fr)}
+
+.leon-map figcaption{justify-content:flex-end;align-items:flex-end}
