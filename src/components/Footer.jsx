@@ -1,7 +1,7 @@
 import { useFooterReveal } from '../hooks/useFooterReveal.js';
 import FooterWordmark from './FooterWordmark.jsx';
 import EditorialBanner from './EditorialBanner.jsx';
-import { Mark } from './Icons.jsx';
+import ImplanLogo from './ImplanLogo.jsx';
 
 export function ClosingSections() {
   return <>
@@ -17,7 +17,7 @@ export function ClosingSections() {
 export default function Footer() {
   const ref=useFooterReveal();
   return <footer className="site-footer" ref={ref}><div className="footer-stage">
-    <div className="footer-top"><div className="brand"><Mark/><span>IMPLAN<small>LEÓN · VISIÓN 2050</small></span></div></div>
+    <div className="footer-top"><div className="brand"><ImplanLogo/></div></div>
     <div className="footer-drawing"><FooterWordmark/></div>
     <div className="footer-bottom micro"><span>INSTITUTO MUNICIPAL DE PLANEACIÓN</span><span>LEÓN, GUANAJUATO</span></div>
   </div></footer>;

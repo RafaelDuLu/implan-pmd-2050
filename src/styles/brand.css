@@ -1,0 +1,17 @@
+/* Supplied institutional artwork, with its original proportions. */
+.implan-logo{display:block;flex:none;width:250px;aspect-ratio:2048/672;background:var(--lime);mask:url('/brand/implan-leon.png') center/contain no-repeat;-webkit-mask:url('/brand/implan-leon.png') center/contain no-repeat}
+.header-plan-logo{display:block;flex:none;width:105px;height:auto;object-fit:contain;mix-blend-mode:screen}
+.site-header{gap:30px;padding-block:20px}
+.site-header .brand{flex-shrink:0}
+.footer-top .implan-logo{width:250px}
+@media(max-width:900px){.implan-logo{width:210px}.header-plan-logo{width:90px}.site-header{gap:22px}.site-header nav{gap:20px}}
+@media(max-width:700px){
+ .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;padding-block:20px}
+ .site-header .brand{grid-column:1;grid-row:1;justify-self:start}
+ .header-plan-logo{grid-column:2;grid-row:1;width:78px}
+ .site-header .implan-logo{width:min(210px,48vw)}
+ .site-header nav{grid-column:1/-1;grid-row:2;display:flex;justify-content:space-between;gap:16px;font-size:12px;border-top:1px solid #353d26;padding-top:12px}
+ .site-header nav a:not(:first-child){display:flex}
+ .site-header nav a{gap:10px;padding:5px 0}
+ .footer-top .implan-logo{width:min(250px,70vw)}
+}
