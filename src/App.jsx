@@ -1,16 +1,18 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useEditorialMotion } from './hooks/useEditorialMotion.js';
 import Hero from './components/Hero.jsx';
 import AxisExplorer from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
 import DataTable from './components/DataTable.jsx';
 import Footer from './components/Footer.jsx';
-import SectionTransition, { AxisSheet } from './components/SectionTransition.jsx';
+import { AxisSheet } from './components/AxisSheet.jsx';
 
 export default function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [selection, setSelection] = useState(() => ({ axis: Number(location.hash.match(/^#eje-([1-7])$/)?.[1] || 3), indicator: '' }));
   const [notice, setNotice] = useState('');
+  useEditorialMotion(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
   useEffect(() => {
     const controller = new AbortController();
     fetch(`${import.meta.env.BASE_URL}data/indicadores.json`, { signal: controller.signal })
@@ -21,14 +23,14 @@ export default function App() {
   }, []);
   const indicators = useMemo(() => data?.indicators.filter(d => d.eligible) ?? [], [data]);
   const selectedIndicators = useMemo(() => indicators.filter(d => d.axis === selection.axis), [indicators, selection.axis]);
-  function selectAxis(axis) {
+  function selectAxis(axis, scrollToPanel = true) {
     setSelection({ axis, indicator: '' });
     history.replaceState(null, '', `#eje-${axis}`);
     setNotice(`Eje ${axis}: ${data.axes.find(a => a.id === axis).name}`);
     requestAnimationFrame(() => {
       const title = document.getElementById('indicator-section-title');
       title?.setAttribute('tabindex', '-1'); title?.focus({ preventScroll: true });
-      document.getElementById('indicadores')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+      if (scrollToPanel) document.getElementById('indicadores')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     });
   }
   function selectIndicator(indicator) {
@@ -47,15 +49,12 @@ export default function App() {
   return <>
     <a href="#ejes" className="skip-link">Saltar a los indicadores</a>
     <Hero count={indicators.length}/>
-    <main>
-      <SectionTransition word="Explorar." number="01" caption="SIETE PERSPECTIVAS" detail="Un plan de ciudad. Distintas formas de mirarlo."/>
+    <main id="main">
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
-      <SectionTransition word="Avanzar." number="02" caption="DEL PRESENTE A LA META" detail="Observa el punto de partida y explora el horizonte." from="paper" to="violet"/>
-      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator}/></AxisSheet>}
-      <SectionTransition word="Comparar." number="03" caption="CADA CIFRA CUENTA" detail="Los datos abiertos. El contexto completo." from="dark" to="paper"/>
+      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={axis => selectAxis(axis, false)} onSelectIndicator={selectIndicator}/></AxisSheet>}
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
-      <Footer/>
     </main>
+    <Footer/>
     <div className="sr-only" role="status" aria-live="polite">{notice}</div>
   </>;
 }

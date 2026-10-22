@@ -54,3 +54,15 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Las cifras históricas adicionales siguen pendientes del cotejo descrito en HISTORICOS.md. No se hicieron mediciones de FPS en hardware móvil ni prueba física en Safari.
 
 - Se respetan también los límites explícitos de unidades «Escala 0 - 112» y «Escala 0 - 10»: un escenario que sale de ellos queda no evaluable.
+
+## Reconstrucción editorial completa · 22 de octubre de 2026
+
+- Nueva portada clara, banners con pregunta/contexto/llamada grande, directorio de filas y cierre estacionario. El CSS anterior se reemplazó por cinco módulos, sin acumular overrides. Los separadores repetidos se retiraron.
+- Se recuperó el webfont Mona Sans identificado en la fuente de referencia y se agregó Mona Sans Mono, con licencia OFL y procedencia en public/fonts. Carga verificada en Chrome. Producción reescribe sus URLs a ../fonts/; no hay CDN de tipografía.
+- Escritorio de 1363 px: portada, banner de entrada, visor de Agua y cierre revisados visualmente. Sin desbordamiento horizontal. El cierre completo llegó a --scene=1; al subir se observó --scene=0.348 y retorno al contorno mientras el banner lo cubre.
+- Se revisó la adaptación mediante marcos reales de navegación de 390, 768 y 1024 px, no mediante recortes de una captura de escritorio. En 390 px (375 px de contenido tras scrollbar): portada sin recortes y menú Cambiar indicador → búsqueda «densidad» → indicador 4.1.3, con cierre del menú, flecha ↓ y un solo visor.
+- Se verificaron individualmente los siete cambios de tema en el ancho de tableta: Sociedad, Seguridad, Economía, Territorio, Agua, Movilidad y Gobierno. Al cambiar de tema desde el menú ya no se fuerza un desplazamiento hacia la cabecera. Desde el directorio sí se lleva al visor.
+- En 1024 px: documento sin desbordamiento, cierre fijado al borde inferior, relleno completo al terminar la página. Se redujo la escala del rótulo para conservar todas las letras; ancho de texto 873.23 px dentro de 888 px disponibles.
+- Agua, factor 2: escenario 112.05, estado favorable, dato reciente 126.7 sin cambios y flecha ↓. El control inicia abierto en la nueva interfaz.
+- Compilación de producción y las 14 pruebas de integridad y cálculos aprobadas después de retirar el arnés responsive. El arnés no se entrega ni forma parte del repositorio.
+- Los valores de assets/data.json se conservan. Los históricos siguen sujetos al cotejo documentado en HISTORICOS.md. No se afirma prueba física en teléfonos/Safari, zoom real del navegador al 150 % ni una medición de FPS en hardware de destino.

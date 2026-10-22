@@ -1,0 +1,11 @@
+Mona Sans / Mona Sans Mono
+Copyright: The Mona Sans Project Authors.
+License: SIL Open Font License 1.1, reproduced in OFL.txt.
+Project: https://github.com/github/mona-sans
+
+mona-sans.woff2: Latin variable weight webfont identified in the user-provided reference source.
+Retrieved unchanged from https://gridarco.com/assets/mona-sans-latin-wght-Pz49MTQZ.woff2 on 2026-10-22.
+This is an open font, not the reference site's logo, identity, scripts or analytics.
+
+mona-sans-mono.woff2: unchanged MonaSansMonoVF[wght].woff2 from the official project:
+https://github.com/github/mona-sans/tree/main/fonts/webfonts/variable

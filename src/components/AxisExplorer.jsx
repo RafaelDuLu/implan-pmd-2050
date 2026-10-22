@@ -1,4 +1,4 @@
-import { useScrollScene } from '../hooks/useScrollScene.js';
+import EditorialBanner from './EditorialBanner.jsx';
 import { Arrow, AxisGlyph } from './Icons.jsx';
 
 export const axisCopy = {
@@ -12,17 +12,11 @@ export const axisCopy = {
 };
 
 export default function AxisExplorer({ axes, indicators, activeAxis, onSelect }) {
-  const ref = useScrollScene();
-  return <section className="axis-section" id="ejes" ref={ref} aria-labelledby="axes-title">
-    <div className="section-intro"><span className="micro section-index">01 — EXPLORA LEÓN</span><div><h2 id="axes-title">Una visión.<br/><span>Siete perspectivas.</span></h2><p>Cada eje cuenta una parte de nuestra ciudad.<br/>Elige uno y descubre qué está cambiando.</p></div><span className="section-aside micro">DEL PUNTO DE PARTIDA<br/>A LA META.</span></div>
-    <div className="bento-grid">{axes.map(axis => {
-      const copy = axisCopy[axis.id], count = indicators.filter(d => d.axis === axis.id).length;
-      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} style={{ '--card-accent': copy.color }} aria-pressed={axis.id === activeAxis} aria-controls="indicadores" onClick={() => onSelect(axis.id)}>
-        <span className="card-sheen" aria-hidden="true"/><span className="axis-card-top micro"><span>EJE 0{axis.id}</span><span>{String(count).padStart(2,'0')} INDICADORES</span></span>
-        <div className="axis-glyph"><AxisGlyph axis={axis.id}/></div><div className="axis-card-bottom"><span><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><b><Arrow diagonal/></b></div>
-        {axis.id === 1 && <p>{copy.text}</p>}
-      </button>;
-    })}</div>
-    <div className="axis-foot micro"><span>SIETE EJES / UNA CONSULTA ABIERTA</span><span>SELECCIONA UN BLOQUE PARA EXPLORAR <Arrow diagonal/></span></div>
-  </section>;
+  return <div className="axis-section" id="ejes">
+    <EditorialBanner index="01 / LOS EJES" id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} description="Cada dato cuenta una parte de nuestra ciudad. Encuentra el tema que te interesa y explora su avance." action="Explorar" href="#directorio"><a href="#indicadores" className="outline-link">Ir al visor de indicadores ↗</a></EditorialBanner>
+    <section className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><span className="micro">UN PLAN. SIETE EJES.</span><h2 id="axes-title">La ciudad,<br/>desde cada<br/>perspectiva.</h2><p>Selecciona un tema.<br/>Consulta sus indicadores, sus cambios y sus metas.</p><span className="directory-count micro">01 — 07 <span>↓</span></span></div><div className="axis-ledger">{axes.map(axis => {
+      const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;
+      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><AxisGlyph axis={axis.id}/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
+    })}</div></section>
+  </div>;
 }

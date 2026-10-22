@@ -1,16 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { useScrollScene } from '../hooks/useScrollScene.js';
 import { axisCopy } from './AxisExplorer.jsx';
-
-/** Both layers occupy the same pixels: the wipe changes the surface and ink together. */
-export default function SectionTransition({ word, number, caption, detail, from = 'dark', to = 'paper' }) {
-  const ref = useScrollScene('viewport');
-  return <div className={`chapter-transition chapter-from-${from} chapter-to-${to}`} ref={ref} role="img" aria-label={`${caption}. ${detail}`}>
-    <div className="chapter-meta micro" aria-hidden="true"><span>{number} — {caption}</span><span>LEÓN / VISIÓN 2050</span></div>
-    <div className="chapter-type" aria-hidden="true"><div className="chapter-word"><span>{word}</span><span className="chapter-word-fill">{word}</span></div><b>↘</b></div>
-    <div className="chapter-bottom" aria-hidden="true"><span>{detail}</span><i/><span>↓</span></div>
-  </div>;
-}
 
 /** One entrance per axis; changing an indicator never restarts this curtain. */
 export function AxisSheet({ axis, children }) {

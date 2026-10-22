@@ -14,14 +14,14 @@ const stateCopy = {
 
 export default function IndicatorExplorer({ axis, indicators, axes, selectedId, onSelectIndicator, onSelectAxis }) {
   const [multiplier, setMultiplier] = useState(1);
-  const [scenarioOpen, setScenarioOpen] = useState(false);
+  const [scenarioOpen, setScenarioOpen] = useState(true);
   const d = indicators.find(d => d.id === selectedId) ?? indicators[0];
   const projected = useMemo(() => project(d, multiplier), [d, multiplier]);
   const timelineData = useMemo(() => [toTimelineRecord(d, multiplier)], [d, multiplier]);
   const p = progress(d), copy = stateCopy[projected.state];
   const sourceLink = /^https?:\/\//.test(d.link || '') ? d.link : null;
   return <section className="indicator-section" id="indicadores" aria-labelledby="indicator-section-title">
-    <div className="indicator-section-heading"><div><span className="micro">02 — OBSERVA EL CAMBIO / EJE 0{axis.id}</span><h2 id="indicator-section-title">{axisCopy[axis.id].title}<span> en perspectiva.</span></h2></div><p>{axis.name}</p></div>
+    <div className="indicator-section-heading" data-reveal><div><span className="micro">02 — OBSERVA EL CAMBIO / EJE 0{axis.id}</span><h2 id="indicator-section-title">{axisCopy[axis.id].title}<span> en perspectiva.</span></h2></div><p>{axis.name}</p></div>
     <TopicNavigation axes={axes} activeAxis={axis.id} onSelect={onSelectAxis}/>
     <div className="indicator-workspace"><IndicatorNavigator indicators={indicators} selectedId={d.id} onSelect={onSelectIndicator}/><div className="indicator-content">
     <div className="indicator-title"><div className="indicator-title-top"><span className="micro">INDICADOR {d.id} · {d.unit}</span><button className="text-button" onClick={() => downloadCSV([d], axes, `indicador-${d.id}.csv`)}>Descargar CSV <span>↓</span></button></div><h3 id="active-indicator-title" tabIndex="-1">{d.name}</h3></div>
