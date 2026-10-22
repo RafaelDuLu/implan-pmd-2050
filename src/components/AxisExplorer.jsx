@@ -12,7 +12,7 @@ export const axisCopy = {
 };
 
 export default function AxisExplorer({ axes, indicators, activeAxis, onSelect }) {
-  return <div className="axis-section" id="ejes">
+  return <div className="axis-section" data-page-layer id="ejes">
     <EditorialBanner index="01 / LOS EJES" id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} description="Cada dato cuenta una parte de nuestra ciudad. Encuentra el tema que te interesa y explora su avance." action="Explorar" href="#directorio"><a href="#indicadores" className="outline-link">Ir al visor de indicadores ↗</a></EditorialBanner>
     <section className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><span className="micro">UN PLAN. SIETE EJES.</span><h2 id="axes-title">La ciudad,<br/>desde cada<br/>perspectiva.</h2><p>Selecciona un tema.<br/>Consulta sus indicadores, sus cambios y sus metas.</p><span className="directory-count micro">01 — 07 <span>↓</span></span></div><div className="axis-ledger">{axes.map(axis => {
       const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;

@@ -35,3 +35,14 @@ No se incorporan el logotipo, los textos comerciales, las rutas, los componentes
 ## Despliegue
 
 No hay cambios de infraestructura: GitHub independiente, rama main, Cloudflare Pages, `npm run build` y salida `dist`. Los cálculos se realizan en el navegador. `assets/data.json` se conserva sin cambios; el inventario y la investigación de históricos mantienen su alcance previo.
+
+
+## Ampliación por capas y lente técnica
+
+Las capturas facilitadas muestran un banner que cubre la superficie siguiente y una lente circular que retira el relleno de letras conservando sus trazos de construcción. Se adapta ese principio a las superficies crema, negro y verde del portal.
+
+`useLayerStack` mide las hojas con ResizeObserver. Su posición sticky usa `min(0px, 100svh − altura)`; una hoja larga debe mostrar su parte inferior antes de quedar retenida. Las superficies siguientes tienen un nivel de apilamiento mayor. El banner final termina el conjunto de capas; el pie permanece fuera para descubrirse sin quedar oculto.
+
+`XRayText` separa contorno y relleno con idéntica composición. Una máscara radial sustractiva retira el relleno local; otra revela el contorno y la retícula. `ScannerOverlay` dibuja cruz, guías de ejes, círculo y construcción vectorial. Las coordenadas muestran píxeles locales de la superficie, sin sugerir mediciones estadísticas. `useScanner` interpola con rAF sin estado React por movimiento y detiene el bucle al estabilizarse.
+
+No se usan imágenes para las letras ni vídeos de fondo. El contenido conserva semántica accesible y los controles de datos mantienen su funcionamiento.

@@ -66,3 +66,12 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Agua, factor 2: escenario 112.05, estado favorable, dato reciente 126.7 sin cambios y flecha ↓. El control inicia abierto en la nueva interfaz.
 - Compilación de producción y las 14 pruebas de integridad y cálculos aprobadas después de retirar el arnés responsive. El arnés no se entrega ni forma parte del repositorio.
 - Los valores de assets/data.json se conservan. Los históricos siguen sujetos al cotejo documentado en HISTORICOS.md. No se afirma prueba física en teléfonos/Safari, zoom real del navegador al 150 % ni una medición de FPS en hardware de destino.
+
+
+## Capas y escáner de construcción · 22 de octubre de 2026
+
+- Escritorio 1363 × 936: el banner verde cubre progresivamente la portada; las hojas largas del visor y directorio conservan su recorrido antes de superponerse. El cierre queda fuera del conjunto de capas para poder descubrirse al final.
+- Territorio → búsqueda «residuos»: tres registros, incluido el último 4.5.2, accesibles sin capas que tapen renglones. Documento sin desbordamiento horizontal.
+- Marco real de 390 × 844 (375 px útiles): misma búsqueda con tres registros, tabla con desplazamiento horizontal propio y documento sin desbordamiento. Cierre accesible al final. El marco no equivale a una prueba física táctil.
+- Escáner comprobado mediante interacción real en portada y cierre: máscara circular sustractiva sobre relleno, contorno conservado, cruz, retícula, diagonales y coordenadas locales actualizadas. El cursor nativo se oculta únicamente sobre superficies activas con puntero preciso.
+- Sin cambios en cifras, históricos, cálculos o CSV. Sin dependencias adicionales. Movimiento reducido elimina las capas fijas y el escáner. Sin medición de FPS ni validación física en Safari.

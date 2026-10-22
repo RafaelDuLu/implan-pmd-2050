@@ -1,0 +1,13 @@
+/* Each incoming surface physically covers the outgoing sheet at its final viewport. */
+.layer-stack{position:relative;z-index:1;background:var(--paper);isolation:isolate}
+.layer-stack #main{position:relative;z-index:2;background:transparent}
+.layer-stack .hero{z-index:1}
+.layer-stack .axis-section{position:relative;z-index:1;background:var(--paper)}
+.layer-stack .axis-section>.editorial-band{z-index:1}
+.layer-stack .axis-directory{position:relative;z-index:2;background:var(--paper)}
+.layer-stack .axis-sheet{z-index:2}
+.layer-stack .table-section{z-index:3}
+.layer-stack>.method-section{z-index:3}
+.layer-stack>.closing-band{position:relative;z-index:4}
+.layer-stack[data-layered=true] [data-page-layer]{position:sticky;top:min(0px,calc(100svh - var(--layer-height,100svh)));box-shadow:0 -24px 55px -42px #15161165}
+@media(prefers-reduced-motion:reduce){.layer-stack [data-page-layer]{position:relative!important;top:auto!important;box-shadow:none!important}}

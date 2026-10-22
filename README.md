@@ -80,6 +80,10 @@ El avance del tramo base–meta conserva cifras negativas y mayores a 100 %; la 
 
 `docs/RECONSTRUCCION_VISUAL.md` registra el análisis del código fuente de referencia y la reconstrucción de la interfaz. Se retiraron los separadores repetidos. Los banners y el directorio tienen funciones de navegación concretas.
 
+Las secciones se superponen mediante capas sticky nativas: las hojas largas se recorren completas antes de que la siguiente cubra su último tramo. ResizeObserver recalcula sus alturas al cambiar de indicador o ancho. Con movimiento reducido vuelven al flujo normal.
+
+El escáner de portada, banners y cierre retira el relleno dentro de una lente circular y descubre contornos, retícula y líneas de construcción. La cruz incorpora guías horizontal/vertical y coordenadas locales X/Y; se desactiva en punteros táctiles y movimiento reducido.
+
 El cierre usa posición sticky solo cuando cabe en el viewport. El banner anterior lo descubre; el relleno se interpola con rAF y se revierte al subir. Al final del documento se completa. En movimiento reducido, el pie fluye normalmente y el rótulo aparece relleno. Las tablas y cifras no se animan.
 
 Los revelados usan IntersectionObserver y transform/opacity; el puntero utiliza variables CSS, una máscara limitada y rAF que se detiene al estabilizarse. No se garantiza una tasa fija de FPS sin medir hardware de destino.

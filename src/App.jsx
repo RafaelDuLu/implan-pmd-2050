@@ -4,13 +4,15 @@ import Hero from './components/Hero.jsx';
 import AxisExplorer from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
 import DataTable from './components/DataTable.jsx';
-import Footer from './components/Footer.jsx';
+import Footer, { ClosingSections } from './components/Footer.jsx';
+import { useLayerStack } from './hooks/useLayerStack.js';
 import { AxisSheet } from './components/AxisSheet.jsx';
 
 export default function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [selection, setSelection] = useState(() => ({ axis: Number(location.hash.match(/^#eje-([1-7])$/)?.[1] || 3), indicator: '' }));
+  const layerStack=useLayerStack(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
   const [notice, setNotice] = useState('');
   useEditorialMotion(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
   useEffect(() => {
@@ -48,12 +50,15 @@ export default function App() {
   const indicatorId = selection.indicator || selectedIndicators[0]?.id;
   return <>
     <a href="#ejes" className="skip-link">Saltar a los indicadores</a>
+    <div className="layer-stack" ref={layerStack}>
     <Hero count={indicators.length}/>
     <main id="main">
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
       {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={axis => selectAxis(axis, false)} onSelectIndicator={selectIndicator}/></AxisSheet>}
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
     </main>
+    <ClosingSections/>
+    </div>
     <Footer/>
     <div className="sr-only" role="status" aria-live="polite">{notice}</div>
   </>;

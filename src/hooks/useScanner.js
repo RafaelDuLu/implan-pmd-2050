@@ -5,7 +5,7 @@ export function useScanner() {
   const ref = useRef(null);
   const frame = useRef(0);
   const reduced = useRef(false);
-  const pointer = useRef({ x: 0, y: 0, drawnX: 0, drawnY: 0, time: 0, rect: null });
+  const pointer = useRef({ x: 0, y: 0, drawnX: 0, drawnY: 0, time: 0, rect: null, labelX: null, labelY: null, lastX: '', lastY: '' });
   const paint = useCallback(function draw(time) {
     frame.current = 0;
     const element = ref.current;
@@ -18,6 +18,12 @@ export function useScanner() {
     p.drawnY += (p.y - p.drawnY) * alpha;
     element.style.setProperty('--mouse-x', `${p.drawnX.toFixed(1)}px`);
     element.style.setProperty('--mouse-y', `${p.drawnY.toFixed(1)}px`);
+    if(p.labelX===null)p.labelX=element.querySelector(':scope > .scanner-instrument [data-scan-x]') || false;
+    if(p.labelY===null)p.labelY=element.querySelector(':scope > .scanner-instrument [data-scan-y]') || false;
+    const labelX=String(Math.round(p.drawnX)).padStart(4,'0');
+    const labelY=String(Math.round(p.drawnY)).padStart(4,'0');
+    if(p.labelX && labelX!==p.lastX){p.labelX.textContent=labelX;p.lastX=labelX;}
+    if(p.labelY && labelY!==p.lastY){p.labelY.textContent=labelY;p.lastY=labelY;}
     // Stop the loop when the pointer settles; there is no idle animation.
     if (Math.abs(p.x - p.drawnX) + Math.abs(p.y - p.drawnY) > 0.2)
       frame.current = requestAnimationFrame(draw);
@@ -47,7 +53,7 @@ export function useScanner() {
   useEffect(() => {
     const invalidate = () => { pointer.current.rect = null; };
     const media = matchMedia('(prefers-reduced-motion: reduce)');
-    const preference = () => { reduced.current = media.matches; if (media.matches) leave(); };
+    const preference = () => { reduced.current = media.matches || !matchMedia('(hover: hover) and (pointer: fine)').matches; if (media.matches) leave(); };
     preference();
     media.addEventListener('change', preference);
     window.addEventListener('resize', invalidate, { passive: true });
