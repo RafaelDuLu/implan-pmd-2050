@@ -1,5 +1,5 @@
 import EditorialBanner from './EditorialBanner.jsx';
-import { Arrow, AxisGlyph } from './Icons.jsx';
+import { Arrow } from './Icons.jsx';
 
 export const axisCopy = {
   1: { title: 'Sociedad', subtitle: 'Educación, inclusión e identidad', text: 'Las condiciones que construyen oportunidades.', color: '#b6ff00' },
@@ -16,7 +16,7 @@ export default function AxisExplorer({ axes, indicators, activeAxis, onSelect })
     <EditorialBanner id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} action="Explorar"/>
     <section className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><h2 id="axes-title">Siete ejes<br/>de ciudad.</h2></div><div className="axis-ledger">{axes.map(axis => {
       const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;
-      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><AxisGlyph axis={axis.id}/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
+      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><img className="axis-art" src={`./axes/eje-${axis.id}.webp`} alt="" width="160" height="160" loading="lazy" decoding="async"/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
     })}</div></section>
   </div>;
 }
