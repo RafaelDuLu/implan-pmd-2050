@@ -84,3 +84,15 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Movimiento fuera del título a (900, 170): lectura X0900 / Y0070 sin perder la cruz. Al salir al encabezado, data-scanning vuelve a false.
 - Se añaden marcas de regla en los ejes, cruz de mayor tamaño y coordenadas con fondo contrastado. Sin halo verde sobre las letras. ResizeObserver mantiene el origen del título alineado al ajustar ancho o cargar fuentes.
 - Compilación y las 14 pruebas aprobadas. Datos, filtros, cálculos y exportaciones sin cambios. Esta revisión visual corresponde a Chrome de escritorio; no se realizó una medición de FPS.
+
+
+## Portada negra y mapa municipal de León · 22 de octubre de 2026
+
+- Se retiró el componente ScannerOverlay y las guías X/Y, reglas, coordenadas, retículas, vectores decorativos y cuadrículas de banners y cierre. El efecto de letras conserva únicamente la transición de relleno a contorno.
+- Portada y encabezado en negro y verde fosforescente. El mapa del municipio 11020 se muestra a la derecha en escritorio y debajo del título en móvil.
+- Cartografía descargada del servicio oficial INEGI: límite municipal y 58,522 segmentos de vialidad; metadatos del insumo indican Marco Geoestadístico diciembre de 2025. Origen y hashes registrados en public/maps/fuentes.json. Se incluyen las vialidades disponibles en ese servicio, sin afirmar cobertura exhaustiva.
+- Ambas capas usan idéntica proyección y extensión; las calles se recortan al contorno municipal. El SVG del contorno pesa 51.9 KB; la capa de calles WebP transparente a 1280 × 1280 pesa 272.7 KB. No hay solicitudes a servicios cartográficos externos al navegar ni librería de mapas.
+- Chrome de escritorio: contorno visible sin interacción; al situar puntero sobre la trama urbana aparece una máscara radial local de 112 px. Cero elementos de guías o rejillas en el DOM; documento sin desbordamiento horizontal.
+- Marco real de 390 × 844 (375 px útiles): mapa de 331 px, documento sin desbordamiento; activar «Revelar calles» con Enter cambia aria-pressed a true y muestra toda la capa (opacity 1, mask none). Las dos imágenes cargan correctamente. Este marco no equivale a una prueba física de teléfono.
+- Movimiento reducido y puntero táctil conservan el botón explícito, sin necesitar hover ni animación. No se modificaron datos estadísticos ni cálculos.
+- El arnés temporal de revisión móvil se retiró del archivo main.jsx antes de compilar y entregar. No se midió FPS en hardware de destino.

@@ -82,7 +82,9 @@ El avance del tramo base–meta conserva cifras negativas y mayores a 100 %; la 
 
 Las secciones se superponen mediante capas sticky nativas: las hojas largas se recorren completas antes de que la siguiente cubra su último tramo. ResizeObserver recalcula sus alturas al cambiar de indicador o ancho. Con movimiento reducido vuelven al flujo normal.
 
-El escáner de portada, banners y cierre retira el relleno dentro de una lente circular y descubre contornos, retícula y líneas de construcción. La cruz incorpora guías horizontal/vertical y coordenadas locales X/Y; se desactiva en punteros táctiles y movimiento reducido.
+La portada recupera fondo negro y tipografía verde fosforescente. El escáner mantiene el revelado local de letras, sin guías, retículas, cruz ni coordenadas. A la derecha, el contorno real del municipio de León revela sus vialidades dentro de la lente. El botón «Revelar calles» ofrece la misma información con toque o teclado, también con movimiento reducido.
+
+La cartografía procede de INEGI, Marco Geoestadístico diciembre de 2025: contorno municipal 11020 y 58,522 segmentos de vialidad disponibles en el servicio. No se presenta como delimitación legal ni como inventario exhaustivo de calles. `public/maps/` contiene SVG del contorno, WebP transparente de calles y `fuentes.json` con URLs y hashes de origen. Son recursos locales sin servicios externos al navegar. `scripts/build-map.py` permite regenerarlos (Pillow en la computadora de preparación; no necesario para Cloudflare).
 
 El cierre usa posición sticky solo cuando cabe en el viewport. El banner anterior lo descubre; el relleno se interpola con rAF y se revierte al subir. Al final del documento se completa. En movimiento reducido, el pie fluye normalmente y el rótulo aparece relleno. Las tablas y cifras no se animan.
 

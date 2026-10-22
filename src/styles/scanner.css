@@ -1,50 +1,19 @@
 .scanner-surface{--mouse-x:-500px;--mouse-y:-500px;--lens-radius:105px}
-/* Optical subtraction: the fill is removed locally, revealing vectors and construction lines. */
-.xray-text{--lens-radius:105px;--scan-ink:var(--ink);position:relative;display:block;isolation:isolate}
+/* A quiet optical reveal: no rulers, crosshairs, coordinates or decorative grids. */
+.xray-text{--scan-ink:var(--ink);position:relative;display:block;isolation:isolate}
 .xray-fill{position:relative;display:block}
 .xray-outline{position:absolute;inset:0;display:block;color:transparent;-webkit-text-stroke:.7px var(--scan-ink);opacity:0}
-.xray-text[data-scanning=true]>.xray-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),transparent 0%,transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),transparent 0%,transparent 98%,black 100%)}
+.xray-text[data-scanning=true]>.xray-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),transparent 98%,black 100%)}
 .xray-text[data-scanning=true]>.xray-outline{opacity:1;mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),black 98%,transparent 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) var(--mouse-y),black 98%,transparent 100%)}
-.band-word{flex:1;min-width:0;--scan-label-bg:var(--lime)}
-.scanner-instrument{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 150ms;color:var(--scan-ink,var(--ink));font-size:initial;letter-spacing:normal;line-height:normal;-webkit-text-stroke:0;font-weight:400}
-.scanner-surface[data-scanning=true]>.scanner-instrument{opacity:1}
-.scan-window{position:absolute;inset:0;mask-image:radial-gradient(circle var(--lens-radius,105px) at var(--mouse-x) var(--mouse-y),black 98%,transparent 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius,105px) at var(--mouse-x) var(--mouse-y),black 98%,transparent 100%)}
-.scan-lattice{position:absolute;inset:0;background-image:linear-gradient(currentColor 1px,transparent 1px),linear-gradient(90deg,currentColor 1px,transparent 1px);background-size:24px 24px;opacity:.17}
-.scan-construction{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--scan-ink,var(--ink));stroke-width:.7;opacity:.6;vector-effect:non-scaling-stroke}
-.scan-guide{position:absolute;background:currentColor;opacity:.38}
-.scan-guide-x{left:var(--mouse-x);top:0;bottom:0;width:1px}
-.scan-guide-y{top:var(--mouse-y);left:0;right:0;height:1px}
-.scan-lens-ring{position:absolute;left:calc(var(--mouse-x) - var(--lens-radius,105px));top:calc(var(--mouse-y) - var(--lens-radius,105px));width:calc(var(--lens-radius,105px)*2);height:calc(var(--lens-radius,105px)*2);border:1px solid currentColor;border-radius:50%;opacity:.8}
-.scan-cursor-cross{position:absolute;left:calc(var(--mouse-x) - 7px);top:calc(var(--mouse-y) - 7px);width:15px;height:15px;background:linear-gradient(transparent 46%,currentColor 46%,currentColor 54%,transparent 54%),linear-gradient(90deg,transparent 46%,currentColor 46%,currentColor 54%,transparent 54%)}
-.scan-readout{position:absolute;left:clamp(76px,var(--mouse-x),calc(100% - 76px));top:clamp(7px,calc(var(--mouse-y) - var(--lens-radius,105px) - 23px),calc(100% - 21px));transform:translateX(-50%);font-size:9px;line-height:1.4;white-space:nowrap;display:flex;gap:7px;align-items:center;padding:3px 6px;background:var(--scan-label-bg,var(--paper))}
-.scan-readout b{font:inherit;min-width:4ch}.scan-readout i{width:10px}
-.scan-axis-mark{position:absolute;font-size:8px;line-height:1.4;opacity:.7}
-.scan-axis-x{right:6px;top:calc(var(--mouse-y) + 7px)}.scan-axis-y{top:6px;left:calc(var(--mouse-x) + 7px)}
-.footer-word{--lens-radius:105px;--scan-ink:#dce6c6;--scan-label-bg:var(--ink)}
+.band-word{flex:1;min-width:0}
+.footer-word{--lens-radius:105px}
 .footer-word[data-scanning=true] .footer-word-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 12px),transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 12px),transparent 98%,black 100%)}
-.footer-word-wire{background:none}
-.footer-word .scan-window{color:var(--lime)}
-.footer-word .scan-construction{stroke:var(--lime)}
-@media(hover:hover) and (pointer:fine){.xray-text[data-scanning=true],.xray-text[data-scanning=true] *,.footer-word[data-scanning=true]{cursor:none}}
-@media(max-width:600px){.footer-word[data-scanning=true] .footer-word-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 18px),transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 18px),transparent 98%,black 100%)}}
-@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.scanner-instrument,.xray-outline{display:none!important}.xray-fill,.footer-word-fill{mask-image:none!important;-webkit-mask-image:none!important}.xray-text,.footer-word{cursor:auto!important}}
-
-/* The hero owns one full-surface instrument. Text masks share its exact coordinate origin. */
-.hero{--scan-ink:var(--ink);--scan-label-bg:var(--paper);--lens-radius:112px}
+.hero{--lens-radius:112px}
 .hero-title-plot{position:relative;display:block;--plot-x:calc(var(--mouse-x) - var(--title-x,0px));--plot-y:calc(var(--mouse-y) - var(--title-y,0px))}
 .hero-title-fill{position:relative;display:block}
-.hero-title-outline{position:absolute;inset:0;display:block;opacity:0;color:transparent;-webkit-text-stroke:1px var(--ink)}
+.hero-title-outline{position:absolute;inset:0;display:block;opacity:0;color:transparent;-webkit-text-stroke:1px var(--lime)}
 .hero-title-outline .headline-period{color:transparent}
 .hero[data-scanning=true] .hero-title-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--plot-x) var(--plot-y),transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--plot-x) var(--plot-y),transparent 98%,black 100%)}
 .hero[data-scanning=true] .hero-title-outline{opacity:1;mask-image:radial-gradient(circle var(--lens-radius) at var(--plot-x) var(--plot-y),black 98%,transparent 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--plot-x) var(--plot-y),black 98%,transparent 100%)}
-.hero>.scanner-instrument{z-index:6}
-.hero .scan-guide{opacity:.65}
-.hero .scan-cursor-cross{width:21px;height:21px;left:calc(var(--mouse-x) - 10px);top:calc(var(--mouse-y) - 10px);filter:drop-shadow(0 0 1px var(--paper))}
-.hero .scan-readout{font-size:11px;border:1px solid var(--line);padding:5px 8px}
-.hero .scan-axis-mark{font-size:10px;opacity:1;background:var(--paper);padding:1px 4px}
-.scan-ruler{display:none;position:absolute;opacity:.35}
-.hero .scan-ruler{display:block}
-.scan-ruler-x{left:0;right:0;top:calc(var(--mouse-y) - 4px);height:9px;background:repeating-linear-gradient(90deg,currentColor 0 1px,transparent 1px 24px)}
-.scan-ruler-y{top:0;bottom:0;left:calc(var(--mouse-x) - 4px);width:9px;background:repeating-linear-gradient(0deg,currentColor 0 1px,transparent 1px 24px)}
-@media(hover:hover) and (pointer:fine){.hero[data-scanning=true]{cursor:none}.hero a{cursor:pointer}}
-@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.hero-title-outline{display:none!important}.hero-title-fill{mask-image:none!important;-webkit-mask-image:none!important}.hero[data-scanning=true]{cursor:auto}}
+@media(max-width:600px){.footer-word[data-scanning=true] .footer-word-fill{mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 18px),transparent 98%,black 100%);-webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--mouse-x) calc(var(--mouse-y) - 18px),transparent 98%,black 100%)}}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.xray-outline,.hero-title-outline{display:none!important}.xray-fill,.footer-word-fill,.hero-title-fill{mask-image:none!important;-webkit-mask-image:none!important}}

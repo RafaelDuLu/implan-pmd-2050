@@ -1,0 +1,27 @@
+{
+  "area": "León, Guanajuato",
+  "cvegeo": "11020",
+  "downloaded": "2026-10-22",
+  "metadata": {
+    "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025",
+    "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020"
+  },
+  "streetMetadata": {
+    "Fuente_informacion_vectorial": "INEGI. Marco Geoestadístico, diciembre de 2025",
+    "Fuente_informacion_estadistica": "INEGI. Censo de Población y Vivienda, 2020"
+  },
+  "roadFeatures": 58522,
+  "segments": 58522,
+  "projection": "Spherical Mercator, north up, identical bounds for both layers",
+  "derivative": "Boundary SVG; road vectors rasterized at 1280 × 1280 with alpha, clipped to municipality. Display only, not legal delimitation or navigation. Only vialidades available in the INEGI service; not a claim of exhaustive street coverage.",
+  "sources": [
+    {
+      "url": "https://gaia.inegi.org.mx/wscatgeo/v2/geo/mgem/11020",
+      "sha256": "3c9123f28afcd193ae525da4d5e7ac0ccba7e630195a13b09d7373d39997b3f5"
+    },
+    {
+      "url": "https://gaia.inegi.org.mx/wscatgeo/v2/geo/vialidades/11/020",
+      "sha256": "d6ab95269c538883caa7d57b15fac5ceb6891d1b865b2af1c3c66f0d0c60e98e"
+    }
+  ]
+}

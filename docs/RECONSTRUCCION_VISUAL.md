@@ -46,3 +46,10 @@ Las capturas facilitadas muestran un banner que cubre la superficie siguiente y 
 `XRayText` separa contorno y relleno con idéntica composición. Una máscara radial sustractiva retira el relleno local; otra revela el contorno y la retícula. `ScannerOverlay` dibuja cruz, guías de ejes, círculo y construcción vectorial. Las coordenadas muestran píxeles locales de la superficie, sin sugerir mediciones estadísticas. `useScanner` interpola con rAF sin estado React por movimiento y detiene el bucle al estabilizarse.
 
 No se usan imágenes para las letras ni vídeos de fondo. El contenido conserva semántica accesible y los controles de datos mantienen su funcionamiento.
+
+
+## Revisión: cartografía con propósito
+
+Por solicitud del usuario se retiran todas las líneas instrumentales del escáner. El componente ScannerOverlay deja de formar parte del proyecto. En vez de construcción geométrica decorativa, la portada presenta el contorno real de León y revela la capa vial oficial de INEGI dentro de la lente. El encabezado y la portada vuelven a negro con verde fosforescente. Los banners, las tablas y las transiciones por capas conservan su estructura.
+
+LeonMap usa dos recursos locales alineados. La lente hereda las coordenadas del puntero de la portada y resta el desplazamiento del mapa, medido con ResizeObserver. El botón de revelado permite consultar todas las vialidades sin ratón; el estado no afecta datos ni filtros. El código de preparación cartográfica está separado de la compilación de Cloudflare.
