@@ -107,3 +107,9 @@ La configuración sigue siendo Cloudflare Pages: `npm run build`, salida `dist`,
 - Desplazamiento real hacia arriba: progreso 1 → 0.7554, relleno 48.85 % y línea blanca visible. Luego 0.4185: relleno retirado y dashoffset escalonado entre letras, comprobado visualmente con contornos incompletos. No se fijó el progreso por script para simular la prueba.
 - Marco real 390 × 844 (375 px útiles): cierre de 442 px, rótulo ajustado al contenedor, sin desbordamiento y relleno completo al terminar. El arnés de prueba se retiró de main.jsx antes de la compilación final.
 - Movimiento reducido: relleno completo sin barrido ni trazos animados; escáner desactivado. No se presenta como prueba física de teléfono/Safari ni como medición de FPS. Datos, fórmulas y descargas se conservan.
+
+## Ajuste del espacio de consulta — 23 de octubre de 2026
+
+La gráfica tiene altura acotada y usa un espacio de coordenadas de 360 unidades cuando su contenedor mide menos de 520 px. En escritorio, escenario, ritmo y avance quedan a la derecha; en anchuras intermedias pasan debajo; en teléfono se apilan con un resumen compacto. Se mantienen los valores, las unidades, los años, la meta y las fuentes.
+
+Verificación en Chrome: escritorio de 1363 × 936 y marco de teléfono de 390 × 844. En teléfono la gráfica tiene 307 px de ancho útil y 307 px de contenido, sin desbordamiento lateral. Se revisaron Evolución, Barras e Hitos. Para el indicador 2.1.2, el control 1.05× produce un escenario de 40.75 y Restablecer 1× recupera 40.36. El control Meta 2030 oculta y restaura la línea. Las cantidades grandes del eje se abrevian; los valores consultables conservan su formato completo. Esta revisión no sustituye una prueba física en iOS o Android.

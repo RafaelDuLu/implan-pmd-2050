@@ -1,0 +1,108 @@
+/* Consultation scale: chart dimensions belong to the workspace, not the page width. */
+.indicator-section{padding-top:48px}
+.indicator-section-heading{padding-bottom:26px;gap:30px}
+.indicator-section-heading h2{font-size:clamp(36px,4vw,62px);margin-top:0}
+.indicator-section-heading>p{font-size:17px;max-width:34ch}
+.topic-navigation{margin-bottom:26px;padding-top:12px}
+.topic-navigation button{padding-bottom:12px;font-size:14px}
+.indicator-workspace{grid-template-columns:210px minmax(0,1fr);gap:32px}
+.navigator-heading{margin-bottom:12px}.navigator-list{max-height:min(420px,52svh)}
+.navigator-list>button{padding-block:14px}.navigator-pager{padding-block:12px}
+.indicator-title{padding-bottom:18px}.indicator-title-top{margin-bottom:14px}
+.indicator-title h3{font-size:clamp(24px,2.25vw,34px);line-height:1.2;max-width:48ch}
+.change-summary{margin-bottom:22px;grid-template-columns:1fr 1fr 1.35fr}
+.change-summary>div{padding:16px}.change-summary>div:nth-child(2){border-right:1px solid #515a42}
+.change-summary .change-direction{grid-column:auto;border-top:0;padding:16px 0 16px 16px;gap:14px}
+.change-direction>div{display:block}.change-direction strong{font-size:30px;margin:6px 0}
+.change-base>strong,.change-latest>strong{font-size:34px;margin:10px 0 5px}
+.change-arrow{font-size:54px}.change-verdict{max-width:30ch}
+.data-bento{grid-template-columns:minmax(0,1fr) minmax(245px,.45fr);align-items:start;gap:0 24px;border-top:0}
+.timeline-panel{grid-column:1;grid-row:1/4;padding:22px;align-self:start}
+.projection-panel{grid-column:2;grid-row:1;padding:0 0 20px;border-bottom:1px solid var(--dark-line)}
+.projection-top>.micro{font-size:8px}.status-orbit{width:22px;height:22px}
+.projection-badge{margin:14px 0 10px;font-size:8px}
+.projection-panel h4{font-size:24px;line-height:1.15;max-width:22ch}
+.projection-number{font-size:44px;line-height:1.1;margin:14px 0 5px}
+.projection-explanation{margin-top:12px}.projection-limit{margin-top:10px}
+.scenario-panel{grid-column:2;grid-row:2;padding:20px 0;border-left:0;gap:12px}
+.scenario-panel h4{font-size:23px;margin:0;max-width:18ch;line-height:1.2}
+.scenario-panel .round-button{width:34px;height:34px;font-size:22px}
+.scenario-controls label{margin-top:0;font-size:12px;flex-wrap:wrap;gap:8px}
+.scenario-controls output{font-size:22px}.scenario-controls input{margin:7px 0 0}
+.scenario-controls p{font-size:11px;margin-top:10px}.range-ends{font-size:10px}
+.progress-panel{grid-column:2;grid-row:3;padding:18px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.progress-panel>.micro{width:100%;font-size:8px}.progress-value{margin:0;gap:12px}
+.progress-value strong{font-size:30px}.progress-value>span{font-size:10px;max-width:none}
+.progress-track{width:100%;margin-top:4px}
+.chart-toolbar{margin-bottom:12px;gap:12px;flex-wrap:wrap}
+.chart-toolbar button{font-size:11px;padding:10px 12px;min-height:44px}
+.chart-toolbar .chart-goal-toggle{font-size:11px;padding:8px 0}
+.chart-caption{font-size:11px;gap:12px}.chart-caption .micro{font-size:8px}
+.history-canvas{overflow:visible}
+.history-canvas svg{display:block;width:100%;min-width:0;height:clamp(220px,28svh,280px)}
+.chart-point-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));margin-top:10px}
+.chart-point-buttons button{padding:12px 10px;min-height:74px}
+.chart-point-buttons strong{font-size:24px;margin-top:6px}
+.chart-point-buttons button:last-child{border-top:0}
+.chart-legend{font-size:10px;gap:10px 16px;margin:14px 0 0}
+.chart-notes{margin-top:8px}.chart-notes>summary{min-height:40px;display:flex;align-items:center;list-style:disclosure-closed}
+.history-chart[data-compact=true] .chart-target-label{font-size:11px}
+.goal-timeline .stage-year{font-size:24px}.goal-timeline .timeline-stages strong{font-size:24px}
+.source-bar{padding-block:18px;gap:16px}.indicator-notes{margin-top:16px}
+@media(max-width:1100px){
+ .data-bento{grid-template-columns:1fr 1fr;gap:0 22px}
+ .timeline-panel{grid-column:1/-1;grid-row:1}
+ .projection-panel{grid-column:1;grid-row:2;padding-top:22px;align-self:stretch}
+ .scenario-panel{grid-column:2;grid-row:2;padding-top:22px;align-self:stretch}
+ .progress-panel{grid-column:1/-1;grid-row:3}
+ .indicator-workspace{grid-template-columns:180px minmax(0,1fr);gap:24px}
+}
+@media(max-width:760px){
+ .indicator-workspace{display:block}.indicator-navigator{position:static;margin-bottom:20px;padding-block:12px}
+ .indicator-navigator .navigator-pager{display:none}
+ .navigator-options[data-open=true]{margin-top:12px}
+ .indicator-section-heading{padding-bottom:20px}
+ .change-summary{grid-template-columns:1fr 1fr 1.3fr}
+ .change-base>strong,.change-latest>strong{font-size:29px}
+ .change-direction strong{font-size:27px}
+ .timeline-panel{padding:18px}
+}
+@media(max-width:600px){
+ .indicator-section{padding-top:32px}.indicator-section-heading>p{font-size:14px;margin-top:12px}
+ .indicator-section-heading h2{font-size:36px}.topic-navigation{margin-bottom:18px}
+ .topic-navigation>div{gap:0 20px}.topic-navigation button{font-size:13px;min-height:44px}
+ .indicator-title h3{font-size:25px;line-height:1.22}.indicator-title-top .text-button{font-size:11px;min-height:44px;white-space:normal}
+ .indicator-title-top>.micro{line-height:1.6;overflow-wrap:anywhere}
+ .change-summary{grid-template-columns:1fr 1fr;margin-bottom:18px}
+ .change-summary>div{padding:14px 12px}.change-summary>div:nth-child(2){border-right:0;padding-right:0}
+ .change-summary .change-direction{grid-column:1/-1;border-top:1px solid #515a42;padding:14px 0;gap:16px}
+ .change-direction>div{flex:1;display:grid;grid-template-columns:1fr auto;gap:5px 12px;align-items:center}
+ .change-direction strong{grid-column:2;grid-row:1/span 2;margin:0;font-size:27px}
+ .change-arrow{font-size:46px}.change-verdict{grid-column:1;font-size:10px}
+ .change-base>strong,.change-latest>strong{font-size:32px}
+ .data-bento{display:grid;grid-template-columns:minmax(0,1fr);gap:0}
+ .timeline-panel{grid-column:1;grid-row:1;padding:16px 12px}
+ .projection-panel{grid-column:1;grid-row:2;padding:20px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px 16px;align-items:start}
+ .projection-top{grid-column:1/-1}.projection-badge{grid-column:1;margin:5px 0}
+ .projection-panel h4{grid-column:1;font-size:22px;max-width:22ch}
+ .projection-number{grid-column:2;grid-row:2/4;font-size:34px;margin:0;text-align:right;max-width:7ch}
+ .projection-year{grid-column:1/-1;font-size:9px}.projection-limit{grid-column:1/-1;margin:0}
+ .projection-explanation{grid-column:1/-1;margin-top:4px;font-size:12px}
+ .scenario-panel{grid-column:1;grid-row:3;padding:20px 0;gap:12px}
+ .scenario-panel h4{font-size:23px}.scenario-controls output{font-size:23px}
+ .scenario-controls p{font-size:12px}.range-ends{gap:8px;font-size:10px}
+ .range-ends button{min-height:44px;font-size:11px}
+ .progress-panel{grid-column:1;grid-row:4;padding-block:18px}
+ .history-canvas svg{height:245px;min-width:0}
+ .chart-toolbar{gap:8px}.chart-toolbar>div{flex:1;display:flex}
+ .chart-toolbar>div button{flex:1;padding:10px 9px}
+ .chart-toolbar .chart-goal-toggle{margin-left:auto;min-height:44px}
+ .chart-caption .micro{max-width:none;font-size:8px}
+ .chart-point-buttons{grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+ .chart-point-buttons button{padding:12px 7px;min-height:76px}
+ .chart-point-buttons span{font-size:8px;line-height:1.5}
+ .chart-point-buttons strong{font-size:21px;letter-spacing:-.04em}
+ .chart-legend{font-size:10px;line-height:1.5}.chart-notes{font-size:12px}
+ .timeline-heading{gap:8px}.timeline-stages strong{font-size:23px}.timeline-stages small{font-size:10px}
+ .source-bar>.micro:last-child{padding-left:0}
+}
