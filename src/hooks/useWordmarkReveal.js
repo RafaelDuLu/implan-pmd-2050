@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 /** Finish while the whole word is visible, before the sticky sheet can hold its position. */
-export function useWordmarkReveal() {
+export function useWordmarkReveal(finishRatio = .5) {
   const ref = useRef(null);
   useEffect(() => {
     const element = ref.current;
@@ -10,7 +10,7 @@ export function useWordmarkReveal() {
     const measure = () => {
       const rect = element.getBoundingClientRect();
       const start = innerHeight * .98;
-      const finish = Math.max(24, Math.min(innerHeight * .5, innerHeight - rect.height - 32));
+      const finish = Math.max(24, Math.min(innerHeight * finishRatio, innerHeight - rect.height - 32));
       target = reduced.matches ? 1 : Math.max(0, Math.min(1, (start - rect.top) / Math.max(1, start - finish)));
     };
     const paint = time => {
@@ -36,6 +36,6 @@ export function useWordmarkReveal() {
       window.removeEventListener('resize', update);
       reduced.removeEventListener('change', update);
     };
-  }, []);
+  }, [finishRatio]);
   return ref;
 }

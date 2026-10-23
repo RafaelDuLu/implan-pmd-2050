@@ -4,7 +4,7 @@ import { glyphs, viewBox } from '../assets/explorarWordmark.mjs';
 
 /** The same normalized path drawing and reversible sweep as the closing wordmark. */
 export default function ScrollWordmark() {
-  const ref = useWordmarkReveal();
+  const ref = useWordmarkReveal(.38);
   useEffect(() => {
     const word = ref.current;
     const measure = () => word.style.setProperty('--word-stroke', String(Number(viewBox.split(' ')[2]) / Math.max(1, word.offsetWidth)));

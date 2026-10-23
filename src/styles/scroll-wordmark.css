@@ -1,15 +1,15 @@
 /* Original Mona Sans vectors: outline drawing, white sweep, then ink fill. */
 .band-action>.scroll-wordmark{
-  --fill:clamp(0,calc((var(--word-progress,0) - .3)/.6),1);
+  --fill:clamp(0,calc((var(--word-progress,0) - .62)/.34),1);
   --sweep-opacity:calc(clamp(0,calc(var(--fill)*30),1)*clamp(0,calc((1 - var(--fill))*30),1));
   position:relative;display:block;flex:none;
   width:min(100%,4.02em);font-size:clamp(48px,14.2vw,225px);
   line-height:1;isolation:isolate;
 }
 .scroll-wordmark>svg{display:block;width:100%;height:auto;overflow:visible}
-.scroll-word-trace{fill:none;stroke:var(--ink);stroke-width:var(--word-stroke,4);clip-path:inset(-2% -2% -2% calc(var(--fill)*100%))}
+.scroll-word-trace{fill:none;stroke:var(--ink);stroke-width:calc(var(--word-stroke,4)*1.1);clip-path:inset(-2% -2% -2% calc(var(--fill)*100%))}
 .scroll-word-trace path{
-  --draw:clamp(0,calc((var(--word-progress,0) - .015 - var(--glyph-index)*.018)*5),1);
+  --draw:clamp(0,calc((var(--word-progress,0) - .02 - var(--glyph-index)*.025)*2.5),1);
   stroke-dasharray:1 1;stroke-dashoffset:calc(1 - var(--draw));
 }
 .scroll-wordmark>.scroll-word-fill{position:absolute;inset:0;width:100%;height:100%;fill:var(--ink);clip-path:inset(-2% calc((1 - var(--fill))*100%) -2% -2%)}
