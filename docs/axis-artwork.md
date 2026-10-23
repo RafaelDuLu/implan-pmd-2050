@@ -62,3 +62,18 @@ Archivo: public/axes/entrances/eje-7.webp
 
 Use case: stylized-concept. Asset type: original full-width transition artwork for IMPLAN León statistical portal. GOBIERNO. A sophisticated editorial architectural illustration of the ACTUAL Palacio Municipal de León Guanajuato, façade shown in the reference. Preserve distinctive terracotta central façade, pale cantera classical pilasters, three upper balcony openings, symmetrical window rhythm and the small square CLOCK turret above the center. Keep recognizable low broad neoclassical proportions and adjoining white building. Quiet civic plaza foreground, a few residents in scale, three-quarter architectural photography composition. NOT a generic parliament, not a cathedral, not a glass pavilion, no dome or invented towers. Exact recognizable building identity is the priority. Input image role: architectural/geographic visual reference; create a new stylized editorial illustration, preserving identifying real-world forms. Premium international studio-quality detailed 3D/editorial rendering with believable materials; cinematic dark palette of charcoal, near-black, stone, leather and muted authentic original colors, selective phosphorescent lime green #b6ff00 light accents. Elegant directional lighting, controlled depth, refined detail, no random abstract sculpture. Wide LANDSCAPE 1536x1024. Main scene within central 75% so it crops to phone; leave some dark breathing room at edges and bottom for HTML caption. No in-image title, no labels, no watermark, no invented institutional seals, no UI. This is an artistic city-themed illustration, not a documentary photograph.
 
+
+## Revisión de detalle — 23 de octubre de 2026
+
+Edición con Imagegen integrado de las aperturas de Sociedad y Economía. Conservan 1440 × 960 y su encuadre y tratamiento de luz. Se revisaron visualmente los siete originales y los dos reemplazos antes de integrarlos; no se detectaron otras deformaciones evidentes a esta escala.
+
+- Sociedad: retirada la mano sobrante junto a la cadera del joven izquierdo; sus dos manos sostienen el libro.
+- Economía: reconstruido el zapato con proporciones naturales, cordones, suela continua y tacón alineado; ajustado el contacto con las manos y la herramienta.
+
+Prompts de corrección (precise-object-edit):
+
+Sociedad: Correct ONLY the anatomy of the young man at the left foreground holding a book. REMOVE the extra dangling hand entirely. Exactly TWO arms and TWO hands, both naturally holding the book at waist height. Reconstruct jacket edge/background cleanly. Check foreground fingers and arm connections. Preserve every other person, Arco de la Calzada architecture, camera, lighting, dusk palette and composition.
+
+Economía: Replace the misshapen shoe with a realistically proportioned brown leather Oxford brogue on one wooden last: rounded almond toe, aligned low heel, continuous welt and sole, coherent panels, neat laces and stitching. Natural horizontal three-quarter side view on the workbench, toe right, heel left. Exactly two anatomically correct artisan hands with coherent grip and burnishing tool contact. Preserve workshop, scraps, sewing machine, background, lighting and wide composition. No extra shoe parts, warped sole or disconnected heel.
+
+Validación: compilación de producción y 14 pruebas aprobadas.
