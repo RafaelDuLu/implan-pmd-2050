@@ -32,3 +32,18 @@
 @media(max-width:600px){.hero-composition{grid-template-columns:1fr;gap:38px;padding:38px 0}.hero h1{font-size:12vw;line-height:1.05}.hero-side{grid-template-columns:1fr 1fr;gap:15px;margin-top:28px;align-items:end}.hero-side>.micro{grid-column:1/-1}.hero-side p{font-size:14px}.hero-side .arrow-link{justify-self:end;font-size:11px;max-width:135px}.leon-map{width:100%;max-width:420px;justify-self:center}.leon-map-canvas{max-width:360px;margin-inline:auto}.leon-map figcaption{flex-direction:row;align-items:end}.leon-map figcaption p{font-size:21px}.map-toggle{font-size:11px;padding:11px;gap:15px}.map-hint{display:none}.map-credit{margin-top:14px}}
 @media(hover:none),(pointer:coarse){.map-hint{display:none}}
 @media(prefers-reduced-motion:reduce){.hero[data-scanning=true] .leon-map:not([data-map-expanded=true]) .leon-map-detail{opacity:0}}
+
+/* The future shares the map's scanner, without changing the paragraph's layout. */
+.hero-side .hero-message{grid-column:1/-1;max-width:none}
+.hero-message>span{display:block}
+.hero-future{
+ width:fit-content;max-width:100%;opacity:0;
+ --future-local-x:calc(var(--mouse-x) - var(--future-x,0px));
+ --future-local-y:calc(var(--mouse-y) - var(--future-y,0px));
+ mask-image:radial-gradient(circle var(--lens-radius) at var(--future-local-x) var(--future-local-y),black 65%,transparent 100%);
+ -webkit-mask-image:radial-gradient(circle var(--lens-radius) at var(--future-local-x) var(--future-local-y),black 65%,transparent 100%);
+}
+.hero[data-scanning=true] .hero-future{opacity:1}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){
+ .hero .hero-future{opacity:1;mask-image:none;-webkit-mask-image:none}
+}
