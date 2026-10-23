@@ -17,7 +17,6 @@
 .solid-button{border:1px solid var(--ink);background:var(--ink);color:var(--paper);padding:17px 22px;font-size:14px;display:inline-flex;justify-content:space-between;gap:35px;align-items:center;min-height:50px}.solid-button:hover{background:var(--lime);color:var(--ink)}
 .load-screen{min-height:100svh;display:grid;align-content:center;gap:24px;padding:var(--gutter);background:var(--ink);color:var(--paper)}.load-screen h1{font-size:var(--display)}
 @keyframes line-enter{from{transform:translateY(105%)}to{transform:translateY(0)}}
-@keyframes sheet-open{0%{visibility:visible;clip-path:inset(0)}20%{clip-path:inset(0)}99%{visibility:visible}100%{visibility:hidden;clip-path:inset(0 0 100%)}}
 
 [data-reveal-ready=true]{transition:opacity 650ms var(--ease),transform 650ms var(--ease)}
 [data-reveal-ready=true][data-revealed=false]{opacity:0;transform:translate3d(0,24px,0)}

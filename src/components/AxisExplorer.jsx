@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { warmAxisArtwork } from '../lib/axis-artwork.js';
 import EditorialBanner from './EditorialBanner.jsx';
 import { Arrow } from './Icons.jsx';
 
@@ -12,9 +14,20 @@ export const axisCopy = {
 };
 
 export default function AxisExplorer({ axes, indicators, activeAxis, onSelect }) {
+  const directory = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        axes.forEach(axis => warmAxisArtwork(axis.id));
+        observer.disconnect();
+      }
+    }, { rootMargin: '400px' });
+    observer.observe(directory.current);
+    return () => observer.disconnect();
+  }, [axes]);
   return <div className="axis-section" data-page-layer id="ejes">
     <EditorialBanner id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} action="Explorar"/>
-    <section className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><h2 id="axes-title">Siete ejes<br/>de ciudad.</h2></div><div className="axis-ledger">{axes.map(axis => {
+    <section ref={directory} className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><h2 id="axes-title">Siete ejes<br/>de ciudad.</h2></div><div className="axis-ledger">{axes.map(axis => {
       const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;
       return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><img className="axis-art" src={`./axes/eje-${axis.id}.webp`} alt="" width="160" height="160" loading="lazy" decoding="async"/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
     })}</div></section>

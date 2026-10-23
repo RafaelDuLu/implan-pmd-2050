@@ -1,0 +1,33 @@
+/* Seven original cinematic artworks. The image settles before the surface lifts. */
+.axis-entrance{
+  position:absolute;inset:0 0 auto;z-index:5;height:min(780px,100svh);
+  overflow:hidden;isolation:isolate;background:#11140d;color:var(--lime);
+  visibility:hidden;pointer-events:none;contain:paint;
+}
+.axis-entrance[data-visible=true]:not([data-phase=done]){visibility:visible;pointer-events:auto}
+.axis-entrance-art{display:block;width:100%;height:100%;object-fit:contain;object-position:50% 50%;opacity:0}
+.axis-entrance-shade{position:absolute;inset:0;background:linear-gradient(0deg,#080c08d9,transparent 40%),linear-gradient(90deg,#10140b66,transparent 45%);pointer-events:none}
+.axis-entrance-caption{position:absolute;left:var(--gutter);bottom:clamp(50px,7vh,80px);display:flex;align-items:baseline;gap:20px;opacity:0}
+.axis-entrance-caption>.micro{font-size:11px}
+.axis-entrance-caption>span:last-child{font-size:clamp(32px,5.3vw,78px);line-height:1.1;letter-spacing:-.05em;font-weight:450}
+.axis-entrance-skip{position:absolute;right:var(--gutter);bottom:clamp(48px,7vh,78px);min-height:44px;display:flex;align-items:center;gap:24px;border:0;border-bottom:1px solid #b6ff0066;font-size:12px;color:var(--lime);background:transparent;opacity:0;transition:color 180ms,border-color 180ms}
+.axis-entrance-skip:hover{color:white;border-color:white}
+.axis-entrance-rule{position:absolute;left:var(--gutter);right:var(--gutter);bottom:28px;height:1px;background:#b6ff0033;overflow:hidden}
+.axis-entrance-rule::after{content:'';display:block;height:100%;background:var(--lime);transform:scaleX(0);transform-origin:left}
+.axis-entrance[data-phase=playing]{animation:axis-entrance-lift 3100ms cubic-bezier(.76,0,.24,1) both}
+.axis-entrance[data-phase=playing] .axis-entrance-art{animation:axis-art-settle 3100ms cubic-bezier(.22,1,.36,1) both}
+.axis-entrance[data-phase=playing] .axis-entrance-caption,.axis-entrance[data-phase=playing] .axis-entrance-skip{animation:axis-caption-settle 3100ms ease both}
+.axis-entrance[data-phase=playing] .axis-entrance-rule::after{animation:axis-entrance-time 2250ms 150ms linear both}
+@keyframes axis-entrance-lift{0%,73%{visibility:visible;transform:translateY(0)}99.9%{visibility:visible}100%{visibility:hidden;transform:translateY(-101%)}}
+@keyframes axis-art-settle{0%{opacity:0;transform:scale(1.055)}14%{opacity:1}73%,100%{opacity:1;transform:scale(1)}}
+@keyframes axis-caption-settle{0%,8%{opacity:0;transform:translateY(12px)}22%,75%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-12px)}}
+@keyframes axis-entrance-time{to{transform:scaleX(1)}}
+@media(max-width:600px){
+ .axis-entrance{height:min(520px,76svh)}
+ .axis-entrance-art{object-position:50% 25%}
+ .axis-entrance-caption{bottom:105px;gap:12px}
+ .axis-entrance-skip{left:var(--gutter);right:auto;bottom:45px;gap:38px}
+ .axis-entrance-rule{bottom:24px}
+ .axis-entrance-shade{background:linear-gradient(0deg,#080c08ed,transparent 60%)}
+}
+@media(prefers-reduced-motion:reduce){.axis-entrance{display:none!important}}
