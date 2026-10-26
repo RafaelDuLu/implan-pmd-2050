@@ -16,7 +16,7 @@ Solo se publican las ilustraciones generadas, no las fotografías de referencia.
 
 ## Movimiento
 
-Duración 3.1 segundos: entrada, pausa y levantamiento de capa. Se inicia con imagen decodificada y 55% del panel visible. Precarga de baja prioridad cerca del directorio. Se omite con el botón, Escape o la preferencia de movimiento reducido. Una descarga fallida o lenta libera los indicadores. No se repite al cambiar de indicador dentro del mismo eje.
+Duración 2.2 segundos: entrada, pausa y levantamiento de capa. Se inicia con imagen decodificada y 55% del panel visible. Precarga de baja prioridad cerca del directorio. Se omite con el botón, Escape o la preferencia de movimiento reducido. Una descarga fallida o lenta libera los indicadores. No se repite al cambiar de indicador dentro del mismo eje.
 
 ## Prompts finales
 

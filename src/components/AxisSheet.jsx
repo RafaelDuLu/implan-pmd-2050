@@ -31,7 +31,7 @@ export function AxisSheet({ axis, children }) {
   useEffect(() => {
     if (!visible || phase === 'done') return;
     // Failed connections cannot leave the statistical controls behind an overlay.
-    const fallback = setTimeout(finish, phase === 'playing' ? 3300 : 2500);
+    const fallback = setTimeout(finish, phase === 'playing' ? 2400 : 2500);
     const escape = event => { if (event.key === 'Escape') finish(); };
     window.addEventListener('keydown', escape);
     return () => { clearTimeout(fallback); window.removeEventListener('keydown', escape); };
