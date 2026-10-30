@@ -1,6 +1,7 @@
 import { goalPlan, paceKeyStep } from '../lib/goal-plan.mjs';
 import { number } from '../lib/indicators.mjs';
 import { indicatorActions } from '../lib/indicator-actions.mjs';
+import { paceContext } from '../lib/pace-context.mjs';
 
 const rateUnits = { '1.3.2': 'años de escolaridad por año', '5.3.1': 'litros diarios por habitante, cada año', '4.5.2': 'kg diarios por persona, cada año', '6.2.1': 'usuarios diarios, cada año', '4.1.3': 'habitantes por hectárea, cada año' };
 const annualUnit = d => rateUnits[d.id] || (d.percent ? 'puntos porcentuales por año' : /^Escala/i.test(d.unit) ? 'puntos del índice por año' : `${d.unit.toLocaleLowerCase('es-MX')} por año`);
@@ -11,6 +12,8 @@ export default function GoalPlan({ indicator: d, multiplier, projected, pace, au
   const title = plan.status === 'achieved' ? risk ? 'Meta cumplida; el escenario pierde el avance' : 'Meta alcanzada' : projected.state === 'unavailable' ? 'El escenario sale de la escala' : plan.crossingYear !== null ? plan.crossingYear <= 2030 ? 'La meta se alcanzaría en' : 'La meta se alcanzaría después de 2030' : 'Con este ritmo no se alcanza la meta';
   const actions = indicatorActions[d.id];
   const direction = plan.annual === null || plan.annual === 0 ? 'Sin cambio anual' : `${plan.annual > 0 ? 'Aumento' : 'Reducción'} de ${rate(plan.annual,d)}`;
+  const context = paceContext(d,plan.annual);
+  const needed = paceContext(d,plan.required);
   return <aside id="detail-rhythm" className="goal-plan" aria-label="Simulador del ritmo hacia la meta">
     <h4>{d.direction === 'D' ? 'Ritmo de reducción' : 'Ritmo de aumento'}</h4>
     {autoAdjusted && <p className="pace-auto-direction">Escenario de mejora · el cambio observado va en sentido contrario.</p>}
@@ -24,8 +27,8 @@ export default function GoalPlan({ indicator: d, multiplier, projected, pace, au
         </div>
       </div>
       <div className="pace-reading">
-        <div className="pace-result" aria-live="polite" aria-atomic="true"><p className="goal-plan-status">{title}</p>{plan.status === 'approaching' && projected.state !== 'unavailable' && <strong className="goal-plan-year">{String(plan.crossingYear)}</strong>}<p className="pace-direction">{direction}.</p></div>
-        {plan.status !== 'achieved' && plan.required !== null && <p className="pace-needed">Para 2030: {d.direction === 'D' ? 'reducir' : 'aumentar'} aproximadamente <strong>{rate(plan.required,d)}</strong>.</p>}
+        <div className="pace-result" aria-live="polite" aria-atomic="true"><p className="goal-plan-status">{title}</p>{plan.status === 'approaching' && projected.state !== 'unavailable' && <strong className="goal-plan-year">{String(plan.crossingYear)}</strong>}<p className="pace-direction">{projected.state === 'unavailable' ? 'Ajusta el ritmo para mantener un escenario dentro de la escala del indicador.' : context ? `${context}.` : `${direction}.`}</p></div>
+        {plan.status !== 'achieved' && plan.required !== null && <p className="pace-needed">Para llegar en 2030: <strong>{needed ? needed.charAt(0).toLocaleLowerCase('es-MX')+needed.slice(1) : rate(plan.required,d)}</strong>.</p>}
         <div className="pace-actions"><button onClick={onReset}>Restablecer</button></div>
       </div>
     </div>

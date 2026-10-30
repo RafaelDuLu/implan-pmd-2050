@@ -182,3 +182,37 @@ test('Los 31 indicadores conservan datos reales y simulan el sentido de su meta'
     assert.equal(JSON.stringify(d),snapshot);
   }
 });
+
+test('Las equivalencias contextualizan los 31 ritmos sin inventar totales municipales', async () => {
+  const { paceContext, paceContexts } = await import('../src/lib/pace-context.mjs');
+  assert.equal(Object.keys(paceContexts).length,31);
+  for(const d of eligible) {
+    const snapshot=JSON.stringify(d);
+    const p=goalPlan(d,2030,goalPaceMultiplier(d));
+    const text=paceContext(d,p.annual);
+    assert.ok(text && !/NaN|undefined|No disponible/.test(text),d.id);
+    if(p.annual!==0) assert.notEqual(text,paceContext(d,p.annual*2),d.id);
+    assert.match(paceContext(d,0),/pausa/);
+    assert.equal(paceContext(d,null),null);
+    assert.equal(JSON.stringify(d),snapshot);
+  }
+});
+test('Escolaridad expresa grados completados y conserva la equivalencia al mover el ritmo', async () => {
+  const { paceContext } = await import('../src/lib/pace-context.mjs');
+  const school=eligible.find(d=>d.id==='1.3.2');
+  const p=goalPlan(school,2030,1);
+  assert.match(paceContext(school,p.required),/64 personas de cada 1,000.*completando un grado/);
+  assert.match(paceContext(school,p.required*2),/128 personas de cada 1,000/);
+  assert.doesNotMatch(paceContext(school,p.required),/reincorpor/);
+});
+test('Se convierten segundos, metros, gramos y días sin perder sus denominadores', async () => {
+  const { paceContext } = await import('../src/lib/pace-context.mjs');
+  const d = id => eligible.find(x=>x.id===id);
+  assert.match(paceContext(d('2.1.2'),-1.5),/90 segundos/);
+  assert.match(paceContext(d('6.1.1'),-.25),/250 metros/);
+  assert.match(paceContext(d('4.5.2'),-.006),/6 gramos/);
+  assert.match(paceContext(d('4.3.4'),.01),/3.65 días/);
+  assert.match(paceContext(d('1.5.1'),.01),/10 personas.*1,000/);
+  assert.match(paceContext(d('1.5.1'),-.01),/aleja/);
+  assert.match(paceContext(d('1.5.1'),.000001),/menos de 0.01/);
+});

@@ -7,3 +7,11 @@ Las prioridades son sugerencias editoriales para evaluación, no recomendaciones
 Referencias de contexto consultadas el 30 de octubre de 2026: proyectos estratégicos y prioritarios de https://www.leonplan2050.gob.mx/eje-1/, /eje-2/, /eje-3/, /eje-4/, /eje-5/, /eje-6/ y /eje-7/. El archivo src/lib/indicator-actions.mjs contiene redacción propia que interpreta esos temas y el indicador; no transcribe un catálogo oficial de medidas por indicador.
 
 Por solicitud del usuario, las fuentes y metodología no se muestran como secciones de la interfaz. Permanecen las referencias originales en assets/data.json y las exportaciones CSV. Los valores de origen siguen pendientes del cotejo institucional documentado previamente, incluida la comparabilidad temporal del indicador 3.1.3.
+
+## Lectura concreta del ritmo
+
+`pace-context.mjs` traduce el cambio anual del mismo escenario a una frase para cada uno de los 31 indicadores. La segunda frase convierte el ritmo requerido a 2030 con el mismo criterio. Ambas parten del último año del dato. Los porcentajes de población, viviendas, vehículos y trámites se normalizan por cada 1,000 unidades de su universo; no son conteos de León ni personas identificadas. No hay denominadores poblacionales absolutos validados en el insumo.
+
+Escolaridad: un incremento de 0.064 años promedio equivale, manteniendo constante la población de referencia, a 64 grados escolares adicionales por cada 1,000 personas de 15 años y más. Una distribución equivalente sería que 64 de ellas completaran un grado más. No implica que deban reincorporarse exactamente 64 personas: matrícula, permanencia, grados completados y cambios de composición poblacional son distintos. La frase se identifica como equivalencia.
+
+Otras conversiones: minutos × 60 a segundos; km × 1,000 a metros; kg por persona y día × 1,000 a gramos; proporción de días × 365 a días equivalentes en un año normalizado. Se mantienen unidades originales para tasas e índices cuando no permiten traducir a personas o infraestructura. Las cifras pueden ser fracciones al tratarse de ritmos promedio, no conteos observados. Cero representa pausa; datos inválidos no generan equivalencias; un escenario fuera de escala no muestra una mejora interpretable. Las prioridades de actuación siguen siendo sugerencias, sin atribuir efectos cuantificados a una intervención.
