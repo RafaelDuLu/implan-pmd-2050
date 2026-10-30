@@ -1,5 +1,5 @@
 import { indicatorActions } from '../src/lib/indicator-actions.mjs';
-import { goalPlan } from '../src/lib/goal-plan.mjs';
+import { goalPlan, paceKeyStep } from '../src/lib/goal-plan.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -150,4 +150,13 @@ test('La simulaciÃ³n respeta la escala y cada indicador tiene prioridades especÃ
   const waterHousing=eligible.find(d=>d.id==='1.1.2');
   assert.equal(project(waterHousing,3,2030,true).state,'unavailable');
   assert.notEqual(indicatorActions['1.1.2'][1],indicatorActions['1.3.2'][1]);
+});
+
+
+test('El teclado acelera reducciones hacia abajo y aumentos hacia arriba', () => {
+  assert.equal(paceKeyStep('D','ArrowDown'),1);
+  assert.equal(paceKeyStep('D','ArrowUp'),-1);
+  assert.equal(paceKeyStep('A','ArrowUp'),1);
+  assert.equal(paceKeyStep('A','ArrowDown'),-1);
+  assert.equal(paceKeyStep('D','Tab'),0);
 });

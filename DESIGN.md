@@ -35,3 +35,9 @@ El módulo goal-plan.mjs distingue meta cumplida en el último dato (sin fechar 
 Se restituye el control de 0× a 3×, con inversión explícita opcional de la dirección y restablecimiento. La gráfica y el año simulado usan exactamente el mismo multiplicador. Nunca se alteran la base, el último dato ni la meta. No se visualizan escenarios fuera de escala. La condición de meta ya alcanzada corresponde al dato real, no al resultado hipotético del control.
 
 Se eliminan de la presentación las fuentes, notas, bloques metodológicos y columna de fuente. La trazabilidad y referencias permanecen en los datos locales y CSV. El único rótulo de interpretación persistente es «Escenario simulado». Se reemplazan consejos tautológicos por prioridades editoriales específicas para los 31 indicadores: cerrar brechas o sostener los resultados. No se presentan como acciones suficientes, causalidad comprobada o medidas oficiales obligatorias. El control modifica el ritmo matemático; no estima el efecto de esas acciones.
+
+## Sentido del ritmo y consulta en pantalla
+
+Control vertical: en metas descendentes 0× arriba y 3× abajo; en ascendentes 3× arriba y 0× abajo. Las flechas de teclado siguen esa orientación y la lectura usa la dirección real del cambio, por lo que una tendencia contraria sigue siendo identificable y puede invertirse explícitamente. El cálculo permanece inalterado.
+
+Encabezado, valores, gráfica y prioridades se compactan en escritorio. En anchos de hasta 1050 px se alternan Gráfica y Ritmo y acciones mediante controles accesibles; no se ocultan definitivamente contenidos ni se recorta texto. Se mantiene desplazamiento nativo para pantallas pequeñas, zoom o textos largos. Volver a los indicadores usa un botón sólido, de ancho completo en teléfono.

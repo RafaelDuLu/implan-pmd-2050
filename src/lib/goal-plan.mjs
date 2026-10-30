@@ -19,3 +19,9 @@ export function goalPlan(d, horizon = 2030, multiplier = 1) {
   return { status, annual, required, crossingYear: crossing === null ? null : Math.ceil(crossing - 1e-9), horizon, latestYear: year,
     factor: !achieved && favorable && required !== null ? Math.abs(required / annual) : null };
 }
+
+/** Visual direction follows the goal: down accelerates reductions, up increases. */
+export function paceKeyStep(direction, key) {
+  if (!['ArrowUp','ArrowDown'].includes(key)) return 0;
+  return (key === 'ArrowDown' ? 1 : -1) * (direction === 'D' ? 1 : -1);
+}

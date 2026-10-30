@@ -61,3 +61,78 @@
 .action-suggestion{font-size:10px!important;color:#b8cad6!important;margin:-2px 0 9px}
 .pace-simulation-label{font-size:10px;color:#b8cad6;margin-top:22px}
 @media(max-width:1000px){.goal-plan{display:block}.pace-tool{max-width:600px}}
+/* Compact, direction-aware consultation. No content is clipped to force a fit. */
+.detail-section{padding-top:18px;padding-bottom:24px}
+.detail-back{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;margin:0 0 14px;border:1px solid var(--axis-light);border-radius:5px;background:var(--axis-tint);color:#121c24;font-size:14px;font-weight:600;gap:10px}
+.detail-back:hover{background:var(--axis-light)}
+.detail-section .indicator-section-heading{grid-template-columns:74px minmax(0,1fr);margin-bottom:14px}
+.detail-section .axis-heading-art{padding:8px}
+.detail-section .axis-heading-art img{width:50px}
+.detail-section .axis-heading-copy{padding:12px 20px;gap:4px}
+.detail-section .axis-heading-copy h2{font-size:25px}
+.detail-section .axis-heading-copy p{font-size:12px}
+.clean-detail .indicator-title{padding:0 0 12px}
+.clean-detail .indicator-title-top{margin-bottom:8px;align-items:center}
+.clean-detail .indicator-title h3{font-size:clamp(21px,1.9vw,28px);line-height:1.25}
+.detail-values{padding:12px 0 18px;gap:16px}
+.detail-values strong{font-size:clamp(25px,2.3vw,33px);margin-top:5px}
+.detail-values span{font-size:12px}
+.detail-layout{grid-template-columns:minmax(0,1.4fr) minmax(340px,1fr);gap:28px}
+.detail-chart{padding:20px;align-self:start}
+.clean-chart-heading{margin-bottom:6px}.clean-chart-heading h4{font-size:18px}
+.clean-chart .history-canvas svg{height:clamp(190px,26svh,260px)}
+.clean-chart-legend{margin-top:6px;gap:8px 14px;font-size:10px}
+.clean-chart-result{margin-top:12px;padding-top:12px;font-size:12px}
+.goal-plan h4{font-size:20px;margin-bottom:10px}
+.pace-workspace{display:grid;grid-template-columns:78px minmax(0,1fr);gap:20px;align-items:start}
+.pace-tool{margin:0;max-width:none;min-width:0;text-align:center}
+.pace-tool .pace-output{display:block;font-size:22px;line-height:1.4;color:var(--axis-light);white-space:nowrap}
+.pace-vertical{display:flex;flex-direction:column;align-items:center;gap:4px;margin-top:6px}
+.pace-end{font-size:10px;line-height:1.5;color:#bdcbd5}
+.pace-tool .pace-vertical input{writing-mode:vertical-lr;direction:rtl;width:44px;height:150px;min-height:0;margin:0;cursor:ns-resize;accent-color:var(--axis-light)}
+.pace-tool[data-direction=D] .pace-vertical input{direction:ltr}
+.pace-result{border:0;padding:0}
+.goal-plan-status{font-size:16px;line-height:1.4;max-width:none}
+.goal-plan-year{font-size:44px;margin:5px 0}
+.pace-direction{font-size:12px;margin-top:8px;line-height:1.6}
+.pace-needed{font-size:12px;margin-top:12px;line-height:1.7}
+.pace-actions{gap:12px;margin-top:5px;flex-wrap:wrap}
+.pace-actions button{font-size:11px;min-height:36px;padding:5px 0}
+.goal-plan-required{margin-top:14px;padding-top:12px}
+.goal-plan h5{font-size:15px;margin-bottom:6px}
+.goal-plan-required p{font-size:13px;line-height:1.65}
+.action-suggestion{display:none}
+.pace-simulation-label{margin-top:10px}
+.detail-view-tabs{display:none}
+@media(min-width:1051px) and (max-height:800px){
+ .detail-section{padding-top:12px}.detail-back{margin-bottom:10px}
+ .detail-section .indicator-section-heading{grid-template-columns:62px minmax(0,1fr);margin-bottom:10px}
+ .detail-section .axis-heading-art img{width:42px}.detail-section .axis-heading-copy{padding:9px 18px}
+ .detail-section .axis-heading-copy h2{font-size:23px}.detail-section .axis-heading-copy p{font-size:11px}
+ .detail-values{padding-block:10px}.clean-chart .history-canvas svg{height:205px}
+ .goal-plan-year{font-size:39px}.goal-plan-required{margin-top:10px;padding-top:10px}
+ .pace-tool .pace-vertical input{height:130px}
+}
+@media(max-width:1050px){
+ .detail-layout{display:block}
+ .detail-view-tabs{display:flex;border-bottom:1px solid #42535f;gap:20px;margin-bottom:18px}
+ .detail-view-tabs button{border:0;border-bottom:2px solid transparent;padding:10px 4px;min-height:44px;font-size:14px;color:#c5d4de}
+ .detail-view-tabs button[aria-pressed=true]{color:var(--axis-light);border-bottom-color:var(--axis-light)}
+ .detail-layout[data-view=rhythm]>.detail-chart{display:none}
+ .detail-layout[data-view=chart]>.goal-plan{display:none}
+ .goal-plan{display:block}.pace-workspace{grid-template-columns:78px minmax(0,1fr)}
+ .pace-tool .pace-vertical input{height:150px}
+}
+@media(max-width:600px){
+ .detail-section{padding-top:12px;padding-bottom:20px}.detail-back{width:100%;margin-bottom:12px;font-size:14px}
+ .detail-section .indicator-section-heading{grid-template-columns:62px minmax(0,1fr);margin-bottom:12px}
+ .detail-section .axis-heading-art img{width:42px}.detail-section .axis-heading-copy{padding:10px 14px}
+ .detail-section .axis-heading-copy h2{font-size:23px}.detail-section .axis-heading-copy p{font-size:11px}
+ .clean-detail .indicator-title-top{margin-bottom:6px}.clean-detail .indicator-title h3{font-size:21px;line-height:1.25}
+ .detail-values{padding:10px 0 12px;gap:10px}.detail-values span{font-size:10px}.detail-values strong{font-size:24px}
+ .detail-view-tabs{margin-bottom:14px}.goal-plan h4{font-size:19px}
+ .pace-workspace{grid-template-columns:65px minmax(0,1fr);gap:18px}.pace-tool .pace-output{font-size:20px}
+ .pace-tool .pace-vertical input{height:130px}.pace-actions{gap:8px 14px}.goal-plan-year{font-size:40px}
+ .goal-plan-required p{font-size:13px}.detail-chart{padding:16px 12px}
+ .clean-chart .history-canvas svg{height:auto;max-height:245px}.pace-simulation-label{margin-top:8px}
+}
