@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { axisCopy } from './AxisExplorer.jsx';
+import { axisCopy, axisTheme } from './AxisExplorer.jsx';
 
 /** One decoded, viewport-synchronized entrance per axis, never per indicator. */
 export function AxisSheet({ axis, children }) {
@@ -47,7 +47,7 @@ export function AxisSheet({ axis, children }) {
   }, [phase, visible]);
   const copy = axisCopy[axis.id];
   const active = visible && phase !== 'done';
-  return <div className="axis-sheet" data-page-layer>
+  return <div className="axis-sheet" style={axisTheme(axis.id)} data-page-layer>
     <div ref={ref} className="axis-entrance" data-phase={phase} data-visible={visible} onAnimationEnd={event => { if (event.target === event.currentTarget) finish(); }}>
       <img ref={image} className="axis-entrance-art" src={`./axes/entrances/eje-${axis.id}.webp`} alt="" width="1440" height="960" decoding="async" fetchPriority="high"/>
       <div className="axis-entrance-shade" aria-hidden="true"/>

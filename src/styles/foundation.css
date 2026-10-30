@@ -1,8 +1,8 @@
 @font-face{font-family:'Mona Sans';src:url('/fonts/mona-sans.woff2') format('woff2');font-weight:200 900;font-style:normal;font-display:swap}
 @font-face{font-family:'Mona Mono';src:url('/fonts/mona-sans-mono.woff2') format('woff2');font-weight:200 900;font-style:normal;font-display:swap}
 :root{
-  --paper:#f5f5ed;--ink:#151611;--dark:#151611;--lime:#b6ff00;--cyan:#b6ff00;
-  --muted:#63655a;--line:#d0d1c5;--dark-line:#44473a;--soft:#b8bdac;
+  --paper:#f6f7f8;--ink:#121c24;--dark:#121c24;--lime:#00b8a3;--cyan:#00b8a3;
+  --muted:#52616c;--line:#d7dfe3;--dark-line:#3d4c57;--soft:#b8c7d1;
   --gutter:clamp(22px,5.9vw,112px);--section:clamp(70px,8vw,136px);
   --ease:cubic-bezier(.22,1,.36,1);--display:clamp(46px,5.4vw,86px);
   font-family:'Mona Sans',Arial,sans-serif;font-size:16px;font-weight:400;color:var(--ink);background:var(--paper);font-synthesis:none;font-optical-sizing:auto;

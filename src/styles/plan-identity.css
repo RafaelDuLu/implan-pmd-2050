@@ -1,0 +1,99 @@
+/* Plan León 2050: official axis colors, quiet reading surfaces, independent data signals. */
+:root{--sociedad:#f9c217;--seguridad:#00b8a3;--economia:#a82167;--territorio:#ff8201;--agua:#4fb348;--movilidad:#2b3990;--gobierno:#0194fe;--success:#9cdbb0;--danger:#ffb4ae}
+html{scrollbar-color:#8799a5 #e8edf0}
+body{font-variant-numeric:lining-nums}
+.site-header-dark{color:#f6f7f8;border-color:#35434e}
+.implan-logo{background:#f6f7f8}
+.hero-top,.hero-bottom{color:#bccbd4}
+.hero-title-fill{color:#f6f7f8}
+.hero-title-fill .headline-line:last-child{color:var(--seguridad)}
+.hero-title-outline{color:transparent;-webkit-text-stroke-color:var(--seguridad)}
+.hero .headline-period{color:var(--sociedad)}
+.leon-map-canvas{filter:hue-rotate(50deg)}
+.site-header::after,.site-footer::after{content:'';position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,var(--sociedad) 0% 14.285%,var(--seguridad) 14.285% 28.57%,var(--economia) 28.57% 42.855%,var(--territorio) 42.855% 57.14%,var(--agua) 57.14% 71.425%,var(--movilidad) 71.425% 85.71%,var(--gobierno) 85.71%)}
+.editorial-band{background:#163e48;color:#f6f7f8}
+.editorial-band .band-action{border-color:#66898d}
+.editorial-band .scroll-word-trace{stroke:#7cd8c9}
+.editorial-band .scroll-word-fill{fill:#7cd8c9}
+.closing-band{background:#242f72;color:#f6f7f8}
+.closing-band .band-action{background:#121c24}
+.axis-directory{grid-template-columns:minmax(170px,.7fr) minmax(0,2.3fr);gap:6%;background:var(--paper)}
+.directory-aside h2{margin:0 0 25px;letter-spacing:-.035em;font-size:clamp(32px,3.2vw,48px)}
+.directory-aside p{color:#52616c;font-size:15px;max-width:25ch}
+.axis-ledger{border:0;display:flex;flex-direction:column;gap:14px;min-width:0}
+.axis-card{grid-template-columns:30px minmax(0,1fr) 190px 26px;grid-template-rows:1fr auto;column-gap:24px;row-gap:12px;min-height:164px;padding:22px 24px;background:var(--axis-tint);color:#182934;border:1px solid color-mix(in srgb,var(--axis-color) 22%,transparent);border-radius:4px;overflow:hidden}
+.axis-card:hover,.axis-card[aria-pressed=true]{background:var(--axis-tint);color:#182934;padding:22px 24px;border-color:var(--axis-color)}
+.axis-card[aria-pressed=true]{box-shadow:inset 0 -3px var(--axis-color)}
+.axis-name{grid-column:2;grid-row:1;align-self:end}
+.axis-name strong{font-size:clamp(27px,2.6vw,40px);letter-spacing:-.035em;line-height:1.12}
+.axis-name>span{font-size:13px;max-width:30ch;line-height:1.5;color:#3f535f;margin-top:9px}
+.axis-number{color:#263d4a;grid-column:1;grid-row:1;position:relative;align-self:start;padding-top:12px}
+.axis-number::before{content:'';display:block;width:22px;height:5px;background:var(--axis-color);margin-bottom:12px}
+.axis-symbol{grid-column:3;grid-row:1/3;width:190px;height:126px;border-radius:2px;overflow:hidden;background:#182934}
+.axis-art{object-fit:cover;width:100%;height:100%;filter:none!important}
+.axis-card:hover .axis-art,.axis-card:focus-visible .axis-art{transform:scale(1.035)}
+.axis-count{grid-column:2;grid-row:2;display:flex;gap:8px;align-items:baseline;font-size:14px;color:#3f535f}
+.axis-count small{font-size:8px}
+.axis-card>svg{grid-column:4;grid-row:1/3;color:#263d4a}
+.axis-card:focus-visible{outline:3px solid #182934;outline-offset:3px}
+.indicator-section-heading{padding-top:12px;padding-bottom:28px;border-top:3px solid var(--axis-color)}
+.indicator-section-heading h2{color:var(--axis-light)}
+.indicator-section-heading>p{color:#ccd7df}
+.indicator-section{--soft:#bdccd6}
+.topic-navigation>div{gap:12px 24px}
+.topic-navigation button{color:#d5dfe6;border-bottom-color:transparent}
+.topic-navigation button::before{content:'';width:7px;height:7px;flex-shrink:0;background:var(--axis-color);border-radius:50%}
+.topic-navigation button:hover,.topic-navigation button[aria-pressed=true]{color:var(--axis-light);border-bottom-color:var(--axis-color)}
+.topic-number{color:#b6c5cf}
+.navigator-list>button[aria-current=true]{background:var(--axis-tint);color:#182934}
+.navigator-list>button:hover:not([aria-current=true]){background:#243340}
+.navigator-list .favorable,.change-direction.favorable{color:var(--success)}
+.navigator-list [aria-current=true] .favorable{color:#24643c}
+.navigator-list .unfavorable,.change-direction.unfavorable{color:var(--danger)}
+.navigator-list [aria-current=true] .unfavorable{color:#963d3d}
+.data-bento[data-state=on-track]{--signal:var(--success)}
+.data-bento[data-state=at-risk]{--signal:var(--danger)}
+.progress-track{background:#3b4b56}
+.progress-track>span{background:var(--axis-light)}
+.axis-entrance{background:#121c24;color:var(--axis-light)}
+.axis-entrance-shade{background:linear-gradient(0deg,#121c24ed,transparent 45%)}
+.axis-entrance-skip{color:var(--axis-light);border-color:var(--axis-color)}
+.axis-entrance-rule{background:#b6c5cf44}
+.axis-entrance-rule::after{background:var(--axis-color)}
+.table-section{background:#f6f7f8}
+.table-section .section-intro{border-top:3px solid var(--axis-color);padding-top:28px}
+.table-caption{color:#344e5d}
+.table-scroll{scrollbar-color:var(--axis-color) #e5eaee}
+.table-section .solid-button:hover{background:var(--axis-tint);color:#182934}
+.table-scroll tbody tr:hover{background:var(--axis-tint)}
+.timeline-node[aria-pressed=true]{background:var(--axis-tint);box-shadow:0 0 0 3px color-mix(in srgb,var(--axis-color) 30%,transparent)}
+.timeline-panel{--lime:var(--axis-color)}
+.timeline-panel button[aria-pressed=true]{color:#182934;background:var(--axis-tint)}
+.source-bar .source-label,.indicator-notes summary>span{color:var(--axis-light)}
+:where(.axis-sheet,.table-section) ::selection{background:var(--axis-tint);color:#182934}
+@media(max-width:1100px){.axis-directory{grid-template-columns:1fr;gap:32px}.directory-aside{position:static;display:flex;align-items:end;justify-content:space-between;gap:30px}.directory-aside h2{margin:0}.directory-aside p{max-width:33ch}.axis-card{grid-template-columns:30px minmax(0,1fr) 230px 26px}.axis-symbol{width:230px;height:144px}}
+@media(max-width:600px){
+ .directory-aside{display:block}.directory-aside h2{font-size:34px}.directory-aside p{margin-top:15px;font-size:14px;max-width:36ch}
+ .axis-directory{padding-block:50px}.axis-ledger{gap:12px}
+ .axis-card,.axis-card:hover,.axis-card[aria-pressed=true]{grid-template-columns:18px minmax(0,1fr) 96px;gap:12px;min-height:152px;padding:18px 14px}
+ .axis-name strong{font-size:25px}.axis-name>span{font-size:11px;max-width:23ch}
+ .axis-number{font-size:9px;padding-top:5px}.axis-number::before{width:16px;height:4px;margin-bottom:10px}
+ .axis-symbol{width:96px;height:112px;grid-row:1/3;align-self:center}
+ .axis-art{object-position:50% 50%}
+ .axis-count{font-size:12px;grid-column:2;grid-row:2}.axis-count small{font-size:7px}
+ .axis-card>svg{display:none}
+ .topic-navigation>div{gap:8px 16px}.topic-navigation button{font-size:12px}
+ .indicator-section-heading>p{font-size:15px}.indicator-section-heading{padding-top:18px}
+ .site-header nav{border-color:#35434e}
+}
+@media(prefers-reduced-motion:reduce){.axis-card:hover .axis-art,.axis-card:focus-visible .axis-art{transform:none}}
+/* Secondary consultation text stays neutral rather than inheriting the old olive palette. */
+.change-base>strong{color:#b9c9d4}
+.change-summary .micro,.change-summary small,.indicator-title-top>.micro,.projection-year,.projection-limit,.scenario-panel .micro,.scenario-panel>p,.scenario-controls p,.source-bar>.micro:last-child,.indicator-notes>div{color:#bdcbd5}
+.change-summary,.change-summary>div,.change-summary>div:nth-child(2){border-color:#42535f}
+.navigator-search,.navigator-pager,.navigator-pager button,.source-bar{border-color:#42535f}
+.navigator-list{scrollbar-color:#889faa #243340}
+.map-toggle{border-color:#4b6976}
+.hero-bottom{border-color:#42535f}
+.timeline-panel .history-goal-line{stroke:#506e7e}
+@media(max-width:600px){.hero-top>span:last-child{max-width:none;text-align:left;white-space:nowrap}}

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { normalize, movement, observedState } from '../lib/indicators.mjs';
-import { axisCopy } from './AxisExplorer.jsx';
+import { axisCopy, axisTheme } from './AxisExplorer.jsx';
 
 export function TopicNavigation({ axes, activeAxis, onSelect }) {
-  return <nav className="topic-navigation" aria-label="Temas estadísticos"><div>{axes.map(axis => <button key={axis.id} aria-pressed={axis.id === activeAxis} onClick={() => onSelect(axis.id)}><span className="topic-number">0{axis.id}</span>{axisCopy[axis.id].title}</button>)}</div></nav>;
+  return <nav className="topic-navigation" aria-label="Temas estadísticos"><div>{axes.map(axis => <button key={axis.id} style={axisTheme(axis.id)} aria-pressed={axis.id === activeAxis} onClick={() => onSelect(axis.id)}><span className="topic-number">0{axis.id}</span>{axisCopy[axis.id].title}</button>)}</div></nav>;
 }
 
 export default function IndicatorNavigator({ indicators, selectedId, onSelect }) {

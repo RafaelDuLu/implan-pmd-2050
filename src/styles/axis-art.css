@@ -3,7 +3,7 @@
 .axis-symbol{display:flex;align-items:center;justify-content:center;width:108px;height:108px;pointer-events:none}
 .axis-art{display:block;width:100%;height:100%;object-fit:contain;transition:transform 450ms var(--ease),filter 450ms var(--ease)}
 .axis-card:hover .axis-art,.axis-card:focus-visible .axis-art{transform:translateY(-5px) rotate(-3deg);filter:drop-shadow(0 10px 8px #14170e18)}
-.axis-card[aria-pressed=true] .axis-art{filter:drop-shadow(0 0 12px #b6ff0028)}
+.axis-card[aria-pressed=true] .axis-art{filter:drop-shadow(0 0 12px #00b8a328)}
 @media(max-width:1150px){.axis-directory{grid-template-columns:1fr 2.8fr;gap:4%}.axis-card{grid-template-columns:20px minmax(0,1fr) 88px 58px 22px;gap:12px}.axis-symbol{width:88px;height:88px}.axis-name strong{font-size:30px}}
 @media(max-width:900px){.axis-directory{grid-template-columns:1fr;gap:35px}.directory-aside{position:static}.directory-aside h2 br{display:none}.axis-card{grid-template-columns:24px minmax(0,1fr) 100px 65px 24px;min-height:130px}.axis-symbol{display:flex;width:100px;height:100px}}
 @media(max-width:600px){
