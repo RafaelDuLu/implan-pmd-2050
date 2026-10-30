@@ -11,3 +11,10 @@
 .layer-stack>.closing-band{position:relative;z-index:4}
 .layer-stack[data-layered=true] [data-page-layer]{position:sticky;top:min(0px,calc(100svh - var(--layer-height,100svh)));box-shadow:0 -24px 55px -42px #15161165}
 @media(prefers-reduced-motion:reduce){.layer-stack [data-page-layer]{position:relative!important;top:auto!important;box-shadow:none!important}}
+
+/* The consultation and export table are normal-flow surfaces. Never let the
+   incoming table cover a chart when summary/detail changes its height. */
+.layer-stack[data-layered=true] .axis-sheet,
+.layer-stack[data-layered=true] .table-section{position:relative;top:auto;box-shadow:none}
+.axis-sheet,.table-section{overflow-anchor:none}
+#indicadores{scroll-margin-top:16px}

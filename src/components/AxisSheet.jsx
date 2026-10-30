@@ -40,7 +40,7 @@ export function AxisSheet({ axis, children }) {
   }, [phase, visible]);
   const copy = axisCopy[axis.id];
   const active = visible && phase !== 'done';
-  return <div className="axis-sheet" style={axisTheme(axis.id)} data-page-layer>
+  return <div className="axis-sheet" style={axisTheme(axis.id)}>
     <div ref={ref} className="axis-entrance" data-phase={phase} data-visible={visible} aria-hidden={!active} onAnimationEnd={event => { if (event.target === event.currentTarget) finish(); }}>
       <button className="axis-entrance-name" onClick={finish} tabIndex={active ? 0 : -1} aria-label={`${copy.title}: omitir transición y consultar indicadores`}>{copy.title}</button>
     </div>

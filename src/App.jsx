@@ -39,7 +39,7 @@ export default function App() {
   function selectIndicator(indicator) {
     setSelection(current => ({ ...current, indicator })); setNotice(`Indicador ${indicator} seleccionado.`);
     requestAnimationFrame(() => {
-      document.getElementById('indicadores')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      document.getElementById('indicadores')?.scrollIntoView({ behavior: 'instant', block: 'start' });
       document.getElementById('active-indicator-title')?.focus({ preventScroll: true });
     });
   }
@@ -50,7 +50,7 @@ export default function App() {
     requestAnimationFrame(() => {
       const row = document.getElementById(`resumen-${previous}`);
       row?.focus({ preventScroll: true });
-      row?.scrollIntoView({ behavior: 'auto', block: 'center' });
+      row?.scrollIntoView({ behavior: 'instant', block: 'center' });
     });
   }
   useEffect(() => {
