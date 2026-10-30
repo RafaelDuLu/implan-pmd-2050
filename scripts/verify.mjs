@@ -1,3 +1,4 @@
+import { goalPlan } from '../src/lib/goal-plan.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -96,4 +97,34 @@ test('El escenario respeta los límites de una escala declarada en la unidad', (
   assert.equal(project(biodiversity,1).state,'on-track');
   assert.equal(project(biodiversity,2).state,'unavailable');
   assert.match(project(biodiversity,2).reason,/0 a 112/);
+});
+
+
+test('El diagnóstico fecha el cruce de metas ascendentes y descendentes sin modificar los datos', () => {
+  const school=eligible.find(d=>d.id==='1.3.2'), water=eligible.find(d=>d.id==='5.3.1');
+  const snapshot=JSON.stringify([school,water]);
+  assert.equal(goalPlan(school).crossingYear,2029);
+  close(goalPlan(school).required,.064);
+  assert.equal(goalPlan(water).crossingYear,2033);
+  close(goalPlan(water).required,-2.34);
+  assert.equal(JSON.stringify([school,water]),snapshot);
+});
+test('Una tendencia contraria o inmóvil no produce un año de cumplimiento inventado', () => {
+  const economy=goalPlan(eligible.find(d=>d.id==='3.1.3'));
+  assert.equal(economy.status,'away'); assert.equal(economy.crossingYear,null);
+  close(economy.required,.01746666666666667);
+  const flat=goalPlan({base:10,baseYear:2020,value:10,year:2025,target2030:20,direction:'A'});
+  assert.equal(flat.status,'flat'); assert.equal(flat.crossingYear,null); close(flat.required,2);
+});
+test('Las metas ya cumplidas no se anuncian como cumplimientos futuros', () => {
+  const fertility=goalPlan(eligible.find(d=>d.id==='1.5.2'));
+  assert.equal(fertility.status,'achieved'); assert.equal(fertility.crossingYear,null); assert.equal(fertility.required,0);
+});
+test('La fecha usa el primer año entero del cruce y maneja periodos y escalas inválidos', () => {
+  const d={base:10,baseYear:2020,value:15,year:2025,target2030:20,direction:'A'};
+  assert.equal(goalPlan(d).crossingYear,2030);
+  assert.equal(goalPlan({...d,baseYear:2025}).status,'unavailable');
+  assert.equal(goalPlan({...d,percent:true}).status,'unavailable');
+  const end=goalPlan({...d,year:2030});
+  assert.equal(end.required,null);
 });

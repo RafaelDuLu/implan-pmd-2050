@@ -1,0 +1,49 @@
+/* Detail is a reading surface, without the previous sidebar or scenario playground. */
+.clean-detail .indicator-title{padding-top:12px;padding-bottom:24px}
+.clean-detail .indicator-title h3{max-width:65ch;font-size:clamp(25px,2.5vw,38px);line-height:1.25}
+.detail-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:22px 0 28px;border-top:1px solid #42535f}
+.detail-values span{display:block;font-size:13px;color:#bdcbd5}
+.detail-values strong{display:block;margin-top:10px;font-weight:450;font-size:clamp(27px,3vw,40px);line-height:1.2;letter-spacing:-.025em;overflow-wrap:anywhere}
+.detail-values>div:last-child strong{color:var(--axis-light)}
+.detail-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:40px;align-items:start}
+.detail-chart{padding:28px;background:var(--paper);color:var(--ink);min-width:0}
+.clean-chart-heading{display:flex;align-items:start;justify-content:space-between;gap:22px;margin-bottom:16px}
+.clean-chart-heading h4{font-size:20px;letter-spacing:-.02em;line-height:1.3}
+.clean-chart-heading>span{font-size:11px;text-align:right;color:#52616c;max-width:24ch}
+.clean-chart .history-canvas svg{height:auto;max-height:330px;min-width:0;width:100%}
+.clean-chart .chart-grid{stroke:#dbe1e5;stroke-width:.8}
+.clean-chart .chart-axis-label{fill:#52616c;font:11px 'Mona Sans',sans-serif}
+.clean-chart .chart-year{fill:#52616c;font:12px 'Mona Sans',sans-serif}
+.clean-chart .chart-target{stroke:#137f86;stroke-width:1.5;stroke-dasharray:3 4}
+.clean-chart .chart-observed-line{stroke:#182934;stroke-width:2.2}
+.clean-chart .chart-scenario-line{fill:none;stroke:#738593;stroke-width:1.8;stroke-dasharray:6 5}
+.clean-observed-dot{fill:#182934;stroke:var(--paper);stroke-width:2}
+.clean-scenario-dot{fill:var(--paper);stroke:#738593;stroke-width:1.8}
+.clean-chart-legend{display:flex;gap:12px 20px;flex-wrap:wrap;margin-top:12px;color:#435865;font-size:11px}
+.clean-chart-legend span{display:flex;gap:8px;align-items:center}
+.clean-chart-legend i{display:block;width:15px;height:0;border-top:2px solid #182934}
+.clean-chart-legend>span:nth-last-child(2):not(:first-child) i{border-top:2px dashed #738593}
+.clean-chart-legend>span:last-child i{border-top:2px dotted #137f86}
+.clean-chart-result{padding-top:18px;margin-top:18px;border-top:1px solid #d7dfe3;font-size:13px;line-height:1.65;color:#435865}
+.clean-chart-result strong{color:var(--ink);font-weight:600}
+.clean-chart .chart-notes{font-size:12px;color:#52616c;margin-top:12px}
+.clean-chart .chart-notes p{font-size:12px;line-height:1.75;margin-top:10px}
+.goal-plan h4{font-size:23px;line-height:1.3;letter-spacing:-.02em;margin-bottom:20px}
+.goal-plan-status{font-size:19px;line-height:1.45;max-width:30ch}
+.goal-plan-year{display:block;font-size:62px;font-weight:450;line-height:1.1;letter-spacing:-.035em;margin:10px 0;color:var(--axis-light)}
+.goal-plan-context{font-size:13px;color:#bdcbd5;line-height:1.75;margin-top:10px}
+.goal-plan-current,.goal-plan-required{border-top:1px solid #42535f;margin-top:24px;padding-top:20px}
+.goal-plan h5{font:500 16px/1.4 'Mona Sans',sans-serif;margin:0 0 10px}
+.goal-plan-current p,.goal-plan-required p{font-size:14px;line-height:1.85;color:#cbd6dd}
+.goal-plan strong:not(.goal-plan-year){font-weight:550;color:var(--paper)}
+.goal-plan-caveat{font-size:11px;color:#b3c3cd;line-height:1.75;margin-top:24px}
+@media(max-width:1000px){.detail-layout{grid-template-columns:1fr;gap:30px}.goal-plan{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.goal-plan>h4,.goal-plan-status,.goal-plan-year,.goal-plan-context,.goal-plan-caveat{grid-column:1/-1}.goal-plan-current,.goal-plan-required{margin-top:22px}.goal-plan-year{font-size:52px}.detail-chart{padding:24px}}
+@media(max-width:600px){.detail-values{gap:12px;padding:18px 0 24px}.detail-values span{font-size:11px}.detail-values strong{font-size:25px}.detail-chart{padding:18px 14px}.clean-chart-heading{gap:12px}.clean-chart-heading h4{font-size:18px}.clean-chart-heading>span{font-size:10px;max-width:16ch}.clean-chart .history-canvas svg{height:auto;min-width:0}.clean-chart-legend{font-size:10px;gap:10px 14px}.goal-plan{display:block}.goal-plan-current p,.goal-plan-required p{font-size:14px}.goal-plan-year{font-size:52px}}
+.detail-section .indicator-section-heading{grid-template-columns:110px minmax(0,1fr);margin-bottom:22px}
+.detail-section .axis-heading-art{padding:10px}
+.detail-section .axis-heading-art img{width:80px}
+.detail-section .axis-heading-copy{padding:20px 28px;gap:9px}
+.detail-section .axis-heading-copy h2{font-size:32px}
+.detail-section .axis-heading-copy p{font-size:14px}
+@media(max-width:600px){.detail-section .indicator-section-heading{grid-template-columns:86px minmax(0,1fr)}.detail-section .axis-heading-art img{width:66px}.detail-section .axis-heading-copy{padding:16px;gap:7px}.detail-section .axis-heading-copy h2{font-size:27px}.detail-section .axis-heading-copy p{font-size:12px}}
+.detail-section h2[tabindex='-1']:focus,.detail-section h3[tabindex='-1']:focus{outline:none}

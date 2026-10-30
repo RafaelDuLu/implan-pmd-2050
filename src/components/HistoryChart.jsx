@@ -1,62 +1,40 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import histories from '../../assets/histories.json';
 import { displayValue, number, chartObservations } from '../lib/indicators.mjs';
-import GoalTimeline from './GoalTimeline.jsx';
 
-/** Only observed points and the explicitly labelled scenario; never synthesize historical years. */
-export default function HistoryChart({ indicator: d, projected, timelineData }) {
-  const [view, setView] = useState('line');
-  const [showGoal, setShowGoal] = useState(true);
-  const [selected, setSelected] = useState(1);
-  const uid = useId();
-  const chartRef = useRef(null);
+/** One quiet view: observed values, valid linear continuation and 2030 target. */
+export default function HistoryChart({ indicator: d, projected }) {
+  const uid = useId(), ref = useRef(null);
   const [compact, setCompact] = useState(false);
   useEffect(() => {
-    const element = chartRef.current;
-    const observer = new ResizeObserver(([entry]) => setCompact(entry.contentRect.width < 520));
-    observer.observe(element);
-    return () => observer.disconnect();
+    const observer = new ResizeObserver(([entry]) => setCompact(entry.contentRect.width < 500));
+    observer.observe(ref.current); return () => observer.disconnect();
   }, []);
-  const plotWidth = compact ? 360 : 740;
-  const plotLeft = compact ? 64 : 68;
-  const plotRight = compact ? 330 : 678;
-  const gridRight = compact ? 340 : 690;
-  const axisNumber = value => Math.abs(value) >= (compact ? 10000 : 1000000)
-    ? new Intl.NumberFormat('es-MX', { notation: 'compact', maximumFractionDigits: 1 }).format(value)
-    : number(value, 1);
-  const factor = d.percent ? 100 : 1;
-  const history = histories.series[d.id];
-  const observations = chartObservations(d, history);
-  const hasHistory = observations.length > 2;
-  const points = [...observations.map((p, i) => ({ ...p, label: p.year === d.baseYear ? 'Línea base' : p.year === d.year ? 'Último dato' : 'Dato histórico', kind: 'observed' })), ...(projected.state !== 'unavailable' ? [{ year: 2030, value: projected.value, label: 'Escenario, no dato oficial', kind: 'scenario' }] : [])];
-  const current = points[Math.min(selected, points.length - 1)];
-  const values = points.map(p => p.value * factor).concat(showGoal ? [d.target2030 * factor] : []);
-  let min = Math.min(...values), max = Math.max(...values);
-  const pad = Math.max((max - min) * .25, Math.abs(max) * .04, .01);
-  min = view === 'bars' && min >= 0 ? 0 : min - pad;
-  max = (view === 'bars' ? Math.max(0, max) : max) + pad;
-  const x = year => plotLeft + (year - observations[0].year) / Math.max(1, 2030 - observations[0].year) * (plotRight - plotLeft);
-  const y = value => 230 - (value * factor - min) / (max - min) * 175;
-  const path = observations.map((p, i) => `${i ? 'L' : 'M'}${x(p.year)},${y(p.value)}`).join(' ');
-  const last = observations.at(-1);
-  return <div className="history-chart" ref={chartRef} data-compact={compact}>
-    <div className="chart-toolbar"><div role="group" aria-label="Vista de la gráfica">{[['line','Evolución'],['bars','Barras'],['milestones','Hitos']].map(([value,label]) => <button key={value} aria-pressed={view === value} onClick={() => setView(value)}>{label}</button>)}</div>{view !== 'milestones' && <button className="chart-goal-toggle" aria-pressed={showGoal} onClick={() => setShowGoal(!showGoal)}><span aria-hidden="true">{showGoal ? '⊕' : '+'}</span> Meta 2030</button>}</div>
-    {view === 'milestones' ? <GoalTimeline data={timelineData}/> : <>
-      <div className="chart-caption"><span className="micro">{observations.length} OBSERVACIONES DISPONIBLES</span><span>{d.percent ? '%' : d.unit}</span></div>
-      <div className="history-canvas" tabIndex="0" role="region" aria-label="Gráfica de valores observados, escenario y meta"><svg viewBox={`0 0 ${plotWidth} 280`} role="img" aria-labelledby={`${uid}-title ${uid}-desc`}><title id={`${uid}-title`}>{d.name}: observaciones y escenario 2030</title><desc id={`${uid}-desc`}>Los años sin observación no tienen datos. Las líneas entre puntos son una guía visual. El tramo punteado es una extrapolación, no un histórico oficial. Consulta los valores con los botones bajo la gráfica.</desc>
-        {[0,.5,1].map(t => { const value = min + (max - min) * t, yy = 230 - t * 175; return <g key={t}><line className="chart-grid" x1={plotLeft} x2={gridRight} y1={yy} y2={yy}/><text className="chart-axis-label" x={plotLeft - 12} y={yy + 5} textAnchor="end">{axisNumber(value)}</text></g>; })}
-        {showGoal && <g><line className="chart-target" x1={plotLeft} x2={gridRight} y1={y(d.target2030)} y2={y(d.target2030)}/><text className="chart-target-label" x={gridRight} y={y(d.target2030)-10} textAnchor="end">META {displayValue(d.target2030,d)}</text></g>}
-        {view === 'line' && <><path className="chart-observed-line" d={path}/>{projected.state !== 'unavailable' && <path className="chart-scenario-line" d={`M${x(last.year)},${y(last.value)}L${x(2030)},${y(projected.value)}`}/>}</>}
-        {points.map((p, i) => <g key={`${p.year}-${p.kind}`} className={p.kind === 'scenario' ? 'chart-scenario-point' : 'chart-observed-point'}>{view === 'bars' ? <rect x={x(p.year)-19} y={Math.min(y(p.value),y(0))} width="38" height={Math.abs(y(p.value)-y(0))}/> : <circle cx={x(p.year)} cy={y(p.value)} r={selected === i ? 7 : 5}/>}<text className="chart-year" x={x(p.year)} y="263" textAnchor="middle">{p.year}{p.kind === 'scenario' ? '*' : ''}</text></g>)}
-      </svg></div>
-      <div className="chart-point-buttons" role="group" aria-label="Consultar valores de la gráfica">{points.map((p, i) => <button key={`${p.year}-${p.kind}`} aria-pressed={selected === i} onClick={() => setSelected(i)}><span>{p.year}{p.kind === 'scenario' ? ' / ESCENARIO' : ''}</span><strong>{displayValue(p.value,d)}</strong></button>)}</div>
-      <p className="sr-only" role="status">{current.label} · {current.year}: {displayValue(current.value,d)}</p>
-      <div className="chart-legend"><span><i/> {hasHistory ? 'Observaciones disponibles' : 'Observaciones del insumo'}</span><span><i/> Escenario no oficial</span>{showGoal && <span><i/> Meta 2030</span>}</div>
-      <details className="chart-notes"><summary>Notas de la gráfica</summary>
-      <p className="chart-integrity">{hasHistory ? 'Observaciones del insumo e histórico validado. Solo se muestran los periodos disponibles.' : 'Vista de referencia con las dos observaciones del Excel. Históricos oficiales pendientes de incorporación; sin valores intermedios inventados.'} El escenario cambia con el control de ritmo.</p>
-      {hasHistory && <p className="chart-integrity">Histórico: <a href={history.source.url} target="_blank" rel="noopener noreferrer">{history.source.name} ↗</a> · {history.geography}</p>}
-      {d.id === '3.1.3' && <p className="chart-source-check">Periodos por cotejar: el Excel etiqueta 2019 y 2024. INEGI señala 2023 como referencia económica de los CE 2024. <a href="https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2025/ce/CE2024_def_RR.pdf" target="_blank" rel="noopener noreferrer">Ver ficha oficial ↗</a></p>}
-      </details>
-    </>}
+  const observations = chartObservations(d, histories.series[d.id]);
+  const last = observations.at(-1), factor = d.percent ? 100 : 1;
+  const showScenario = projected.state !== 'unavailable' && d.year < 2030;
+  const width = compact ? 360 : 740, left = compact ? 72 : 80, right = width - 28;
+  const values = [...observations.map(p => p.value),d.target2030,...(showScenario ? [projected.value] : [])];
+  const bottom = Math.min(...values), top = Math.max(...values), pad = Math.max((top-bottom)*.22,Math.abs(top)*.03,.001);
+  const low = bottom-pad, high=top+pad;
+  const x = year => left + (year-observations[0].year)/Math.max(1,2030-observations[0].year)*(right-left);
+  const y = value => 224-(value-low)/(high-low)*174;
+  const path = observations.map((p,i)=>`${i ? 'L':'M'}${x(p.year)},${y(p.value)}`).join(' ');
+  const axis = value => Math.abs(value*factor)>=10000 ? new Intl.NumberFormat('es-MX',{notation:'compact',maximumFractionDigits:1}).format(value*factor) : number(value*factor,1);
+  const ticks = [...new Set([observations[0].year,last.year,2030])];
+  return <div className="history-chart clean-chart" ref={ref}>
+    <div className="clean-chart-heading"><h4>Evolución hacia la meta</h4><span>{d.percent ? '%' : d.unit}</span></div>
+    <div className="history-canvas"><svg viewBox={`0 0 ${width} 272`} role="img" aria-labelledby={`${uid}-title ${uid}-description`}>
+      <title id={`${uid}-title`}>{d.name}</title><desc id={`${uid}-description`}>Base {d.baseYear}: {displayValue(d.base,d)}. Último dato {d.year}: {displayValue(d.value,d)}. Meta 2030: {displayValue(d.target2030,d)}. {showScenario ? `Continuación lineal a 2030: ${displayValue(projected.value,d)}; no es un dato observado ni un pronóstico oficial.` : 'La continuación a 2030 no es interpretable dentro de la escala y no se representa.'} Las líneas entre observaciones son guías visuales; no añaden datos para años sin observación.</desc>
+      {[0,.5,1].map(t=>{const value=low+(high-low)*t,yy=y(value);return <g key={t}><line className="chart-grid" x1={left} x2={right} y1={yy} y2={yy}/><text className="chart-axis-label" x={left-12} y={yy+4} textAnchor="end">{axis(value)}</text></g>;})}
+      <line className="chart-target" x1={left} x2={right} y1={y(d.target2030)} y2={y(d.target2030)}/>
+      <path className="chart-observed-line" d={path}/>
+      {showScenario && <><path className="chart-scenario-line" d={`M${x(last.year)},${y(last.value)}L${x(2030)},${y(projected.value)}`}/><circle className="clean-scenario-dot" cx={x(2030)} cy={y(projected.value)} r="4"/></>}
+      {observations.map(p=><circle key={p.year} className="clean-observed-dot" cx={x(p.year)} cy={y(p.value)} r={p.year===last.year ? 5:4}/>)}
+      {ticks.map((year,i)=><text key={year} className="chart-year" x={x(year)} y="257" textAnchor={i===ticks.length-1?'end':'middle'}>{year}</text>)}
+    </svg></div>
+    <div className="clean-chart-legend"><span><i/>Datos disponibles</span>{showScenario && <span><i/>Continuación estimada</span>}<span><i/>Meta 2030</span></div>
+    {showScenario ? <p className="clean-chart-result">Con el ritmo observado, en 2030: <strong>{displayValue(projected.value,d)}</strong>{!d.percent ? ` ${d.unit.toLocaleLowerCase('es-MX')}` : ''}.</p> : <p className="clean-chart-result">{projected.reason || 'La continuación a 2030 no es evaluable.'}</p>}
+    <details className="chart-notes"><summary>Datos y supuestos de la gráfica</summary><p>Solo se representan las observaciones disponibles. El tramo discontinuo prolonga el cambio medio entre {d.baseYear} y {d.year}; no representa valores publicados para los años intermedios.</p>{d.id === '3.1.3' && <p>Periodos por cotejar: el Excel etiqueta 2019 y 2024; los Censos Económicos 2024 tienen referencia económica en 2023. El cálculo conserva los años del insumo y requiere validación.</p>}</details>
   </div>;
 }
