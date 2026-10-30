@@ -16,7 +16,7 @@ export const axisCopy = {
 /** Brand colors taken from the official Plan León 2050 stylesheet. */
 export function axisTheme(id) {
   const a = axisCopy[id];
-  return { '--axis-color': a.color, '--axis-light': a.light, '--axis-tint': a.tint, '--lime': a.light, '--cyan': a.light };
+  return { '--axis-color': a.color, '--axis-ink': [3, 6].includes(Number(id)) ? '#ffffff' : '#121c24', '--axis-light': a.light, '--axis-tint': a.tint, '--lime': a.light, '--cyan': a.light };
 }
 
 export default function AxisExplorer({ axes, indicators, activeAxis, onSelect }) {
@@ -35,7 +35,7 @@ export default function AxisExplorer({ axes, indicators, activeAxis, onSelect })
     <EditorialBanner id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} action="Explorar"/>
     <section ref={directory} className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><h2 id="axes-title">Siete ejes <br/>de ciudad.</h2><p>Consulta los indicadores del Plan León 2050 por eje estratégico.</p></div><div className="axis-ledger">{axes.map(axis => {
       const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;
-      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} style={axisTheme(axis.id)} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><img className="axis-art" src={`./axes/entrances/eje-${axis.id}.webp`} alt="" width="1440" height="960" loading="lazy" decoding="async"/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
+      return <button key={axis.id} className={`axis-card axis-card-${axis.id}`} style={axisTheme(axis.id)} data-reveal aria-pressed={axis.id===activeAxis} aria-controls="indicadores" onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><img className="axis-art" src={`./axes/official/eje-${axis.id}.webp`} alt="" width="1063" height="1200" loading="lazy" decoding="async"/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;
     })}</div></section>
   </div>;
 }

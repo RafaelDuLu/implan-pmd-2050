@@ -1,0 +1,48 @@
+{
+  "page": "https://www.leonplan2050.gob.mx/ejes/",
+  "downloaded": "2026-10-30",
+  "assets": [
+    {
+      "axis": 1,
+      "source": "https://www.leonplan2050.gob.mx/img/eje1-hero.webp",
+      "file": "eje-1.webp",
+      "sha256": "01be7f2e882853bc3ef36c0b8e729792365e429f9ccc157d60655f7ca35f5181"
+    },
+    {
+      "axis": 2,
+      "source": "https://www.leonplan2050.gob.mx/img/eje2-hero.webp",
+      "file": "eje-2.webp",
+      "sha256": "ab203612576d2e50bc11077dc70ed004698bfd11fb5c0770529cf3acceebaf69"
+    },
+    {
+      "axis": 3,
+      "source": "https://www.leonplan2050.gob.mx/img/eje3-hero.webp",
+      "file": "eje-3.webp",
+      "sha256": "7e3495e46b5fbd306b01b0dcf920e328c8d2fc4c744f5f7b49177ac2794b93f0"
+    },
+    {
+      "axis": 4,
+      "source": "https://www.leonplan2050.gob.mx/img/eje4-hero.webp",
+      "file": "eje-4.webp",
+      "sha256": "588250424cae92399cf842e612ab8909065c5ba9f0617a409a23b8448452945f"
+    },
+    {
+      "axis": 5,
+      "source": "https://www.leonplan2050.gob.mx/img/eje5-hero.webp",
+      "file": "eje-5.webp",
+      "sha256": "7618b56a60c6ff3015e255178c535db5b87751d0aefdfe269c7899e72a24b860"
+    },
+    {
+      "axis": 6,
+      "source": "https://www.leonplan2050.gob.mx/img/eje6-hero.webp",
+      "file": "eje-6.webp",
+      "sha256": "dbf11edd20bc8b40e922042f2cab7e483a4bd4dad6eb7e69f3ee4340f9324b4b"
+    },
+    {
+      "axis": 7,
+      "source": "https://www.leonplan2050.gob.mx/img/eje7-hero.webp",
+      "file": "eje-7.webp",
+      "sha256": "9b25c460fe053e3e8c7bf91fe1d3f7676b60adef96d9e3972b4e49f75aaf5b12"
+    }
+  ]
+}
