@@ -3,6 +3,7 @@ import { useEditorialMotion } from './hooks/useEditorialMotion.js';
 import Hero from './components/Hero.jsx';
 import AxisExplorer from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
+import AxisOverview from './components/AxisOverview.jsx';
 import DataTable from './components/DataTable.jsx';
 import Footer, { ClosingSections } from './components/Footer.jsx';
 import { useLayerStack } from './hooks/useLayerStack.js';
@@ -37,7 +38,20 @@ export default function App() {
   }
   function selectIndicator(indicator) {
     setSelection(current => ({ ...current, indicator })); setNotice(`Indicador ${indicator} seleccionado.`);
-    requestAnimationFrame(() => document.getElementById('active-indicator-title')?.focus({ preventScroll: true }));
+    requestAnimationFrame(() => {
+      document.getElementById('indicadores')?.scrollIntoView({ behavior: 'auto', block: 'start' });
+      document.getElementById('active-indicator-title')?.focus({ preventScroll: true });
+    });
+  }
+  function showOverview() {
+    const previous = selection.indicator;
+    setSelection(current => ({ ...current, indicator: '' }));
+    setNotice('Vista de avance de los indicadores del eje.');
+    requestAnimationFrame(() => {
+      const row = document.getElementById(`resumen-${previous}`);
+      row?.focus({ preventScroll: true });
+      row?.scrollIntoView({ behavior: 'auto', block: 'center' });
+    });
   }
   useEffect(() => {
     const change = () => { const axis = location.hash.match(/^#eje-([1-7])$/)?.[1]; if (axis) setSelection({ axis: Number(axis), indicator: '' }); };
@@ -54,7 +68,7 @@ export default function App() {
     <Hero count={indicators.length}/>
     <main id="main">
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
-      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}><IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={axis => selectAxis(axis)} onSelectIndicator={selectIndicator}/></AxisSheet>}
+      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}>{selection.indicator ? <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator} onBack={showOverview}/> : <AxisOverview axis={axis} axes={data.axes} indicators={selectedIndicators} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator}/>}</AxisSheet>}
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
     </main>
     <ClosingSections/>

@@ -17,3 +17,9 @@ Modo: portada y banners de presentación; directorio y consulta orientados a ope
 El color identifica el eje en el directorio, navegación, títulos, barra de avance y apertura; variantes claras sobre superficies oscuras y tintas suaves en superficies claras garantizan legibilidad. Las señales favorable y desfavorable son independientes del eje. Las siete imágenes originales del sitio oficial se guardan sin alterar en public/axes/official y se muestran completas en el directorio y encabezado del eje. El menú y el encabezado utilizan el fondo exacto del eje, con texto oscuro o blanco según contraste. La apertura solo muestra el nombre y el color oficial, sin fotografías ni dependencia de su descarga.
 
 Implementación estática, fuentes, datos e imágenes locales, sin servicios externos durante la navegación. Preservar los datos y advertencias metodológicas, CSV, controles de escenario, teclado, móvil y movimiento reducido.
+
+## Consulta en dos niveles
+
+Al seleccionar un eje se muestra AxisOverview: una fila interactiva por indicador con valor base, último dato, avance del tramo base–meta y meta 2030. El porcentaje usa la función de avance existente, conserva retrocesos y valores superiores a 100 %, y solo acota la línea visual. Las unidades se muestran sin mezclar magnitudes. Incluye búsqueda del eje y explicación desplegable.
+
+Al seleccionar una fila o un indicador de Datos abiertos se monta el análisis detallado existente con gráfica, navegación y ritmo. Volver al avance del eje restaura el foco en la fila elegida. Cambiar de eje siempre vuelve al resumen; la apertura de color se ejecuta únicamente por eje.

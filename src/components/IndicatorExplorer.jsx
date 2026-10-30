@@ -4,7 +4,7 @@ import HistoryChart from './HistoryChart.jsx';
 import ChangeSummary from './ChangeSummary.jsx';
 import IndicatorNavigator, { TopicNavigation } from './IndicatorNavigator.jsx';
 import { Arrow } from './Icons.jsx';
-import { axisCopy } from './AxisExplorer.jsx';
+import { AxisHeading } from './AxisOverview.jsx';
 
 const stateCopy = {
   'on-track': { label: 'El ritmo apunta a la meta.', badge: 'ALCANZARÍA LA META', text: 'Si se mantuviera el cambio medio observado, el valor alcanzaría o superaría la meta en el sentido deseado.' },
@@ -12,7 +12,7 @@ const stateCopy = {
   unavailable: { label: 'El escenario tiene un límite.', badge: 'NO EVALUABLE', text: 'Los datos no permiten interpretar este escenario dentro del rango del indicador.' },
 };
 
-export default function IndicatorExplorer({ axis, indicators, axes, selectedId, onSelectIndicator, onSelectAxis }) {
+export default function IndicatorExplorer({ axis, indicators, axes, selectedId, onSelectIndicator, onSelectAxis, onBack }) {
   const [multiplier, setMultiplier] = useState(1);
   const [scenarioOpen, setScenarioOpen] = useState(true);
   const d = indicators.find(d => d.id === selectedId) ?? indicators[0];
@@ -21,7 +21,8 @@ export default function IndicatorExplorer({ axis, indicators, axes, selectedId, 
   const p = progress(d), copy = stateCopy[projected.state];
   const sourceLink = /^https?:\/\//.test(d.link || '') ? d.link : null;
   return <section className="indicator-section" id="indicadores" aria-labelledby="indicator-section-title">
-    <div className="indicator-section-heading" data-reveal><div className="axis-heading-art"><img src={`./axes/official/eje-${axis.id}.webp`} alt="" width="1063" height="1200" decoding="async"/></div><div className="axis-heading-copy"><h2 id="indicator-section-title">{axisCopy[axis.id].title}</h2><p>{axis.name}</p></div></div>
+    <button className="overview-back text-button" onClick={onBack}>← Volver al avance del eje</button>
+    <AxisHeading axis={axis}/>
     <TopicNavigation axes={axes} activeAxis={axis.id} onSelect={onSelectAxis}/>
     <div className={`indicator-workspace${indicators.length < 2 ? ' single-indicator' : ''}`}><IndicatorNavigator indicators={indicators} selectedId={d.id} onSelect={onSelectIndicator}/><div className="indicator-content">
     <div className="indicator-title"><div className="indicator-title-top"><span className="micro">INDICADOR {d.id} · {d.unit}</span><button className="text-button" onClick={() => downloadCSV([d], axes, `indicador-${d.id}.csv`)}>Descargar CSV <span>↓</span></button></div><h3 id="active-indicator-title" tabIndex="-1">{d.name}</h3></div>

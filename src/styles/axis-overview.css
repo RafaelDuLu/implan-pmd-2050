@@ -1,0 +1,51 @@
+/* First read: one comparable base-to-goal rail per indicator. Detail is opt-in. */
+.overview-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin:34px 0 28px}
+.overview-heading h3{font-size:clamp(26px,3vw,38px);line-height:1.2;letter-spacing:-.03em}
+.overview-heading p{font-size:14px;color:#bdcbd5;max-width:61ch;margin-top:10px}
+.overview-search{width:250px;flex-shrink:0}
+.overview-search input{width:100%;min-height:44px;border:0;border-bottom:1px solid #6a7a86;background:transparent;color:var(--paper);padding:10px 0;font-size:14px}
+.overview-list{border-top:1px solid #42535f}
+.overview-indicator{display:block;width:100%;padding:28px 24px 22px;text-align:left;border:0;border-bottom:1px solid #42535f;color:var(--paper);background:transparent;transition:background 180ms}
+.overview-indicator:hover,.overview-indicator:focus-visible{background:#1d2b35}
+.overview-indicator-title{display:grid;grid-template-columns:55px minmax(0,1fr) 24px;gap:20px;align-items:start}
+.overview-indicator-title>.micro{color:var(--axis-light);font-size:10px;padding-top:6px}
+.overview-indicator-name{font-size:clamp(19px,1.8vw,26px);line-height:1.35;font-weight:450;letter-spacing:-.02em;max-width:75ch}
+.overview-indicator-title>svg{color:var(--axis-light);margin-top:4px}
+.overview-latest{font-size:13px;color:#bdcbd5;margin:12px 44px 24px 75px;line-height:1.7}
+.overview-latest strong{color:var(--paper);font-weight:500}
+.overview-values{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1fr);gap:20px;align-items:start}
+.overview-values>div{min-width:0}
+.overview-values>div:last-child{text-align:right}
+.overview-values>div>span{display:block;font-size:12px;color:#bdcbd5}
+.overview-values strong{display:block;font-size:clamp(23px,2.6vw,36px);font-weight:450;line-height:1.2;letter-spacing:-.025em;margin-top:9px;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.overview-progress{text-align:center}
+.overview-progress strong{color:var(--axis-light)}
+.overview-progress[data-state=negative] strong{color:var(--danger)}
+.overview-progress small{display:block;font-size:11px;line-height:1.5;color:#bdcbd5;margin-top:7px}
+.overview-track{position:relative;height:3px;background:#4b5d69;margin:24px 6px 18px}
+.overview-track-fill{position:absolute;inset:0 auto 0 0;background:var(--axis-light)}
+.overview-track i{display:block;position:absolute;top:50%;transform:translate(-50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--ink);border:1px solid #c0d0da}
+.overview-track-start{left:0}.overview-track .overview-track-current{width:13px;height:13px;background:var(--axis-light);border:2px solid var(--ink);z-index:1}
+.overview-track .overview-track-goal{left:100%;border-radius:0;transform:translate(-50%,-50%) rotate(45deg)}
+.overview-row-footer{display:flex;align-items:center;justify-content:space-between;gap:25px;font-size:11px;color:#bdcbd5}
+.overview-row-footer>span:last-child{display:flex;align-items:center;gap:12px;color:var(--axis-light);white-space:nowrap}
+.overview-row-footer svg{width:16px;height:16px}
+.overview-method{margin-top:26px;color:#bdcbd5;font-size:12px;max-width:80ch}
+.overview-method summary{cursor:pointer;min-height:44px;padding-block:12px}.overview-method p{padding:10px 0;line-height:1.7}
+.overview-empty{padding:40px 0;display:grid;gap:20px;justify-items:start}
+.overview-back{margin-bottom:25px;color:var(--axis-light);font-size:14px;min-height:44px}
+@media(max-width:650px){
+ .overview-heading{display:block;margin-top:26px}.overview-heading h3{font-size:25px}.overview-heading p{font-size:13px}
+ .overview-search{display:block;width:100%;margin-top:15px}
+ .overview-indicator{padding:24px 0 20px}
+ .overview-indicator-title{grid-template-columns:1fr 20px;gap:8px 12px}
+ .overview-indicator-title>.micro{grid-column:1/-1;padding:0}
+ .overview-indicator-name{font-size:19px}.overview-indicator-title>svg{grid-column:2;grid-row:2}
+ .overview-latest{margin:10px 0 20px;font-size:12px}
+ .overview-values{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) minmax(0,1fr);gap:10px}
+ .overview-values>div>span{font-size:10px;line-height:1.6}
+ .overview-values strong{font-size:22px;line-height:1.25;margin-top:8px}
+ .overview-progress small{font-size:10px}.overview-row-footer{font-size:10px;gap:15px}
+ .overview-row-footer>span:first-child{max-width:65%;overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){.overview-indicator{transition:none}}
