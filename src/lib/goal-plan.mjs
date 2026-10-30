@@ -25,3 +25,10 @@ export function paceKeyStep(direction, key) {
   if (!['ArrowUp','ArrowDown'].includes(key)) return 0;
   return (key === 'ArrowDown' ? 1 : -1) * (direction === 'D' ? 1 : -1);
 }
+
+/** Orient hypothetical pace toward the declared goal without changing observed data. */
+export function goalPaceMultiplier(d, pace = 1) {
+  const delta = d.value - d.base;
+  const desired = d.direction === 'D' ? -1 : 1;
+  return delta * desired < 0 ? -pace : pace;
+}

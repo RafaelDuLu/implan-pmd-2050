@@ -45,3 +45,7 @@ Encabezado, valores, gráfica y prioridades se compactan en escritorio. En ancho
 ## Protección de lectura al abrir indicadores
 
 AxisSheet y Datos abiertos quedan fuera del sistema de hojas sticky. Ambas secciones conservan flujo normal y altura de contenido: la tabla siempre comienza después del análisis completo. Las capas se mantienen en portada, directorio y cierre. Se evita el desplazamiento duplicado desde la tabla al detalle; la navegación central de App realiza el único scroll. Se desactiva el anclaje automático en las dos superficies variables y se reserva margen superior al abrir el indicador.
+
+## Orientación automática del escenario
+
+Se retira el botón de inversión. La dirección de cada meta (A/D) define automáticamente el control y el signo del escenario. Cuando la variación observada va en sentido contrario, solo se invierte la proyección hipotética, manteniendo intactos base, dato reciente, meta y línea histórica. La interfaz identifica ese caso como «Escenario de mejora · el cambio observado va en sentido contrario». 0× mantiene el último dato, y una serie inmóvil no adquiere un ritmo inventado. Restablecer vuelve a 1× en la orientación automática.

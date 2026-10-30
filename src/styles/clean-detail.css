@@ -136,3 +136,6 @@
  .goal-plan-required p{font-size:13px}.detail-chart{padding:16px 12px}
  .clean-chart .history-canvas svg{height:auto;max-height:245px}.pace-simulation-label{margin-top:8px}
 }
+
+.pace-auto-direction{font-size:11px;line-height:1.6;color:#bdcbd5;margin:0 0 12px;max-width:55ch}
+.pace-actions{justify-content:flex-end}

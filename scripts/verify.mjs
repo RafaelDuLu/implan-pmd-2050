@@ -1,5 +1,5 @@
 import { indicatorActions } from '../src/lib/indicator-actions.mjs';
-import { goalPlan, paceKeyStep } from '../src/lib/goal-plan.mjs';
+import { goalPlan, paceKeyStep, goalPaceMultiplier } from '../src/lib/goal-plan.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -159,4 +159,26 @@ test('El teclado acelera reducciones hacia abajo y aumentos hacia arriba', () =>
   assert.equal(paceKeyStep('A','ArrowUp'),1);
   assert.equal(paceKeyStep('A','ArrowDown'),-1);
   assert.equal(paceKeyStep('D','Tab'),0);
+});
+
+
+test('El ritmo se orienta automáticamente a la meta sin alterar el histórico', () => {
+  const cases=[
+    {base:10,value:12,direction:'D',expected:-2},
+    {base:12,value:10,direction:'D',expected:2},
+    {base:12,value:10,direction:'A',expected:-2},
+    {base:10,value:12,direction:'A',expected:2},
+  ];
+  for(const d of cases) assert.equal(goalPaceMultiplier(d,2),d.expected);
+  assert.equal(goalPaceMultiplier({base:10,value:10,direction:'D'},2),2);
+});
+test('Los 31 indicadores conservan datos reales y simulan el sentido de su meta', () => {
+  for(const d of eligible) {
+    const snapshot=JSON.stringify(d);
+    const m=goalPaceMultiplier(d,1);
+    const p=goalPlan(d,2030,m);
+    assert.ok(p.annual*(d.direction==='D'?-1:1)>=0);
+    close(project(d,m,2030,true).value,d.value+(d.value-d.base)/(d.year-d.baseYear)*m*(2030-d.year));
+    assert.equal(JSON.stringify(d),snapshot);
+  }
 });
