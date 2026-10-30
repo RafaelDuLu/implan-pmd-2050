@@ -121,3 +121,9 @@ body{font-variant-numeric:lining-nums}
 }
 @media(prefers-reduced-motion:reduce){.axis-card:hover .axis-art,.axis-card:focus-visible .axis-art{transform:none}}
 @media(max-width:360px){.axis-name strong{font-size:22px}.axis-name>span{font-size:10px}.indicator-section-heading{grid-template-columns:90px minmax(0,1fr)}.axis-heading-art img{width:72px}.axis-heading-copy{padding:18px 12px}.indicator-section-heading .axis-heading-copy h2{font-size:25px}}
+
+/* White scanner reveal; base colors remain unchanged outside the pointer lens. */
+@media(hover:hover) and (pointer:fine){
+ .hero[data-scanning=true] .hero-title-outline .headline-line:last-child{-webkit-text-stroke-color:#fff}
+ .hero[data-scanning=true] .leon-map-detail img{filter:brightness(0) invert(1)}
+}
