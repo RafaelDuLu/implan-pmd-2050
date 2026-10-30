@@ -47,3 +47,17 @@
 .detail-section .axis-heading-copy p{font-size:14px}
 @media(max-width:600px){.detail-section .indicator-section-heading{grid-template-columns:86px minmax(0,1fr)}.detail-section .axis-heading-art img{width:66px}.detail-section .axis-heading-copy{padding:16px;gap:7px}.detail-section .axis-heading-copy h2{font-size:27px}.detail-section .axis-heading-copy p{font-size:12px}}
 .detail-section h2[tabindex='-1']:focus,.detail-section h3[tabindex='-1']:focus{outline:none}
+.pace-tool{margin-bottom:24px}
+.pace-tool label{display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:14px;min-height:36px}
+.pace-tool output{font-size:27px;color:var(--axis-light);font-variant-numeric:tabular-nums}
+.pace-tool input{width:100%;min-height:44px;margin:8px 0 0;accent-color:var(--axis-light);cursor:ew-resize}
+.pace-scale{display:grid;grid-template-columns:1fr 1fr 1fr;color:#b9cbd6;font-size:11px}
+.pace-scale>span:nth-child(2){text-align:left}.pace-scale>span:last-child{text-align:right}
+.pace-actions{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:10px}
+.pace-actions button{border:0;padding:8px 0;min-height:44px;text-decoration:underline;text-underline-offset:5px;font-size:12px;color:var(--axis-light)}
+.pace-result{border-top:1px solid #42535f;padding-top:20px}
+.pace-direction{font-size:12px;color:#bdcbd5;line-height:1.7;margin-top:12px}
+.pace-needed{font-size:14px;line-height:1.8;margin-top:18px;color:#d0dbe2}
+.action-suggestion{font-size:10px!important;color:#b8cad6!important;margin:-2px 0 9px}
+.pace-simulation-label{font-size:10px;color:#b8cad6;margin-top:22px}
+@media(max-width:1000px){.goal-plan{display:block}.pace-tool{max-width:600px}}

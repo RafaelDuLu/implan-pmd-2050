@@ -1,3 +1,4 @@
+import { indicatorActions } from '../src/lib/indicator-actions.mjs';
 import { goalPlan } from '../src/lib/goal-plan.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -127,4 +128,26 @@ test('La fecha usa el primer año entero del cruce y maneja periodos y escalas i
   assert.equal(goalPlan({...d,percent:true}).status,'unavailable');
   const end=goalPlan({...d,year:2030});
   assert.equal(end.required,null);
+});
+
+
+test('El control simula aceleración, pausa e inversión sin cambiar observaciones', () => {
+  const water=eligible.find(d=>d.id==='5.3.1');
+  const snapshot=JSON.stringify(water);
+  assert.equal(goalPlan(water,2030,2).crossingYear,2029);
+  assert.equal(goalPlan(water,2030,.5).crossingYear,2041);
+  assert.equal(goalPlan(water,2030,0).status,'flat');
+  assert.equal(goalPlan(water,2030,-1).status,'away');
+  close(project(water,0,2030,true).value,water.value);
+  assert.equal(JSON.stringify(water),snapshot);
+  const economy=eligible.find(d=>d.id==='3.1.3');
+  assert.equal(goalPlan(economy,2030,-2).status,'approaching');
+  assert.ok(project(economy,-2,2030,true).value>economy.value);
+  assert.equal(project(economy,-2).state,'unavailable');
+});
+test('La simulación respeta la escala y cada indicador tiene prioridades específicas', () => {
+  for(const d of eligible) assert.equal(indicatorActions[d.id]?.length,2);
+  const waterHousing=eligible.find(d=>d.id==='1.1.2');
+  assert.equal(project(waterHousing,3,2030,true).state,'unavailable');
+  assert.notEqual(indicatorActions['1.1.2'][1],indicatorActions['1.3.2'][1]);
 });

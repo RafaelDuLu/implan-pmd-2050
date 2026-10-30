@@ -29,3 +29,9 @@ Al seleccionar una fila o un indicador de Datos abiertos se monta el análisis d
 El detalle se lee a ancho completo, sin lista lateral de indicadores ni control multiplicador. Presenta base, último dato y meta una sola vez; una gráfica de observaciones, continuación lineal y meta; y un diagnóstico de año de cumplimiento y cambio anual necesario a 2030. Volver al resumen permite escoger otro indicador. Los colores de identidad no sustituyen una evaluación causal.
 
 El módulo goal-plan.mjs distingue meta cumplida en el último dato (sin fechar retrospectivamente el cruce), tendencia favorable con año futuro de cruce redondeado hacia arriba, tendencia inmóvil, tendencia contraria y datos no evaluables. La exigencia anual parte del último año del dato y no del reloj del navegador. En porcentajes se expresa en puntos porcentuales por año. No se sugieren políticas causales desde dos observaciones. Se conservan fuentes, notas de cotejo de periodos y limitaciones.
+
+## Simulador y prioridades por indicador (revisión)
+
+Se restituye el control de 0× a 3×, con inversión explícita opcional de la dirección y restablecimiento. La gráfica y el año simulado usan exactamente el mismo multiplicador. Nunca se alteran la base, el último dato ni la meta. No se visualizan escenarios fuera de escala. La condición de meta ya alcanzada corresponde al dato real, no al resultado hipotético del control.
+
+Se eliminan de la presentación las fuentes, notas, bloques metodológicos y columna de fuente. La trazabilidad y referencias permanecen en los datos locales y CSV. El único rótulo de interpretación persistente es «Escenario simulado». Se reemplazan consejos tautológicos por prioridades editoriales específicas para los 31 indicadores: cerrar brechas o sostener los resultados. No se presentan como acciones suficientes, causalidad comprobada o medidas oficiales obligatorias. El control modifica el ritmo matemático; no estima el efecto de esas acciones.

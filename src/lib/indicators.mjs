@@ -24,10 +24,10 @@ export function assessGoal(projection, target, direction = 'A') {
   const tolerance = 1e-10 * Math.max(1, Math.abs(target));
   return (projection - target) * (direction === 'D' ? -1 : 1) >= -tolerance ? 'on-track' : 'at-risk';
 }
-export function project(indicator, multiplier = 1, horizon = 2030) {
+export function project(indicator, multiplier = 1, horizon = 2030, allowReverse = false) {
   const { base, baseYear, value, year, target2030, direction } = indicator;
   if (![base, baseYear, value, year, target2030, multiplier, horizon].every(isNumber)
-      || year <= baseYear || horizon < year || multiplier < 0) {
+      || year <= baseYear || horizon < year || (!allowReverse && multiplier < 0)) {
     return { value: null, rate: null, state: 'unavailable', reason: 'No hay observaciones comparables suficientes.' };
   }
   const rate = (value - base) / (year - baseYear);

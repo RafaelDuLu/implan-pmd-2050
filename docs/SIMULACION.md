@@ -1,0 +1,9 @@
+# Simulación de ritmo y prioridades editoriales
+
+El control escala el cambio anual medio entre las dos observaciones del insumo. La posición 0 mantiene el último dato; 1 conserva el cambio observado; 3 lo triplica. Invertir tendencia cambia su signo, sin modificar los datos. El año mostrado es el primer año entero igual o posterior al cruce de la meta pendiente, siempre que el escenario se mantenga dentro de la escala al horizonte. No se inventa un año histórico para metas ya alcanzadas. Las prioridades de sostenimiento corresponden al cumplimiento real, con advertencia dinámica si la simulación lo pone en riesgo.
+
+Las prioridades son sugerencias editoriales para evaluación, no recomendaciones presupuestales, garantías de cumplimiento ni una cuantificación causal de efectos. Son específicas para el significado de cada indicador. Algunas son criterios de interpretación: menos llamadas no prueba menos violencia; menor dotación no debe lograrse reduciendo acceso; menor disposición final no debe deberse a recolección insuficiente; una cuota económica depende también del denominador estatal.
+
+Referencias de contexto consultadas el 30 de octubre de 2026: proyectos estratégicos y prioritarios de https://www.leonplan2050.gob.mx/eje-1/, /eje-2/, /eje-3/, /eje-4/, /eje-5/, /eje-6/ y /eje-7/. El archivo src/lib/indicator-actions.mjs contiene redacción propia que interpreta esos temas y el indicador; no transcribe un catálogo oficial de medidas por indicador.
+
+Por solicitud del usuario, las fuentes y metodología no se muestran como secciones de la interfaz. Permanecen las referencias originales en assets/data.json y las exportaciones CSV. Los valores de origen siguen pendientes del cotejo institucional documentado previamente, incluida la comparabilidad temporal del indicador 3.1.3.

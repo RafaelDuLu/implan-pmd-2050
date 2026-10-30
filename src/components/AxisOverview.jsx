@@ -27,6 +27,6 @@ export default function AxisOverview({ axis, axes, indicators, onSelectAxis, onS
       </button>;
     })}</div>
     {!rows.length && <div className="overview-empty"><p>No hay indicadores para esta búsqueda.</p><button className="text-button" onClick={() => setQuery('')}>Mostrar todos</button></div>}
-    <details className="overview-method"><summary>¿Cómo se interpreta el avance?</summary><p>El porcentaje representa el tramo recorrido entre el valor base y la meta, según el último dato disponible. Puede ser negativo o mayor a 100 %. La línea muestra el tramo de 0 a 100 %; la cifra conserva el avance completo. Cuando la base coincide con la meta, este avance no es calculable. No es una proyección.</p></details>
+
   </section>;
 }
