@@ -1,0 +1,109 @@
+/* A top-layer workspace: the list remains in place and never scrolls underneath. */
+.focus-dialog{position:fixed;inset:0;margin:0;width:100%;max-width:none;height:100dvh;max-height:none;box-sizing:border-box;padding:clamp(16px,2.5vw,36px);border:0;background:#121c24;color:#f6f7f8;overflow:hidden;overscroll-behavior:none}
+.focus-dialog::backdrop{background:#121c24}
+.focus-frame{height:100%;max-width:1680px;margin:auto;display:grid;grid-template-rows:auto auto auto minmax(0,1fr);gap:16px;border-top:3px solid var(--axis-color);padding-top:15px;box-sizing:border-box}
+.focus-toolbar{display:flex;align-items:center;justify-content:space-between;gap:20px;min-width:0}
+.focus-toolbar .detail-back{margin:0;min-height:44px;font-size:14px;padding:10px 18px;white-space:nowrap}
+.focus-axis{display:flex;align-items:center;gap:10px;color:var(--axis-light);font-size:17px;min-width:0}
+.focus-axis img{height:34px;width:30px;object-fit:contain;flex-shrink:0}
+.focus-code{font-size:11px;color:#b9cbd5;border-left:1px solid #42535f;padding-left:10px}
+.focus-csv{min-height:44px;font-size:12px;white-space:nowrap}
+.focus-title{font-size:clamp(23px,2.1vw,35px);font-weight:450;line-height:1.22;letter-spacing:-.025em;max-width:78ch;margin:0}
+.focus-title:focus{outline:none}
+.focus-values{margin:0;border-top:1px solid #42535f;border-bottom:1px solid #42535f;padding:12px 0;gap:20px}
+.focus-values>div{display:flex;align-items:baseline;gap:18px;min-width:0}
+.focus-values span{font-size:12px;flex-shrink:0}
+.focus-values strong{font-size:29px;margin:0;line-height:1.2;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.focus-values small{font-size:10px;font-weight:400;line-height:1.4;color:#b9cbd5;max-width:20ch}
+.focus-tabs{display:none;margin:0}
+.focus-layout{grid-row:4;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(330px,1fr);gap:clamp(24px,3vw,48px);align-items:center;min-height:0;min-width:0}
+.focus-layout>.detail-chart{align-self:center;min-width:0;max-height:100%;box-sizing:border-box;padding:24px}
+.focus-dialog .clean-chart .history-canvas svg{height:min(44dvh,440px);max-height:none;min-height:0}
+.focus-dialog .clean-chart-heading h4{font-size:clamp(23px,2vw,32px)}
+.focus-dialog .reference-chart-legend{font-size:13px}
+.focus-dialog .goal-plan{align-self:center;min-width:0;display:block}
+.focus-dialog .goal-plan h4{font-size:21px;margin:0 0 12px}
+.focus-dialog .pace-priority{margin-bottom:14px;padding:15px 17px}
+.focus-dialog .pace-priority p{font-size:16px;line-height:1.5}
+.focus-dialog .pace-auto-direction{margin-bottom:12px}
+.focus-dialog .pace-workspace{grid-template-columns:78px minmax(0,1fr);gap:20px}
+.focus-dialog .goal-plan-year{font-size:clamp(36px,3.2vw,52px);margin:5px 0}
+.focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:140px}
+.focus-dialog .goal-plan-required{padding-top:12px;margin-top:14px}
+.focus-dialog .goal-plan-required p{font-size:13px;line-height:1.55}
+.focus-dialog .pace-simulation-label{font-size:10px;line-height:1.5;margin-top:10px}
+@media(min-width:1101px) and (max-height:800px){
+ .focus-dialog{padding:18px 28px}.focus-frame{gap:12px;padding-top:12px}
+ .focus-title{font-size:25px}.focus-values{padding:10px 0}.focus-values strong{font-size:26px}
+ .focus-dialog .clean-chart .history-canvas svg{height:36dvh}
+ .focus-dialog .pace-priority{padding:12px 14px;margin-bottom:10px}.focus-dialog .pace-priority p{font-size:14px}
+ .focus-dialog .goal-plan h4{font-size:19px;margin-bottom:9px}.focus-dialog .goal-plan-status{font-size:15px}
+ .focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:120px}
+ .focus-dialog .pace-auto-direction{font-size:10px;margin-bottom:9px}
+ .focus-dialog .goal-plan-required{margin-top:10px;padding-top:10px}.focus-dialog .goal-plan-required p{font-size:12px}
+}
+@media(max-width:1100px),(max-height:680px){
+ .focus-frame{gap:12px;grid-template-rows:auto auto auto auto minmax(0,1fr)}.focus-layout{grid-row:5;display:block;height:100%;min-height:0}
+ .focus-tabs{display:flex;gap:24px;min-height:44px;border-bottom:1px solid #42535f}
+ .focus-tabs button{padding:10px 5px;min-height:44px;font-size:14px}
+ .focus-layout[data-view=chart]>.goal-plan{display:none}
+ .focus-layout[data-view=rhythm]>.detail-chart,.focus-layout[data-view=actions]>.detail-chart{display:none}
+ .focus-layout[data-view=actions]>.goal-plan{display:block}
+ .focus-layout[data-view=actions] .pace-workspace,.focus-layout[data-view=actions] .pace-auto-direction{display:none}
+ .focus-layout[data-view=rhythm] .goal-plan-required{display:none}
+ .focus-layout[data-view=actions] .goal-plan-required{display:block}
+ .focus-dialog .goal-plan{max-width:720px;margin:0 auto;height:100%;display:flex;flex-direction:column;justify-content:center;box-sizing:border-box}
+ .focus-dialog .goal-plan h4{font-size:20px}
+ .focus-layout>.detail-chart{height:100%;max-width:1100px;margin:auto;display:flex;align-items:center}
+ .focus-dialog .editorial-chart{width:100%}
+ .focus-dialog .clean-chart .history-canvas svg{height:min(39dvh,390px)}
+ .focus-values>div{display:block}.focus-values strong{margin-top:5px}
+}
+@media(max-width:600px){
+ .focus-dialog{padding:12px 16px}.focus-frame{gap:10px;padding-top:10px}
+ .focus-toolbar{gap:10px;flex-wrap:wrap}.focus-toolbar .detail-back{padding:9px 12px;font-size:12px;min-height:40px}
+ .focus-axis{font-size:13px;gap:6px}.focus-axis img{height:25px;width:22px}.focus-code{font-size:9px;padding-left:6px}
+ .focus-csv{display:none}
+ .focus-title{font-size:21px;line-height:1.22;max-width:none}
+ .focus-values{padding:9px 0;gap:10px}.focus-values span{font-size:10px}.focus-values strong{font-size:24px;gap:4px;margin-top:4px}.focus-values small{font-size:9px;max-width:13ch}
+ .focus-tabs{gap:23px;min-height:40px}.focus-tabs button{font-size:13px;min-height:40px;padding:8px 3px}
+ .focus-layout>.detail-chart{padding:20px 12px}
+ .focus-dialog .clean-chart .history-canvas svg{height:min(37dvh,320px)}
+ .focus-dialog .clean-chart-heading h4{font-size:20px}.focus-dialog .reference-chart-legend{font-size:10px}
+ .focus-dialog .goal-plan h4{font-size:19px;margin-bottom:10px}
+ .focus-dialog .pace-priority{padding:13px 14px;margin-bottom:12px}.focus-dialog .pace-priority p{font-size:15px}
+ .focus-dialog .pace-workspace{grid-template-columns:64px minmax(0,1fr);gap:18px}
+ .focus-dialog .goal-plan-status{font-size:16px}.focus-dialog .goal-plan-year{font-size:40px}
+ .focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:120px}
+ .focus-dialog .goal-plan-required p{font-size:15px;line-height:1.6}
+}
+@media(max-height:650px){
+ .focus-dialog{padding:10px 18px}.focus-frame{padding-top:8px;gap:7px}
+ .focus-title{font-size:19px}.focus-values{padding:6px 0}.focus-values strong{font-size:22px}
+ .focus-dialog .goal-plan{justify-content:start}.focus-dialog .pace-priority{padding:10px 12px;margin-bottom:8px}.focus-dialog .pace-priority p{font-size:13px}
+ .focus-dialog .goal-plan h4{font-size:16px;margin-bottom:6px}.focus-dialog .pace-auto-direction{font-size:10px;margin-bottom:7px}
+ .focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:90px}
+ .focus-dialog .pace-direction{font-size:11px;line-height:1.4}.focus-dialog .goal-plan-status{font-size:14px}.focus-dialog .goal-plan-year{font-size:32px}
+ .focus-dialog .pace-simulation-label{font-size:9px;margin-top:6px}
+ .focus-dialog .clean-chart .history-canvas svg{height:30dvh}
+}
+@media(max-width:600px) and (max-height:800px){
+ .focus-title{font-size:18px}.focus-frame{gap:8px}
+ .focus-dialog .pace-priority{padding:10px 12px;margin-bottom:9px}.focus-dialog .pace-priority p{font-size:14px;line-height:1.45}
+ .focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:90px}
+ .focus-dialog .pace-auto-direction{font-size:10px;margin-bottom:8px}
+ .focus-dialog .goal-plan h4{font-size:17px;margin-bottom:8px}
+ .focus-dialog .goal-plan-status{font-size:15px}.focus-dialog .pace-direction{font-size:11px;line-height:1.45}
+ .focus-dialog .pace-simulation-label{font-size:9px;margin-top:7px}
+}
+@media(max-width:600px) and (max-height:800px){
+ .focus-layout[data-view=rhythm] .goal-plan>h4{display:none}
+ .focus-dialog .goal-plan{justify-content:safe center}
+}
+@media(max-width:600px) and (max-height:700px){
+ .focus-dialog .pace-slider-wrap,.focus-dialog .pace-tool .pace-vertical input{height:70px}
+ .focus-dialog .pace-priority{margin-bottom:6px;padding:9px 11px}
+ .focus-dialog .pace-priority p{font-size:13px}
+ .focus-dialog .pace-auto-direction{margin-bottom:6px}
+ .focus-dialog .goal-plan-year{font-size:34px}
+}

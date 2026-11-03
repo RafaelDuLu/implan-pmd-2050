@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useEditorialMotion } from './hooks/useEditorialMotion.js';
 import Hero from './components/Hero.jsx';
-import AxisExplorer, { axisTheme } from './components/AxisExplorer.jsx';
+import AxisExplorer from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
 import AxisOverview from './components/AxisOverview.jsx';
 import DataTable from './components/DataTable.jsx';
@@ -41,7 +41,7 @@ export default function App() {
     setNotice(`Indicador ${indicator} seleccionado.`);
   }
   function showOverview() {
-    pendingNavigation.current={type:'back',id:selection.indicator};
+    pendingNavigation.current={type:'back',id:selection.indicator,scroll:false};
     setSelection(current => ({ ...current, indicator: '' }));
     setNotice('Lista completa de indicadores, agrupada por eje.');
   }
@@ -49,6 +49,7 @@ export default function App() {
   useEffect(()=>{
     if (!data || !pendingNavigation.current) return;
     const intent=pendingNavigation.current;
+    if(intent.type==='detail'){pendingNavigation.current=null;return;}
     const target=document.getElementById(intent.type==='axis' ? `lista-eje-${intent.axis}` : intent.type==='back' ? `resumen-${intent.id}` : 'active-indicator-title');
     if (!target) return;
     pendingNavigation.current=null;
@@ -75,12 +76,13 @@ export default function App() {
     <Hero count={indicators.length}/>
     <main id="main">
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
-      <div className="axis-sheet" style={selection.indicator ? axisTheme(axis.id) : undefined}>{selection.indicator ? <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator} onBack={showOverview}/> : <AxisOverview axes={data.axes} indicators={indicators} onSelectIndicator={selectIndicator}/>}</div>
+      <div className="axis-sheet"><AxisOverview axes={data.axes} indicators={indicators} onSelectIndicator={selectIndicator}/></div>
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
     </main>
     <ClosingSections/>
     </div>
     <Footer/>
+    {selection.indicator && <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onBack={showOverview}/>}
     <div className="sr-only" role="status" aria-live="polite">{notice}</div>
   </>;
 }

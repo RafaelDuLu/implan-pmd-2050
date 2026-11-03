@@ -83,3 +83,9 @@ La referencia visual oscura sustituye el tratamiento editorial claro anterior. S
 Histórico blanco con nodos luminosos; escenario azul claro segmentado; meta turquesa punteada. La etiqueta del extremo tiene marco y puntero, y se desplaza con el dato. Los rellenos degradados se recortan bajo los trazos reales y se interpolan junto a la proyección, sin cambios de escala, valores o cálculos. La leyenda de la referencia vuelve debajo del trazado. Se elimina por completo el resumen adicional de resultado que antes aparecía debajo de la gráfica; el valor permanece en la etiqueta del punto y en la descripción accesible.
 
 La textura decorativa no tiene animación propia ni codifica cantidades. Las entradas y transiciones conservan la alternativa de movimiento reducido. El recurso local no añade servicios externos, dependencias ni coste operativo.
+
+## Detalle de indicador en pantalla completa
+
+«Ver detalles» abre un diálogo nativo en la capa superior. El documento de fondo queda fijo, se conserva su posición y la lista permanece montada. El botón «Volver a los indicadores» siempre visible y Escape cierran el diálogo, restauran la posición original y devuelven el foco al indicador. El diálogo mantiene el recorrido de teclado dentro de sus controles.
+
+En escritorio se centra un espacio de trabajo con cabecera compacta, tres valores esenciales, gráfica amplia y simulador lateral. En pantallas estrechas o bajas, las vistas Gráfica, Ritmo y Acciones comparten el espacio disponible sin desplazar la página; los datos clave y el regreso permanecen presentes. Las dimensiones y tipografía se compactan para alturas móviles menores. Se conserva íntegra la geometría SVG, la simulación, el cero inicial y el horizonte 2030.
