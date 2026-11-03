@@ -20,5 +20,26 @@ export function paceScenario(d,pace=0) {
   const selected=isNumber(pace) ? Math.max(0,Math.min(profile.max,pace)) : 0;
   const annual=(d.direction==='D' ? -1 : 1)*profile.reference*selected;
   // Override only the hypothetical annual change; published observations stay intact.
-  return {profile,plan:goalPlan(d,2030,1,annual),projected:project(d,1,2030,true,annual)};
+  const plan=goalPlan(d,2030,1,annual);
+  const projected=project(d,1,2030,true,annual);
+  if (plan.status==='achieved') {
+    // Preserve actual overachievement; never replace a published value with the goal.
+    return {profile,plan:{...plan,annual:0},projected:{...projected,value:d.value,state:'on-track',reason:null,maintained:true}};
+  }
+  const reachedAt=plan.status==='approaching' ? d.year+(d.target2030-d.value)/annual : null;
+  if (reachedAt!==null && reachedAt<=2030+1e-9) {
+    return {profile,plan,projected:{...projected,value:d.target2030,state:'on-track',reason:null,capped:true,reachedAt:Math.min(2030,reachedAt)}};
+  }
+  return {profile,plan,projected};
+}
+
+
+/** Draw the real crossing time and then a plateau, always ending at 2030. */
+export function paceChartPoints(d,projected) {
+  if (projected.state==='unavailable' || !isNumber(projected.value)) return [];
+  const points=[{year:d.year,value:d.value}];
+  if (projected.capped && isNumber(projected.reachedAt) && projected.reachedAt>d.year && projected.reachedAt<2030)
+    points.push({year:projected.reachedAt,value:d.target2030});
+  points.push({year:2030,value:projected.value});
+  return points;
 }

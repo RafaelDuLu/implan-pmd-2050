@@ -63,3 +63,5 @@ La apertura del detalle se limita al botón con borde «Ver detalles». El nombr
 ## Esfuerzo necesario destacado y control individual
 
 En el detalle, el análisis para llegar en 2030 ocupa un bloque de alto contraste con el tinte del eje, encima de la simulación. Las metas ya cumplidas destacan cómo sostenerlas. El control inicia en 0× y vuelve a 0× al restablecer; cero conserva el último dato. Cada indicador muestra su punto requerido a 2030 y un máximo calculado para poder explorarlo, con un margen de 25 % y mínimo de 3×. La gráfica y el año comparten el cambio anual simulado. La guía de 1× indica si refiere a la magnitud histórica o, solo en históricos planos, al esfuerzo requerido. La lista conserva el semáforo editorial previo, independiente de esta escala de exploración.
+
+Al alcanzar la meta, la línea del escenario se aplana hasta 2030. El punto de cruce conserva su momento real y el año mostrado puede adelantarse al acelerar. El valor simulado final queda limitado a la meta, mientras los sobrecumplimientos observados se conservan intactos. Las metas que ya se cumplen desactivan el control de avance adicional y mantienen sus prioridades de conservación.

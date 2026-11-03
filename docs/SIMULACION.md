@@ -25,3 +25,9 @@ Cada detalle inicia y se restablece en 0×: el escenario conserva el último dat
 Para un histórico sin cambio, la referencia explícita de 1× es el esfuerzo necesario a 2030 (no una tasa observada inventada). Las metas ya cumplidas muestran las prioridades para sostener el resultado, sin inventar una exigencia adicional. La fecha de cruce y la gráfica usan exactamente el mismo cambio anual simulado. Los límites de escala originales siguen impidiendo interpretar escenarios imposibles.
 
 El semáforo de la lista mantiene su criterio editorial de recuperación de hasta 3× y la alerta de retroceso de un tramo completo; es un umbral comparativo, independiente del máximo ahora individual de cada control. Ampliar el rango no reclasifica una alerta como éxito.
+
+## Tope del escenario al cumplir la meta
+
+La simulación del detalle deja de acumular mejoras al alcanzar el objetivo: utiliza el momento exacto de cruce como punto intermedio y mantiene el valor de la meta hasta 2030. El diagnóstico conserva el año de cumplimiento calculado con el ritmo seleccionado; acelerar puede adelantarlo, sin producir valores posteriores innecesarios. El eje temporal termina en 2030. Si aún no llega, se conserva la proyección parcial sin forzar el cumplimiento.
+
+La regla funciona para metas ascendentes y descendentes. Si el dato real ya cumple o excede la meta, se conserva ese dato y se desactiva el control de avance adicional; no se rebaja a la meta ni se modifica la serie histórica. El tope afecta únicamente el escenario interactivo. La proyección lineal original usada por la exportación no cambia.

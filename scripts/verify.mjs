@@ -255,7 +255,7 @@ test('Los 31 controles inician en cero y su referencia llega a 2030 sin alterar 
       const target=paceScenario(d,profile.requiredPace);
       assert.ok(target.plan.crossingYear<=2030,d.id);
       assert.equal(target.projected.state,'on-track',d.id);
-      close(target.projected.value,d.value+target.plan.annual*(2030-d.year));
+      close(target.projected.value,d.target2030);
     }
     assert.equal(JSON.stringify(d),before);
   }
@@ -280,4 +280,41 @@ test('Un histórico plano usa una referencia explícita sin inventar cambio obse
   assert.equal(project(d).rate,0);
   assert.equal(paceScenario(d,NaN).projected.value,10);
   assert.equal(project(d,1,2030,false,2).state,'unavailable');
+});
+
+test('El escenario se detiene en la meta en 2030 y acelerar conserva un cumplimiento más temprano', async () => {
+  const {paceScenario,paceChartPoints}=await import('../src/lib/pace-scenario.mjs');
+  const d=eligible.find(d=>d.id==='4.1.3');
+  const normal=paceScenario(d,4.19),fast=paceScenario(d,6);
+  close(normal.projected.value,75);close(fast.projected.value,75);
+  assert.equal(normal.plan.crossingYear,2030);
+  assert.equal(fast.plan.crossingYear,2029);
+  const points=paceChartPoints(d,fast.projected);
+  assert.equal(points.length,3);
+  assert.ok(points[1].year<2030);
+  close(points[1].value,75);
+  assert.deepEqual(points.at(-1),{year:2030,value:75});
+  assert.ok(points.every(p=>p.year<=2030 && p.value<=75));
+  assert.equal(paceScenario(d,3).projected.capped,undefined);
+  assert.ok(paceScenario(d,3).projected.value<75);
+});
+test('El tope respeta metas descendentes, porcentajes y sobrecumplimientos reales', async () => {
+  const {paceScenario,paceChartPoints}=await import('../src/lib/pace-scenario.mjs');
+  for(const d of eligible){
+    const before=JSON.stringify(d),s=paceScenario(d,paceScenario(d).profile.max);
+    assert.notEqual(s.projected.state,'unavailable',d.id);
+    if(s.plan.status==='achieved') {
+      close(s.projected.value,d.value);close(s.plan.annual,0);
+      assert.equal(s.projected.maintained,true);
+    } else {
+      close(s.projected.value,d.target2030);
+      const points=paceChartPoints(d,s.projected);
+      assert.ok(points.every(p=>p.year<=2030));
+      assert.ok(points.every(p=>d.direction==='D' ? p.value>=d.target2030 : p.value<=d.target2030));
+    }
+    assert.equal(JSON.stringify(d),before);
+  }
+  const housing=eligible.find(d=>d.id==='1.1.2');
+  close(paceScenario(housing,3).projected.value,.9759);
+  assert.equal(project(housing,3,2030,true).state,'unavailable'); // CSV/legacy projection remains unchanged.
 });
