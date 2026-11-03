@@ -12,6 +12,7 @@ export default function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [selection, setSelection] = useState(() => ({ axis: Number(location.hash.match(/^#eje-([1-7])$/)?.[1] || 3), indicator: '' }));
+  const fullscreenOwned=useRef(false);
   const pendingNavigation=useRef(location.hash.match(/^#eje-([1-7])$/) ? {type:'axis',axis:selection.axis} : null);
   const layerStack=useLayerStack(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
   const [notice, setNotice] = useState('');
@@ -32,19 +33,29 @@ export default function App() {
     history.replaceState(null, '', `#eje-${axis}`);
     setNotice(`Eje ${axis}: ${data.axes.find(a => a.id === axis).name}`);
   }
-  function selectIndicator(indicator) {
+  async function selectIndicator(indicator) {
     const selected=indicators.find(d=>d.id===indicator);
     if (!selected) return;
+    if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+      try { await document.documentElement.requestFullscreen({navigationUI:'hide'}); fullscreenOwned.current=true; } catch { fullscreenOwned.current=false; }
+    }
     pendingNavigation.current={type:'detail'};
     setSelection({ axis:selected.axis, indicator });
     history.replaceState(null, '', `#eje-${selected.axis}`);
     setNotice(`Indicador ${indicator} seleccionado.`);
   }
   function showOverview() {
+    if(fullscreenOwned.current){fullscreenOwned.current=false;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});}
     pendingNavigation.current={type:'back',id:selection.indicator,scroll:false};
     setSelection(current => ({ ...current, indicator: '' }));
     setNotice('Lista completa de indicadores, agrupada por eje.');
   }
+  useEffect(()=>{
+    if(!selection.indicator && fullscreenOwned.current){fullscreenOwned.current=false;if(document.fullscreenElement)document.exitFullscreen().catch(()=>{});}
+    const leave=()=>{if(selection.indicator && fullscreenOwned.current && !document.fullscreenElement)showOverview();};
+    document.addEventListener('fullscreenchange',leave);
+    return()=>document.removeEventListener('fullscreenchange',leave);
+  },[selection.indicator]);
   // Run after React commits the destination, including slow renders and hash links.
   useEffect(()=>{
     if (!data || !pendingNavigation.current) return;

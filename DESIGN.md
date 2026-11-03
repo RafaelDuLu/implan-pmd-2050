@@ -89,3 +89,9 @@ La textura decorativa no tiene animación propia ni codifica cantidades. Las ent
 «Ver detalles» abre un diálogo nativo en la capa superior. El documento de fondo queda fijo, se conserva su posición y la lista permanece montada. El botón «Volver a los indicadores» siempre visible y Escape cierran el diálogo, restauran la posición original y devuelven el foco al indicador. El diálogo mantiene el recorrido de teclado dentro de sus controles.
 
 En escritorio se centra un espacio de trabajo con cabecera compacta, tres valores esenciales, gráfica amplia y simulador lateral. En pantallas estrechas o bajas, las vistas Gráfica, Ritmo y Acciones comparten el espacio disponible sin desplazar la página; los datos clave y el regreso permanecen presentes. Las dimensiones y tipografía se compactan para alturas móviles menores. Se conserva íntegra la geometría SVG, la simulación, el cero inicial y el horizonte 2030.
+
+## Gráfica protagonista y prioridades dentro del encuadre
+
+El detalle usa todo el ancho disponible y reserva aproximadamente 70 % del área principal a la gráfica. El SVG mide su lienzo con ResizeObserver: años, valores y dominio numérico siguen idénticos; solo cambian las coordenadas de presentación para ocupar el alto y ancho reales. Las transiciones interpolan la misma geometría medida, incluida la base de los rellenos. No se estira una imagen ni se cambian cálculos.
+
+En escritorio, las prioridades ocupan una franja inferior independiente y siempre visible, en lugar de quedar al final del simulador fuera del encuadre. En móvil abre primero Gráfica; Ritmo y Acciones conservan controles y prioridades en el mismo espacio protegido. Se solicita pantalla completa nativa desde el clic del usuario cuando el navegador la admite; si no está disponible, el diálogo sigue ocupando el viewport y bloqueando el desplazamiento. Volver y Escape restauran la navegación; la rueda no desplaza el detalle ni el fondo.

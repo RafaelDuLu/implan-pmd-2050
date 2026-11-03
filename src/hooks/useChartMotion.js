@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
 
 // Pixel interpolation only. No intermediate measurements enter the data model.
-export function useChartMotion(target) {
+export function useChartMotion(target,baseline=233) {
   const ref=useRef(null),current=useRef(null);
   const key=target.join(',');
   useLayoutEffect(()=>{
@@ -18,7 +18,7 @@ export function useChartMotion(target) {
     const paint=values=>{
       current.current=values;
       line?.setAttribute('d',`M${values[0]},${values[1]}L${values[2]},${values[3]}L${values[4]},${values[5]}`);
-      area?.setAttribute('d',`M${values[0]},${values[1]}L${values[2]},${values[3]}L${values[4]},${values[5]}L${values[4]},233L${values[0]},233Z`);
+      area?.setAttribute('d',`M${values[0]},${values[1]}L${values[2]},${values[3]}L${values[4]},${values[5]}L${values[4]},${baseline}L${values[0]},${baseline}Z`);
       node?.setAttribute('transform',`translate(${values[4]} ${values[5]})`);
       label?.setAttribute('transform',`translate(${values[4]} ${values[6]})`);
       crossing?.setAttribute('transform',`translate(${values[2]} ${values[3]})`);
@@ -38,6 +38,6 @@ export function useChartMotion(target) {
     const preference=()=>{if(media.matches)finish();};
     media.addEventListener('change',preference);
     return()=>{cancelAnimationFrame(frame);media.removeEventListener('change',preference);};
-  },[key]);
+  },[key,baseline]);
   return ref;
 }

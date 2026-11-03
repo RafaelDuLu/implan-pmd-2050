@@ -5,23 +5,27 @@ import HistoryChart from './HistoryChart.jsx';
 import GoalPlan from './GoalPlan.jsx';
 import { goalPaceMultiplier } from '../lib/goal-plan.mjs';
 import { paceScenario } from '../lib/pace-scenario.mjs';
+import { indicatorActions } from '../lib/indicator-actions.mjs';
 import { axisCopy, axisTheme } from './AxisExplorer.jsx';
 
 export default function IndicatorExplorer({ axis, indicators, axes, selectedId, onBack }) {
   const d=indicators.find(d=>d.id===selectedId) ?? indicators[0];
   const dialog=useRef(null),heading=useRef(null);
-  const [detailView,setDetailView]=useState('rhythm');
+  const [detailView,setDetailView]=useState('chart');
   const [pace,setPace]=useState(0);
   const {profile,plan,projected}=paceScenario(d,pace);
   const autoAdjusted=goalPaceMultiplier(d,1)<0;
   useLayoutEffect(()=>{
     const node=dialog.current,body=document.body,html=document.documentElement;
+    const stopWheel=event=>event.preventDefault();
+    node.addEventListener('wheel',stopWheel,{passive:false});
     const scrollY=window.scrollY,scrollX=window.scrollX;
     const saved={position:body.style.position,top:body.style.top,left:body.style.left,width:body.style.width,overflow:body.style.overflow,htmlOverflow:html.style.overflow};
     body.style.position='fixed';body.style.top=`${-scrollY}px`;body.style.left=`${-scrollX}px`;body.style.width='100%';body.style.overflow='hidden';html.style.overflow='hidden';
     if(!node.open)node.showModal();
     heading.current?.focus({preventScroll:true});
     return()=>{
+      node.removeEventListener('wheel',stopWheel);
       node.close();
       Object.assign(body.style,{position:saved.position,top:saved.top,left:saved.left,width:saved.width,overflow:saved.overflow});
       html.style.overflow=saved.htmlOverflow;
@@ -35,6 +39,7 @@ export default function IndicatorExplorer({ axis, indicators, axes, selectedId, 
       <div className="detail-values focus-values">{[['Valor base',d.baseYear,d.base],['Último dato',d.year,d.value],['Meta',2030,d.target2030]].map(([label,year,value])=><div key={label}><span>{label} · {year}</span><strong>{displayValue(value,d)}{!d.percent && <small>{d.unit}</small>}</strong></div>)}</div>
       <div className="detail-view-tabs focus-tabs" role="group" aria-label="Contenido del indicador">{[['chart','Gráfica','detail-chart'],['rhythm','Ritmo','detail-rhythm'],['actions','Acciones','detail-rhythm']].map(([view,label,controls])=><button key={view} id={`${view}-tab`} aria-pressed={detailView===view} aria-controls={controls} onClick={()=>setDetailView(view)}>{label}</button>)}</div>
       <div className="detail-layout focus-layout" data-view={detailView}><div className="detail-chart" id="detail-chart"><HistoryChart indicator={d} projected={projected}/></div><GoalPlan indicator={d} plan={plan} profile={profile} projected={projected} pace={pace} autoAdjusted={autoAdjusted} onPace={setPace} onReset={()=>setPace(0)}/></div>
+      {indicatorActions[d.id] && <section className="focus-priorities" aria-labelledby="focus-priorities-title"><h3 id="focus-priorities-title">{plan.status==='achieved' ? 'Para sostener la meta' : 'Prioridades para cerrar la brecha'}</h3><p>{indicatorActions[d.id][plan.status==='achieved' ? 1:0]}</p></section>}
     </div>
   </dialog>,document.body);
 }
