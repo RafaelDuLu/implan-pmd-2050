@@ -1,40 +1,35 @@
-/* A measured drawing surface: ink, reference rules and a quiet future field. */
-.detail-chart:has(.editorial-chart){background:#f6f7f8;border-top:2px solid var(--axis-color);padding:22px 24px 20px}
-.editorial-chart .clean-chart-heading{margin-bottom:12px;align-items:baseline;gap:16px}
-.editorial-chart .clean-chart-heading h4{font-size:21px;font-weight:500;letter-spacing:-.025em;color:#182934}
-.editorial-chart .clean-chart-heading>span{font-size:11px;line-height:1.5;color:#465b69;max-width:24ch}
-.editorial-chart .chart-scenario-field{fill:#eaf0f3}
-.editorial-chart .chart-zone-label{fill:#405767;font:500 12px 'Mona Sans',sans-serif;letter-spacing:.025em}
-.editorial-chart .chart-zone-scenario{fill:var(--chart-accent)}
-.editorial-chart .chart-grid{stroke:#d7dfe4;stroke-width:.6;shape-rendering:crispEdges}
-.editorial-chart .chart-axis-label{fill:#546774;font-size:12px;font-variant-numeric:tabular-nums}
-.editorial-chart .chart-time-seam{stroke:#b3c0c9;stroke-width:.8;stroke-dasharray:2 4;shape-rendering:crispEdges}
-.editorial-chart .chart-target{stroke:var(--chart-accent);stroke-width:1;stroke-dasharray:2 4;opacity:.7}
-.editorial-chart .chart-target-notch{fill:none;stroke:var(--chart-accent);stroke-width:1.5}
-.editorial-chart .chart-target-label{fill:var(--chart-accent);font:500 12px 'Mona Sans',sans-serif;paint-order:stroke;stroke:#f6f7f8;stroke-width:5px;stroke-linejoin:round}
-.editorial-chart .chart-observed-line{fill:none;stroke:#182934;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;animation:chart-draw-history 520ms cubic-bezier(.2,.7,.2,1) both}
-.editorial-chart .chart-scenario-line{fill:none;stroke:var(--chart-accent);stroke-width:2;stroke-dasharray:5 5;stroke-linecap:butt;stroke-linejoin:round}
+/* Dark drawing surface, matched to the approved reference. Marks remain real SVG. */
+.detail-chart:has(.editorial-chart){background:#05161f url('/charts/goal-surface.webp') center/100% 100% no-repeat;color:#eef8fa;border:1px solid #23434d;border-radius:18px;padding:24px 26px 22px;box-shadow:inset 0 1px 0 #9ae4e820,8px 12px 25px #00000018;overflow:hidden}
+.editorial-chart .clean-chart-heading{margin-bottom:12px;align-items:center;gap:16px}
+.editorial-chart .clean-chart-heading h4{display:flex;align-items:center;gap:12px;font-size:clamp(21px,1.9vw,29px);font-weight:650;letter-spacing:-.025em;line-height:1.2;color:#f3fbfc}
+.editorial-chart .clean-chart-heading h4::before{content:'';display:block;flex-shrink:0;width:4px;height:27px;border-radius:2px;background:#35ded6;box-shadow:0 0 9px #23ded02b}
+.editorial-chart .clean-chart-heading>span{font-size:12px;line-height:1.4;color:#d4e4eb;max-width:23ch;border:1px solid #75929c;border-radius:22px;padding:5px 12px;text-align:center}
+.editorial-chart .history-canvas{overflow:visible}
+.editorial-chart .chart-grid{stroke:#8ca6b1;stroke-opacity:.3;stroke-width:.8;stroke-dasharray:2 3;shape-rendering:crispEdges}
+.editorial-chart .chart-axis-label{fill:#c1d2da;font:500 13px 'Mona Sans',sans-serif;font-variant-numeric:tabular-nums}
+.editorial-chart .chart-frame-axis{fill:none;stroke:#a0b4bc;stroke-width:1.2;shape-rendering:crispEdges}
+.editorial-chart .chart-target{stroke:#23e3d1;stroke-width:2.8;stroke-dasharray:.1 6.5;stroke-linecap:round;opacity:.95}
+.editorial-chart .chart-history-area,.editorial-chart .chart-scenario-area{stroke:none;pointer-events:none}
+.editorial-chart .chart-observed-line{fill:none;stroke:#f3ffff;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;animation:chart-draw-history 520ms cubic-bezier(.2,.7,.2,1) both;filter:drop-shadow(0 0 2px #51d9d54d)}
+.editorial-chart .chart-scenario-line{fill:none;stroke:#a7d0e5;stroke-width:2.3;stroke-dasharray:6 5;stroke-linecap:butt;stroke-linejoin:round}
 .editorial-chart .chart-scenario-motion{animation:chart-reveal-scenario 240ms 220ms both}
-.editorial-chart .clean-observed-dot{fill:#182934;stroke:#f6f7f8;stroke-width:1.5}
+.editorial-chart .clean-observed-dot{fill:#f3ffff;stroke:#75d8df;stroke-width:1.6;filter:drop-shadow(0 0 3px #36dfd58c)}
 .editorial-chart .chart-observed-marks{animation:chart-reveal-scenario 220ms 300ms both}
-.editorial-chart .chart-observed-value{fill:#182934;font:500 12px 'Mona Sans',sans-serif;paint-order:stroke;stroke:#f6f7f8;stroke-width:4px;stroke-linejoin:round}
-.editorial-chart .chart-end-ring{fill:#f6f7f8;stroke:var(--chart-accent);stroke-width:1.5}
-.editorial-chart .chart-end-core{fill:var(--chart-accent)}
-.editorial-chart .chart-crossing-node circle{fill:#f6f7f8;stroke:var(--chart-accent);stroke-width:1.3}
-.editorial-chart .chart-end-label text{fill:var(--chart-accent);font:600 14px 'Mona Sans',sans-serif;paint-order:stroke;stroke:#eaf0f3;stroke-width:5px;stroke-linejoin:round;font-variant-numeric:tabular-nums}
-.editorial-chart .chart-year-tick{stroke:#acbbc5;stroke-width:.7;shape-rendering:crispEdges}
-.editorial-chart .chart-year{fill:#405767;font-size:12px;font-variant-numeric:tabular-nums}
-.editorial-chart-result{border-top:1px solid #cdd8df;margin-top:12px;padding-top:14px;color:#405767}
-.editorial-chart-result>span{display:block;font-size:11px;line-height:1.5}
-.editorial-chart-result p{display:flex;align-items:baseline;flex-wrap:wrap;gap:7px;margin-top:5px}
-.editorial-chart-result strong{display:inline-block;font-size:29px;font-weight:550;line-height:1.2;letter-spacing:-.025em;color:var(--chart-accent);font-variant-numeric:tabular-nums;animation:chart-update-value 140ms ease-out}
-.editorial-chart-result .chart-result-unit{font-size:12px;line-height:1.4;color:#405767}
-.editorial-chart-result small{display:block;font-size:11px;line-height:1.5;margin-top:6px;color:#405767}
+.editorial-chart .chart-end-ring{fill:#467187;stroke:#c5ebff;stroke-width:1.8}
+.editorial-chart .chart-end-core{fill:#d6f6ff}
+.editorial-chart .chart-crossing-node circle{fill:#234a57;stroke:#a2e9ea;stroke-width:1.3}
+.editorial-chart .chart-value-bubble{fill:#09212b;stroke:#27e7df;stroke-width:1.3;filter:drop-shadow(0 0 3px #27e7df45)}
+.editorial-chart .chart-end-label text{fill:#f3ffff;font:650 15px 'Mona Sans',sans-serif;font-variant-numeric:tabular-nums;stroke:none}
+.editorial-chart .chart-year-tick{stroke:#a0b4bc;stroke-width:1;shape-rendering:crispEdges}
+.editorial-chart .chart-year{fill:#d0e0e7;font:500 13px 'Mona Sans',sans-serif;font-variant-numeric:tabular-nums}
+.reference-chart-legend{display:flex;gap:12px 22px;flex-wrap:wrap;margin-top:12px;padding-top:7px;font-size:12px;line-height:1.5;color:#e1edf2}
+.reference-chart-legend span{display:flex;align-items:center;gap:8px}
+.reference-chart-legend i{display:block;flex-shrink:0;width:25px;height:0;border-top:2px solid #f3ffff;border-radius:1px}
+.reference-chart-legend>span:nth-last-child(2):not(:first-child) i{border-top:2px dashed #a7d0e5}
+.reference-chart-legend>span:last-child i{border-top:3px dotted #23e3d1}
+.chart-unavailable{font-size:12px;line-height:1.5;color:#d2e2e9;margin-top:12px}
 @keyframes chart-draw-history{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 @keyframes chart-reveal-scenario{from{opacity:0}to{opacity:1}}
-@keyframes chart-update-value{from{opacity:.4;transform:translateY(2px)}to{opacity:1;transform:translateY(0)}}
-@media(min-width:1051px) and (max-height:800px){.detail-chart:has(.editorial-chart){padding:16px 20px}.editorial-chart .clean-chart-heading h4{font-size:19px}.editorial-chart-result{margin-top:8px;padding-top:10px}.editorial-chart-result strong{font-size:25px}}
-@media(max-width:600px){.detail-chart:has(.editorial-chart){padding:18px 12px}.editorial-chart .clean-chart-heading h4{font-size:19px}.editorial-chart .clean-chart-heading>span{font-size:10px;max-width:17ch}.editorial-chart .chart-zone-label,.editorial-chart .chart-target-label,.editorial-chart .chart-observed-value{font-size:12px}.editorial-chart .chart-axis-label,.editorial-chart .chart-year{font-size:12px}.editorial-chart-result strong{font-size:28px}}
+@media(min-width:1051px) and (max-height:800px){.detail-chart:has(.editorial-chart){padding:18px 22px}.editorial-chart .clean-chart-heading h4{font-size:21px}.reference-chart-legend{margin-top:8px;font-size:11px}}
+@media(max-width:600px){.detail-chart:has(.editorial-chart){padding:20px 12px 18px;border-radius:14px}.editorial-chart .clean-chart-heading{gap:10px}.editorial-chart .clean-chart-heading h4{font-size:20px;gap:8px}.editorial-chart .clean-chart-heading h4::before{width:3px;height:31px}.editorial-chart .clean-chart-heading>span{font-size:10px;padding:4px 8px;max-width:15ch}.editorial-chart .chart-axis-label,.editorial-chart .chart-year{font-size:12px}.reference-chart-legend{gap:9px 14px;font-size:10px}.reference-chart-legend i{width:19px}}
 @media(prefers-reduced-motion:reduce){.editorial-chart *{animation:none!important;transition:none!important}}
-
-.editorial-chart[data-compact=true] .chart-target-label{font-size:12px}

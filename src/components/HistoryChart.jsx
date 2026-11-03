@@ -4,7 +4,6 @@ import { displayValue, number, chartObservations } from '../lib/indicators.mjs';
 import { paceChartPoints } from '../lib/pace-scenario.mjs';
 import { useChartMotion } from '../hooks/useChartMotion.js';
 
-const chartInk={1:'#805f06',2:'#006b60',3:'#a82167',4:'#985000',5:'#286c23',6:'#2b3990',7:'#006bb8'};
 
 /** Presentation only: the approved observations, scale and scenario stay intact. */
 export default function HistoryChart({ indicator: d, projected }) {
@@ -32,35 +31,30 @@ export default function HistoryChart({ indicator: d, projected }) {
   // Labels occupy their own layer; pixel offsets never change data positions.
   const end=scenarioPoints.at(-1) || {year:2030,value:d.value};
   const middle=scenarioPoints.length===3 ? scenarioPoints[1] : end;
-  const endLabelY=y(end.value)+(Math.abs(y(end.value)-y(d.target2030))<24 ? 23 : -13);
+  const endLabelY=y(end.value)-18;
+  const bubbleWidth=Math.max(70,displayValue(end.value,d).length*8.5+26);
   const motion=useChartMotion([x(last.year),y(last.value),x(middle.year),y(middle.value),x(end.year),y(end.value),endLabelY]);
-  const observedLabelY=y(last.value)+(Math.abs(y(last.value)-y(d.target2030))<26 ? 22 : -13);
-  const targetText=`Meta 2030 · ${displayValue(d.target2030,d)}`;
-  const resultNote=projected.capped ? `Meta alcanzada${projected.reachedAt<2030 ? ` en ${Math.ceil(projected.reachedAt-1e-9)}` : ''}; se mantiene hasta 2030.` : projected.maintained ? 'Se conserva el resultado ya alcanzado.' : '';
-  return <div className="history-chart clean-chart editorial-chart" ref={ref} data-compact={compact} style={{'--chart-accent':chartInk[d.axis] || '#006b60'}}>
+  return <div className="history-chart clean-chart editorial-chart" ref={ref} data-compact={compact} style={{'--chart-accent':'#23ded0'}}>
     <div className="clean-chart-heading"><h4>Evolución hacia la meta</h4><span>{d.percent ? '%' : d.unit}</span></div>
     <div className="history-canvas"><svg viewBox={`0 0 ${width} 272`} role="img" aria-labelledby={`${uid}-title ${uid}-description`}>
       <title id={`${uid}-title`}>{d.name}</title><desc id={`${uid}-description`}>Base {d.baseYear}: {displayValue(d.base,d)}. Último dato {d.year}: {displayValue(d.value,d)}. Meta 2030: {displayValue(d.target2030,d)}. {showScenario ? `Escenario simulado a 2030: ${displayValue(projected.value,d)}; no es un dato observado ni un pronóstico oficial.${projected.capped ? ' El escenario alcanza la meta y la mantiene hasta 2030.' : projected.maintained ? ' Se conserva el resultado ya alcanzado.' : ''}` : 'La continuación a 2030 no es interpretable dentro de la escala y no se representa.'} Las líneas entre observaciones son guías visuales; no añaden datos para años sin observación.</desc>
-      <rect className="chart-scenario-field" x={x(last.year)} y="36" width={right-x(last.year)} height="197"/>
-      <text className="chart-zone-label" x={left} y="22">{compact ? 'Datos' : 'Observado'}</text>
-      {showScenario && <text className="chart-zone-label chart-zone-scenario" x={right} y="22" textAnchor="end">{compact ? 'Escenario' : 'Escenario simulado'}</text>}
+      <defs><linearGradient id={`${uid}-history-fill`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#31c8c3" stopOpacity=".28"/><stop offset="100%" stopColor="#14303e" stopOpacity="0"/></linearGradient><linearGradient id={`${uid}-scenario-fill`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#85b8d6" stopOpacity=".23"/><stop offset="100%" stopColor="#173342" stopOpacity=".02"/></linearGradient></defs>
       {[0,.5,1].map(t=>{const value=low+(high-low)*t,yy=y(value);return <g key={t}><line className="chart-grid" x1={left} x2={right} y1={yy} y2={yy}/><text className="chart-axis-label" x={left-12} y={yy+4} textAnchor="end">{axis(value)}</text></g>;})}
-      <line className="chart-time-seam" x1={x(last.year)} x2={x(last.year)} y1="36" y2="233"/>
+      <path className="chart-frame-axis" d={`M${left-7},50V233H${right+10}`}/>
       <line className="chart-target" x1={left} x2={right} y1={y(d.target2030)} y2={y(d.target2030)}/>
-      <path className="chart-target-notch" d={`M${left-5},${y(d.target2030)-4}V${y(d.target2030)+4}`}/>
-      <text className="chart-target-label" x={left} y={y(d.target2030)-12}>{targetText}</text>
+      <path className="chart-history-area" fill={`url(#${uid}-history-fill)`} d={`${path}L${x(last.year)},233L${x(observations[0].year)},233Z`}/>
       <path className="chart-observed-line" pathLength="1" d={path}/>
       {showScenario && <g ref={motion} className="chart-scenario-motion">
-        <path className="chart-scenario-line" d={scenarioPath}/>
+        <path className="chart-scenario-area" fill={`url(#${uid}-scenario-fill)`} d={`${scenarioPath}L${right},233L${x(last.year)},233Z`}/><path className="chart-scenario-line" d={scenarioPath}/>
         {projected.capped && projected.reachedAt<2030 && <g className="chart-crossing-node" transform={`translate(${x(projected.reachedAt)} ${y(d.target2030)})`}><circle r="3"/></g>}
         <g className="chart-end-node" transform={`translate(${x(2030)} ${y(projected.value)})`}><circle className="chart-end-ring" r="7"/><circle className="chart-end-core" r="2.5"/></g>
-        <g className="chart-end-label" transform={`translate(${right} ${endLabelY})`}><text textAnchor="end">{displayValue(projected.value,d)}</text></g>
+        <g className="chart-end-label" transform={`translate(${right} ${endLabelY})`}><path className="chart-value-bubble" d={`M${-bubbleWidth+12},-30H4Q12,-30 12,-22V-8Q12,0 4,0H6L0,8L-6,0H${-bubbleWidth+20}Q${-bubbleWidth+12},0 ${-bubbleWidth+12},-8V-22Q${-bubbleWidth+12},-30 ${-bubbleWidth+20},-30Z`}/><text x={-bubbleWidth/2+12} y="-11" textAnchor="middle">{displayValue(projected.value,d)}</text></g>
       </g>}
       <g className="chart-observed-marks">{observations.map(p=><circle key={p.year} className="clean-observed-dot" cx={x(p.year)} cy={y(p.value)} r={p.year===last.year ? 4:3}/>)}
-      {!compact && observations.length>1 && x(last.year)-x(observations[0].year)>85 && <text className="chart-observed-value" x={x(observations[0].year)} y={y(observations[0].value)+(Math.abs(y(observations[0].value)-y(d.target2030))<26 ? 22 : -13)}>{displayValue(observations[0].value,d)}</text>}
-      <text className="chart-observed-value" x={x(last.year)} y={observedLabelY} textAnchor={compact ? 'start':'middle'}>{displayValue(last.value,d)}</text></g>
+      </g>
       {ticks.map((year,i)=><g key={year}><line className="chart-year-tick" x1={x(year)} x2={x(year)} y1="233" y2="238"/><text className="chart-year" x={x(year)} y="257" textAnchor={i===ticks.length-1?'end':'middle'}>{year}</text></g>)}
     </svg></div>
-    {showScenario ? <div className="editorial-chart-result"><span>Con el ritmo seleccionado, en 2030</span><p><strong key={displayValue(projected.value,d)}>{displayValue(projected.value,d)}</strong>{!d.percent && <span className="chart-result-unit">{d.unit.toLocaleLowerCase('es-MX')}</span>}</p>{resultNote && <small>{resultNote}</small>}</div> : <p className="clean-chart-result">{projected.reason || 'La continuación a 2030 no es evaluable.'}</p>}
+    <div className="reference-chart-legend"><span><i/>Datos disponibles</span>{showScenario && <span><i/>Escenario simulado</span>}<span><i/>Meta 2030</span></div>
+    {!showScenario && <p className="chart-unavailable" role="status">{projected.reason || 'La continuación a 2030 no es evaluable.'}</p>}
   </div>;
 }

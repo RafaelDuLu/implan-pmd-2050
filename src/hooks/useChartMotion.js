@@ -8,6 +8,7 @@ export function useChartMotion(target) {
     const group=ref.current;
     if (!group) return;
     const line=group.querySelector('.chart-scenario-line');
+    const area=group.querySelector('.chart-scenario-area');
     const node=group.querySelector('.chart-end-node');
     const label=group.querySelector('.chart-end-label');
     const crossing=group.querySelector('.chart-crossing-node');
@@ -17,6 +18,7 @@ export function useChartMotion(target) {
     const paint=values=>{
       current.current=values;
       line?.setAttribute('d',`M${values[0]},${values[1]}L${values[2]},${values[3]}L${values[4]},${values[5]}`);
+      area?.setAttribute('d',`M${values[0]},${values[1]}L${values[2]},${values[3]}L${values[4]},${values[5]}L${values[4]},233L${values[0]},233Z`);
       node?.setAttribute('transform',`translate(${values[4]} ${values[5]})`);
       label?.setAttribute('transform',`translate(${values[4]} ${values[6]})`);
       crossing?.setAttribute('transform',`translate(${values[2]} ${values[3]})`);

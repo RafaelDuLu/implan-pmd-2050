@@ -75,3 +75,11 @@ La superficie clara utiliza tinta oscura para el histórico y un acento accesibl
 La entrada dibuja el histórico una vez (520 ms), seguida por aparición breve del escenario y nodos. Las actualizaciones del ritmo interpolan solo coordenadas de pantalla durante 180 ms con cancelación al recibir un cambio nuevo. Los segmentos permanecen rectos, y la animación nunca escribe en el modelo de datos ni genera valores numéricos intermedios: las etiquetas y el resumen muestran siempre el resultado calculado. El histórico y la meta no se animan con el control. La preferencia de movimiento reducido elimina la entrada y aplica la posición final inmediatamente.
 
 En móvil se recalculan las etiquetas con la variante compacta existente, manteniendo su escala aprobada y un mínimo de detalle legible, sin arrastre, zoom obligatorio ni información exclusiva de hover. La lectura accesible del SVG conserva datos, unidades y advertencias del escenario. El control por toque y teclado se mantiene en el simulador existente.
+
+## Acabado de la referencia oscura · revisión solicitada
+
+La referencia visual oscura sustituye el tratamiento editorial claro anterior. Se reproduce su atmósfera con un fondo local derivado de la imagen seleccionada mediante ImageGen: azul petróleo, marco con profundidad y tejido luminoso decorativo en el borde inferior. Se guarda optimizado en public/charts/goal-surface.webp (1848 × 851). El bitmap no contiene datos, ejes ni texto: todo el gráfico sigue siendo SVG real.
+
+Histórico blanco con nodos luminosos; escenario azul claro segmentado; meta turquesa punteada. La etiqueta del extremo tiene marco y puntero, y se desplaza con el dato. Los rellenos degradados se recortan bajo los trazos reales y se interpolan junto a la proyección, sin cambios de escala, valores o cálculos. La leyenda de la referencia vuelve debajo del trazado. Se elimina por completo el resumen adicional de resultado que antes aparecía debajo de la gráfica; el valor permanece en la etiqueta del punto y en la descripción accesible.
+
+La textura decorativa no tiene animación propia ni codifica cantidades. Las entradas y transiciones conservan la alternativa de movimiento reducido. El recurso local no añade servicios externos, dependencias ni coste operativo.
