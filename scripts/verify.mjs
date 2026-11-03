@@ -216,3 +216,30 @@ test('Se convierten segundos, metros, gramos y días sin perder sus denominadore
   assert.match(paceContext(d('1.5.1'),-.01),/aleja/);
   assert.match(paceContext(d('1.5.1'),.000001),/menos de 0.01/);
 });
+
+test('El semáforo distingue cumplimiento real, recuperación y atención sin alterar datos', async () => {
+  const { overviewStatus }=await import('../src/lib/overview-status.mjs');
+  const base={base:0,baseYear:2020,value:5,year:2025,target2030:10,direction:'A',unit:'Unidades',percent:false};
+  assert.equal(overviewStatus(base).state,'good');
+  assert.equal(overviewStatus({...base,value:12}).label,'Meta superada');
+  assert.equal(overviewStatus({...base,value:3}).state,'watch');
+  assert.equal(overviewStatus({...base,value:-6}).state,'watch');
+  assert.equal(overviewStatus({...base,value:-1}).state,'risk');
+  assert.equal(overviewStatus({...base,value:-20}).state,'risk');
+  assert.equal(overviewStatus({...base,value:0}).state,'risk');
+  assert.equal(overviewStatus({...base,target2030:0}).state,'unknown');
+  const lower={base:100,baseYear:2020,value:80,year:2025,target2030:60,direction:'D',unit:'Unidades'};
+  assert.equal(overviewStatus(lower).state,'good');
+  assert.equal(overviewStatus({...lower,value:120}).state,'watch');
+  assert.equal(overviewStatus({...lower,value:105}).state,'risk');
+  for(const d of eligible){const before=JSON.stringify(d);assert.ok(['good','watch','risk','unknown'].includes(overviewStatus(d).state));assert.equal(JSON.stringify(d),before);}
+});
+test('Las barras comparten origen y escala, con desbordamiento explícito en ambos sentidos', async () => {
+  const { overviewRail }=await import('../src/lib/overview-status.mjs');
+  assert.deepEqual(overviewRail(40),{left:50,width:20,marker:70,overflow:0});
+  assert.deepEqual(overviewRail(-40),{left:30,width:20,marker:30,overflow:0});
+  assert.deepEqual(overviewRail(332.5),{left:50,width:50,marker:100,overflow:1});
+  assert.deepEqual(overviewRail(-612.5),{left:0,width:50,marker:0,overflow:-1});
+  assert.equal(overviewRail(100).overflow,0);
+  assert.equal(overviewRail(null).width,0);
+});

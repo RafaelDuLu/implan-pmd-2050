@@ -1,18 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useEditorialMotion } from './hooks/useEditorialMotion.js';
 import Hero from './components/Hero.jsx';
-import AxisExplorer from './components/AxisExplorer.jsx';
+import AxisExplorer, { axisTheme } from './components/AxisExplorer.jsx';
 import IndicatorExplorer from './components/IndicatorExplorer.jsx';
 import AxisOverview from './components/AxisOverview.jsx';
 import DataTable from './components/DataTable.jsx';
 import Footer, { ClosingSections } from './components/Footer.jsx';
 import { useLayerStack } from './hooks/useLayerStack.js';
-import { AxisSheet } from './components/AxisSheet.jsx';
 
 export default function App() {
   const [data, setData] = useState(null);
   const [error, setError] = useState(false);
   const [selection, setSelection] = useState(() => ({ axis: Number(location.hash.match(/^#eje-([1-7])$/)?.[1] || 3), indicator: '' }));
+  const pendingNavigation=useRef(location.hash.match(/^#eje-([1-7])$/) ? {type:'axis',axis:selection.axis} : null);
   const layerStack=useLayerStack(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
   const [notice, setNotice] = useState('');
   useEditorialMotion(`${Boolean(data)}:${selection.axis}:${selection.indicator}`);
@@ -27,34 +27,41 @@ export default function App() {
   const indicators = useMemo(() => data?.indicators.filter(d => d.eligible) ?? [], [data]);
   const selectedIndicators = useMemo(() => indicators.filter(d => d.axis === selection.axis), [indicators, selection.axis]);
   function selectAxis(axis, scrollToPanel = true) {
+    pendingNavigation.current={type:'axis',axis,scroll:scrollToPanel};
     setSelection({ axis, indicator: '' });
     history.replaceState(null, '', `#eje-${axis}`);
     setNotice(`Eje ${axis}: ${data.axes.find(a => a.id === axis).name}`);
-    requestAnimationFrame(() => {
-      const title = document.getElementById('indicator-section-title');
-      title?.setAttribute('tabindex', '-1'); title?.focus({ preventScroll: true });
-      if (scrollToPanel) document.getElementById('indicadores')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-    });
   }
   function selectIndicator(indicator) {
-    setSelection(current => ({ ...current, indicator })); setNotice(`Indicador ${indicator} seleccionado.`);
-    requestAnimationFrame(() => {
-      document.getElementById('indicadores')?.scrollIntoView({ behavior: 'instant', block: 'start' });
-      document.getElementById('active-indicator-title')?.focus({ preventScroll: true });
-    });
+    const selected=indicators.find(d=>d.id===indicator);
+    if (!selected) return;
+    pendingNavigation.current={type:'detail'};
+    setSelection({ axis:selected.axis, indicator });
+    history.replaceState(null, '', `#eje-${selected.axis}`);
+    setNotice(`Indicador ${indicator} seleccionado.`);
   }
   function showOverview() {
-    const previous = selection.indicator;
+    pendingNavigation.current={type:'back',id:selection.indicator};
     setSelection(current => ({ ...current, indicator: '' }));
-    setNotice('Vista de avance de los indicadores del eje.');
-    requestAnimationFrame(() => {
-      const row = document.getElementById(`resumen-${previous}`);
-      row?.focus({ preventScroll: true });
-      row?.scrollIntoView({ behavior: 'instant', block: 'center' });
-    });
+    setNotice('Lista completa de indicadores, agrupada por eje.');
   }
+  // Run after React commits the destination, including slow renders and hash links.
+  useEffect(()=>{
+    if (!data || !pendingNavigation.current) return;
+    const intent=pendingNavigation.current;
+    const target=document.getElementById(intent.type==='axis' ? `lista-eje-${intent.axis}` : intent.type==='back' ? `resumen-${intent.id}` : 'active-indicator-title');
+    if (!target) return;
+    pendingNavigation.current=null;
+    target.focus({preventScroll:true});
+    if (intent.scroll===false) return;
+    const destination=intent.type==='detail' ? document.getElementById('indicadores') : target;
+    destination?.scrollIntoView({behavior:intent.type==='axis' && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'instant',block:intent.type==='back' ? 'center' : 'start'});
+  },[data,selection]);
   useEffect(() => {
-    const change = () => { const axis = location.hash.match(/^#eje-([1-7])$/)?.[1]; if (axis) setSelection({ axis: Number(axis), indicator: '' }); };
+    const change = () => {
+      const axis = location.hash.match(/^#eje-([1-7])$/)?.[1];
+      if (axis) { pendingNavigation.current={type:'axis',axis:Number(axis)}; setSelection({ axis: Number(axis), indicator: '' }); }
+    };
     window.addEventListener('hashchange', change);
     return () => window.removeEventListener('hashchange', change);
   }, []);
@@ -68,7 +75,7 @@ export default function App() {
     <Hero count={indicators.length}/>
     <main id="main">
       <AxisExplorer axes={data.axes} indicators={indicators} activeAxis={selection.axis} onSelect={selectAxis}/>
-      {!!selectedIndicators.length && <AxisSheet key={`sheet-${selection.axis}`} axis={axis}>{selection.indicator ? <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator} onBack={showOverview}/> : <AxisOverview axis={axis} axes={data.axes} indicators={selectedIndicators} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator}/>}</AxisSheet>}
+      <div className="axis-sheet" style={selection.indicator ? axisTheme(axis.id) : undefined}>{selection.indicator ? <IndicatorExplorer key={indicatorId} axis={axis} axes={data.axes} indicators={selectedIndicators} selectedId={indicatorId} onSelectAxis={selectAxis} onSelectIndicator={selectIndicator} onBack={showOverview}/> : <AxisOverview axes={data.axes} indicators={indicators} onSelectIndicator={selectIndicator}/>}</div>
       <DataTable key={`table-${selection.axis}`} indicators={selectedIndicators} axes={data.axes} axis={axis} onSelectIndicator={selectIndicator}/>
     </main>
     <ClosingSections/>

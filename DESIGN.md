@@ -49,3 +49,11 @@ AxisSheet y Datos abiertos quedan fuera del sistema de hojas sticky. Ambas secci
 ## Orientación automática del escenario
 
 Se retira el botón de inversión. La dirección de cada meta (A/D) define automáticamente el control y el signo del escenario. Cuando la variación observada va en sentido contrario, solo se invierte la proyección hipotética, manteniendo intactos base, dato reciente, meta y línea histórica. La interfaz identifica ese caso como «Escenario de mejora · el cambio observado va en sentido contrario». 0× mantiene el último dato, y una serie inmóvil no adquiere un ritmo inventado. Restablecer vuelve a 1× en la orientación automática.
+
+## Lista completa y semáforo de avance · noviembre de 2026
+
+La consulta inicial reúne los 31 indicadores, agrupados por eje en el orden oficial. Cada grupo comienza con su nombre completo y una línea del color institucional. El directorio ya no abre una transición: desplaza y enfoca el encabezado correspondiente dentro de la lista. Elegir cualquier fila o barra abre el ritmo del indicador y su eje correcto; volver restaura el foco en esa fila. Se conserva Datos abiertos para consulta y exportación.
+
+Las filas muestran nombre, un único porcentaje de avance y semáforo, sin repetir base, valor actual ni meta. Barra divergente con escala compartida −100…100, base al centro y proporción lineal idéntica a ambos lados. Los valores fuera de escala conservan su cifra real y utilizan trama con flecha de continuación, nunca se normalizan por fila ni desbordan la pantalla. Tintes sobrios en toda la fila, texto de estado y señal de advertencia complementan el color.
+
+Semáforo editorial, no oficial: verde si ya se cumple la meta o el ritmo observado permite llegar a 2030; rojo si el retroceso alcanza o supera el tramo completo base–meta (avance ≤−100 %) o si no basta el escenario de mejora máximo de 3×; amarillo en el resto cuando el escenario de mejora de hasta 3× llega a 2030. Este último puede requerir invertir la tendencia observada. No equivale a viabilidad técnica o presupuestaria. Gris cuando no se calcula el avance. Los límites y sentido del indicador, el último año disponible y los cálculos de origen se conservan. La clasificación no cambia al manipular el simulador del detalle.
