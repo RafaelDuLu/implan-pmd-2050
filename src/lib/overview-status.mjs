@@ -1,7 +1,7 @@
 import { assessGoal, isNumber, progress } from './indicators.mjs';
 import { goalPlan, goalPaceMultiplier } from './goal-plan.mjs';
 
-/** Orientation only: recovery tests the simulator's existing 3× limit, not feasibility. */
+/** Orientation only: recovery tests the fixed 3× comparison threshold, not feasibility. */
 export function overviewStatus(d) {
   const p=progress(d);
   if (!isNumber(p)) return { state:'unknown', label:'Revisar información', progress:p };

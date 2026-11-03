@@ -24,14 +24,14 @@ export function assessGoal(projection, target, direction = 'A') {
   const tolerance = 1e-10 * Math.max(1, Math.abs(target));
   return (projection - target) * (direction === 'D' ? -1 : 1) >= -tolerance ? 'on-track' : 'at-risk';
 }
-export function project(indicator, multiplier = 1, horizon = 2030, allowReverse = false) {
+export function project(indicator, multiplier = 1, horizon = 2030, allowReverse = false, scenarioAnnual = null) {
   const { base, baseYear, value, year, target2030, direction } = indicator;
   if (![base, baseYear, value, year, target2030, multiplier, horizon].every(isNumber)
-      || year <= baseYear || horizon < year || (!allowReverse && multiplier < 0)) {
+      || year <= baseYear || horizon < year || (!allowReverse && multiplier < 0) || (scenarioAnnual !== null && (!allowReverse || !isNumber(scenarioAnnual)))) {
     return { value: null, rate: null, state: 'unavailable', reason: 'No hay observaciones comparables suficientes.' };
   }
   const rate = (value - base) / (year - baseYear);
-  const projected = value + rate * multiplier * (horizon - year);
+  const projected = value + (scenarioAnnual ?? rate * multiplier) * (horizon - year);
   const scale = String(indicator.unit || '').match(/^Escala\s+(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)$/i);
   const bounds = indicator.percent ? [0,1] : scale ? [Number(scale[1]),Number(scale[2])] : null;
   const outOfBounds = bounds && (projected < bounds[0] || projected > bounds[1]);

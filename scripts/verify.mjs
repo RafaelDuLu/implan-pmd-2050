@@ -243,3 +243,41 @@ test('Las barras comparten origen y escala, con desbordamiento explícito en amb
   assert.equal(overviewRail(100).overflow,0);
   assert.equal(overviewRail(null).width,0);
 });
+
+test('Los 31 controles inician en cero y su referencia llega a 2030 sin alterar observaciones', async () => {
+  const {paceProfile,paceScenario}=await import('../src/lib/pace-scenario.mjs');
+  for(const d of eligible){
+    const before=JSON.stringify(d),profile=paceProfile(d),paused=paceScenario(d);
+    close(paused.projected.value,d.value);close(paused.plan.annual,0);
+    assert.ok(Number.isFinite(profile.max) && profile.max>=3);
+    if(profile.requiredPace!==null){
+      assert.ok(profile.requiredPace<=profile.max,d.id);
+      const target=paceScenario(d,profile.requiredPace);
+      assert.ok(target.plan.crossingYear<=2030,d.id);
+      assert.equal(target.projected.state,'on-track',d.id);
+      close(target.projected.value,d.value+target.plan.annual*(2030-d.year));
+    }
+    assert.equal(JSON.stringify(d),before);
+  }
+});
+test('Densidad y economía tienen escalas suficientes y referencias específicas', async () => {
+  const {paceProfile,paceScenario}=await import('../src/lib/pace-scenario.mjs');
+  const density=eligible.find(d=>d.id==='4.1.3'),economy=eligible.find(d=>d.id==='3.1.3');
+  assert.equal(paceProfile(density).requiredPace,4.19);
+  assert.equal(paceProfile(density).max,6);
+  assert.equal(paceScenario(density,3).projected.state,'at-risk');
+  assert.equal(paceScenario(density,4.19).projected.state,'on-track');
+  assert.equal(paceProfile(economy).max,4);
+  assert.equal(paceProfile(economy).requiredPace,3.16);
+  assert.equal(paceScenario(density,100).plan.annual,paceScenario(density,6).plan.annual);
+});
+test('Un histórico plano usa una referencia explícita sin inventar cambio observado', async () => {
+  const {paceScenario}=await import('../src/lib/pace-scenario.mjs');
+  const d={base:10,baseYear:2020,value:10,year:2025,target2030:20,direction:'A',unit:'Unidades'};
+  assert.equal(paceScenario(d).profile.flatReference,true);
+  assert.equal(paceScenario(d).plan.status,'flat');
+  assert.equal(paceScenario(d,1).projected.value,20);
+  assert.equal(project(d).rate,0);
+  assert.equal(paceScenario(d,NaN).projected.value,10);
+  assert.equal(project(d,1,2030,false,2).state,'unavailable');
+});
