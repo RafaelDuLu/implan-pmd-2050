@@ -85,3 +85,23 @@
  .focus-dialog .pace-direction{font-size:11px;line-height:1.4}.focus-dialog .pace-simulation-label{font-size:9px;margin-top:6px}
 }
 .focus-dialog input[type=range]{touch-action:none}
+
+/* Priorities have a distinct reading surface; pace has a precise target action. */
+.focus-priorities{background:var(--axis-tint);color:#121c24;border:0;border-radius:6px;padding:16px 20px;gap:24px;grid-template-columns:minmax(230px,.85fr) 3fr}
+.focus-priorities h3{color:#121c24;font-size:18px;font-weight:650;line-height:1.35}
+.focus-priorities p{color:#182f38;font-size:16px;font-weight:500;line-height:1.5;max-width:100ch}
+.focus-dialog .pace-required-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px 12px;margin-top:9px;font-size:11px;line-height:1.4;color:#344853}
+.focus-dialog .pace-goal-button{display:inline-flex;align-items:center;gap:8px;background:#142b34;border:1px solid #142b34;border-radius:4px;color:#fff;min-height:36px;padding:7px 10px;font-size:12px;font-weight:550;white-space:nowrap}
+.focus-dialog .pace-goal-button:hover{background:#fff;color:#142b34}.focus-dialog .pace-goal-button:focus-visible{outline:2px solid #142b34;outline-offset:3px}
+.focus-dialog .pace-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px}
+.focus-dialog .pace-fine-controls{display:flex;gap:7px}
+.focus-dialog .pace-fine-controls button{display:grid;place-items:center;width:36px;min-height:36px;padding:0;border:1px solid #7d96a5;border-radius:4px;color:#f3f8fa;background:#1d303b;font-size:22px;line-height:1;text-decoration:none}
+.focus-dialog .pace-fine-controls button:hover:not(:disabled){background:var(--axis-tint);color:#121c24;border-color:var(--axis-light)}
+.focus-dialog .pace-fine-controls button:disabled{opacity:.35;cursor:default}
+.focus-dialog .pace-tool .pace-vertical input{appearance:none;-webkit-appearance:none;background:transparent;border:0;outline-offset:3px;border-radius:12px}
+.focus-dialog .pace-tool input::-webkit-slider-runnable-track{width:8px;height:100%;border-radius:10px;background:#526875;border:1px solid #8aa0ad}
+.focus-dialog .pace-tool input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin-left:-9px;border:3px solid #e5f4f6;border-radius:50%;background:var(--axis-light);box-shadow:0 3px 8px #0005;cursor:ns-resize}
+.focus-dialog .pace-tool input::-moz-range-track{width:8px;height:100%;border-radius:10px;background:#526875;border:1px solid #8aa0ad}
+.focus-dialog .pace-tool input::-moz-range-thumb{width:19px;height:19px;border:3px solid #e5f4f6;border-radius:50%;background:var(--axis-light);box-shadow:0 3px 8px #0005}
+@media(min-width:1001px) and (max-height:800px){.focus-priorities{padding:12px 16px}.focus-priorities h3{font-size:17px}.focus-priorities p{font-size:15px}}
+@media(max-width:600px) and (max-height:750px){.focus-dialog .pace-required-row{margin-top:7px}.focus-dialog .pace-goal-button{min-height:32px;padding:5px 8px;font-size:11px}.focus-dialog .pace-actions{margin-top:5px}}
