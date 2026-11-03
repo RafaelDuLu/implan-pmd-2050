@@ -6,7 +6,7 @@ import { paceContext } from '../lib/pace-context.mjs';
 const rateUnits = { '1.3.2': 'años de escolaridad por año', '5.3.1': 'litros diarios por habitante, cada año', '4.5.2': 'kg diarios por persona, cada año', '6.2.1': 'usuarios diarios, cada año', '4.1.3': 'habitantes por hectárea, cada año' };
 const annualUnit = d => rateUnits[d.id] || (d.percent ? 'puntos porcentuales por año' : /^Escala/i.test(d.unit) ? 'puntos del índice por año' : `${d.unit.toLocaleLowerCase('es-MX')} por año`);
 const rate = (value,d) => `${number(Math.abs(value)*(d.percent ? 100:1),3)} ${annualUnit(d)}`;
-export default function GoalPlan({ indicator: d, plan, profile, projected, pace, autoAdjusted, onPace, onReset }) {
+export default function GoalPlan({ indicator: d, plan, profile, projected, pace, onPace, onReset }) {
   const risk = projected.state === 'at-risk';
   const title = plan.status === 'achieved' ? risk ? 'Meta cumplida; el escenario pierde el avance' : 'Meta alcanzada' : projected.state === 'unavailable' ? 'El escenario sale de la escala' : plan.crossingYear !== null ? plan.crossingYear <= 2030 ? 'La meta se alcanzaría en' : 'La meta se alcanzaría después de 2030' : 'Con este ritmo no se alcanza la meta';
   const actions = indicatorActions[d.id];
@@ -18,7 +18,6 @@ export default function GoalPlan({ indicator: d, plan, profile, projected, pace,
     <h4>{d.direction === 'D' ? 'Ritmo de reducción' : 'Ritmo de aumento'}</h4>
     {plan.status !== 'achieved' && plan.required !== null && <div className="pace-priority"><h5>Lo necesario para llegar en 2030</h5><p>{needed || rate(plan.required,d)}.</p>{profile.requiredPace!==null && <div className="pace-required-row"><span>Ritmo necesario: <strong>{number(profile.requiredPace,2)}×</strong></span><button className="pace-goal-button" onClick={()=>onPace(profile.requiredPace)} aria-label="Ajustar al ritmo necesario para llegar en 2030">Llegar en 2030 <span aria-hidden="true">↗</span></button></div>}</div>}
     {plan.status === 'achieved' && actions && <div className="pace-priority"><h5>Meta cumplida · cómo sostenerla</h5><p>{actions[1]}</p></div>}
-    {autoAdjusted && <p className="pace-auto-direction">Escenario de mejora · el cambio observado va en sentido contrario.</p>}
     <div className="pace-workspace">
       <div className="pace-tool" data-direction={d.direction}>
         <label className="sr-only" htmlFor="pace">{d.direction === 'D' ? 'Ritmo de reducción: mueve hacia abajo para acelerar' : 'Ritmo de aumento: mueve hacia arriba para acelerar'}</label>
@@ -35,6 +34,5 @@ export default function GoalPlan({ indicator: d, plan, profile, projected, pace,
       </div>
     </div>
     {actions && plan.status !== 'achieved' && <div className="goal-plan-required"><h5>Prioridades para cerrar la brecha</h5><p className="action-suggestion">Prioridades sugeridas</p><p>{actions[0]}</p></div>}
-    <p className="pace-simulation-label">Escenario simulado · 0× conserva el último dato. {profile.flatReference ? '1× usa el ritmo necesario a 2030 porque el histórico no cambió.' : '1× equivale a la magnitud del cambio histórico.'}</p>
   </aside>;
 }
