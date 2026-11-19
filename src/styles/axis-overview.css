@@ -51,3 +51,11 @@
  .overview-status{font-size:11px}.overview-rail-labels{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.overview-open{transition:none}}
+
+/* Each axis opens a separate list; the landing ends at the seven choices. */
+.axis-list-toolbar{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px clamp(20px,4vw,64px);background:#121c24;border-bottom:2px solid var(--axis-color);color:var(--axis-light)}
+.axis-list-toolbar .detail-back{margin:0;min-height:44px;padding:10px 18px;font-size:15px}
+.axis-list-toolbar>span{font-size:16px;font-weight:500}
+.axis-list-toolbar~#main .axis-overview{padding-top:30px}
+.axis-list-toolbar~#main .overview-axis h3{scroll-margin-top:100px}
+@media(max-width:600px){.axis-list-toolbar{padding:12px 16px;gap:10px;flex-wrap:wrap}.axis-list-toolbar .detail-back{width:auto;font-size:14px;margin:0}.axis-list-toolbar>span{font-size:14px}.axis-list-toolbar~#main .overview-axis h3{scroll-margin-top:140px}}

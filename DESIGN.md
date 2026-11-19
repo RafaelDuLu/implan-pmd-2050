@@ -99,3 +99,7 @@ En escritorio, las prioridades ocupan una franja inferior independiente y siempr
 ## Prioridades destacadas y selección precisa del ritmo
 
 La franja de prioridades utiliza el tinte del eje, texto oscuro y mayor peso tipográfico; conserva su espacio inferior sin reducir el protagonismo de la gráfica. El control mantiene el rango, sentido y paso aprobados, pero amplía la perilla e incorpora botones −/+ de 0.01×. El botón «Llegar en 2030» selecciona directamente profile.requiredPace, ya calculado para cada indicador; no modifica fórmulas ni datos y solo aparece cuando la meta está pendiente. Se conservan cero inicial y restablecimiento a cero. Verificado en portátil 1280×720 y móvil 390×667 con metas ascendentes y descendentes.
+
+## Menú de ejes y listas independientes
+
+La portada termina en «Siete ejes de ciudad»: no monta listas, tablas ni secciones posteriores debajo del directorio. Cada acceso abre una vista independiente filtrada por el eje elegido, incluidas búsqueda y tabla de datos. La barra superior mantiene «Volver a los siete ejes» visible y restaura el acceso seleccionado. Los enlaces #eje-1 a #eje-7 conservan acceso directo; Atrás, Adelante y recargar respetan la vista. El detalle del ritmo vuelve a la misma lista. Se preservan la portada, los recursos oficiales, los datos y la simulación. Validación de los siete ejes: 4, 5, 1, 10, 1, 7 y 3 indicadores, respectivamente.
