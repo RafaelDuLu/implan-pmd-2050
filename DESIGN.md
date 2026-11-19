@@ -103,3 +103,11 @@ La franja de prioridades utiliza el tinte del eje, texto oscuro y mayor peso tip
 ## Menú de ejes y listas independientes
 
 La portada termina en «Siete ejes de ciudad»: no monta listas, tablas ni secciones posteriores debajo del directorio. Cada acceso abre una vista independiente filtrada por el eje elegido, incluidas búsqueda y tabla de datos. La barra superior mantiene «Volver a los siete ejes» visible y restaura el acceso seleccionado. Los enlaces #eje-1 a #eje-7 conservan acceso directo; Atrás, Adelante y recargar respetan la vista. El detalle del ritmo vuelve a la misma lista. Se preservan la portada, los recursos oficiales, los datos y la simulación. Validación de los siete ejes: 4, 5, 1, 10, 1, 7 y 3 indicadores, respectivamente.
+
+## Transición portada → cielo → León → ejes
+
+Se sustituye únicamente el separador «Explorar» por LeonAxisJourney. La secuencia reutiliza la coreografía de RafaelDuLu/Inflacion (LeonArrival, Atmosphere, ground-impact y leon-letters), que corresponde a la referencia descrita; la portada actual de Informalidad usa otra secuencia de luz. El Arco recortado es el mismo recurso local de esa escena, con el punto de contacto original de la escultura.
+
+Contrato de escenas (progreso del recorrido): nacimiento desde el borde de portada 0–4 %; descenso y contacto con el avión hasta 14 %; caída e impacto en el suelo hasta 28 %; recuperación hasta 38 %; letras y compresión hasta 65 %; salto y contacto con el Arco en 73 %; rebote de salida hacia los ejes hasta 91 %. El título comienza arriba a la izquierda y se desplaza a la derecha antes de las letras. Se conserva el menú de siete ejes como destino y su navegación independiente.
+
+Un solo reloj de desplazamiento nativo mueve pelota, cámara, avión, nubes, letras y título mediante atributos SVG. El muestreo nativo de trayectorias SVG sustituye GSAP/MotionPath del origen: no se agrega dependencia. No hay rueda interceptada, autoplay ni bucle de renderizado en reposo. El recorrido se adapta a móvil y permite invertir el scroll. Movimiento reducido y pantallas de poca altura muestran un fotograma estático del Arco sin recorrido largo. Los enlaces directos al directorio y a cada eje siguen funcionando. El contenido de los indicadores y sus simulaciones permanecen intactos.

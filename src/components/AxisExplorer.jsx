@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { warmAxisArtwork } from '../lib/axis-artwork.js';
-import EditorialBanner from './EditorialBanner.jsx';
+import LeonAxisJourney from './LeonAxisJourney.jsx';
 import { Arrow } from './Icons.jsx';
 
 export const axisCopy = {
@@ -31,8 +31,8 @@ export default function AxisExplorer({ axes, indicators, activeAxis, onSelect })
     observer.observe(directory.current);
     return () => observer.disconnect();
   }, [axes]);
-  return <div className="axis-section" data-page-layer id="ejes">
-    <EditorialBanner id="axes-banner-title" title={<>¿Cómo está<br/>cambiando León?</>} action="Explorar"/>
+  return <div className="axis-section" id="ejes">
+    <LeonAxisJourney/>
     <section ref={directory} className="axis-directory" id="directorio" aria-labelledby="axes-title"><div className="directory-aside" data-reveal><h2 id="axes-title" tabIndex="-1">Siete ejes <br/>de ciudad.</h2><p>Consulta los indicadores del Plan León 2050 por eje estratégico.</p></div><div className="axis-ledger">{axes.map(axis => {
       const copy=axisCopy[axis.id], count=indicators.filter(d=>d.axis===axis.id).length;
       return <button id={`axis-entry-${axis.id}`} key={axis.id} className={`axis-card axis-card-${axis.id}`} style={axisTheme(axis.id)} data-reveal aria-pressed={axis.id===activeAxis} onClick={()=>onSelect(axis.id)}><span className="axis-number micro">0{axis.id}</span><span className="axis-name"><strong>{copy.title}</strong><span>{copy.subtitle}</span></span><span className="axis-symbol"><img className="axis-art" src={`./axes/official/eje-${axis.id}.webp`} alt="" width="1063" height="1200" loading="lazy" decoding="async"/></span><span className="axis-count micro">{String(count).padStart(2,'0')}<small>INDICADORES</small></span><Arrow diagonal/></button>;

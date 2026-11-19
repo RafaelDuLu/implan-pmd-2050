@@ -34,6 +34,7 @@ export default function Hero({ count }) {
       <div className="hero-top micro"><span>PORTAL DE TABULADORES ESTADÍSTICOS</span></div>
       <div className="hero-composition"><div className="hero-story"><h1 id="hero-title" aria-label="Una ciudad. Todas sus perspectivas."><span className="hero-title-plot" aria-hidden="true"><span className="hero-title-outline">{headline}</span><span className="hero-title-fill">{headline}</span></span></h1><div className="hero-side"><p className="hero-message"><span>El presente de León,</span><span className="hero-future">con la mirada hacia el futuro.</span></p></div></div><LeonMap/></div>
       <div className="hero-bottom"><div className="hero-stat"><strong>07</strong><span className="micro">EJES DE CIUDAD</span></div><div className="hero-stat"><strong>{count}</strong><span className="micro">INDICADORES DISPONIBLES</span></div></div>
+      <span className="cover-journey-seed" aria-hidden="true"/>
       <ScannerOverlay/>
     </section>
   </>;
