@@ -47,3 +47,6 @@
 @media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){
  .hero .hero-future{opacity:1;mask-image:none;-webkit-mask-image:none}
 }
+
+/* Desktop reveals the streets with the cursor; keep the toggle on small screens. */
+@media(min-width:901px){.leon-map figcaption{display:none}}
